@@ -91,19 +91,26 @@ That is all for now, just some DSL around Trollop to make your script look nice 
 
 ### TODO
 
-- should be able to support command line apps without sub commands, just a plain vanilla command line app
-- should have the ability to generate a skeleton command line app according to my conventions
-- should be more config file aware but can live without it
-- work out if it needs to be involved in better logging support
-- should have better ability to create better help text
-- should have deal better with exit codes and stuff (read the book section about it)
+- ability to support a command line app without sub commands
+- creating a scaffold for a plain app without sub commands
+- creating a scaffold for an app with sub commands
+- a convention for how to do validation of various command line options (and validation in general)
+- a convention for how to actually do the code that will handle the commands etc.
+- how to preoperly do logging and support various modes (e.g. verbose)
+- how to properly do exit codes and exception catching for the app
+- support for configuration files for your command line apps
+- better ways to create help text to override default trollop behaviour
+- ability to have a default command
 - maybe add some specs for it if needed
 - maybe add some cukes for it if needed
-- blog about what makes a good command line app (this and the one below are possibly one post)
-- blog about how to use escort and why the other libraries fall short
-- blog about how escort is constructed
-- should have ability to ask for user input for some commands, using highline or something like that
-- should have a clean structure convention of where code that executes the commands should live so that command line apps are easy
-- use escort to build a command line version of my markov chains name generator from ages ago
-- blog about using escort to build my name generator
-- ability to have a default command when you didn't specify one??? (what would this mean for sub command and non sub command apps)
+- ability to ask for user input for some commands, using highline or something like that
+- support for infinitely nesting sub commands
+- much better documentation and usage patterns
+  - blog about what makes a good command line app (this and the one below are possibly one post)
+  - blog about how to use escort and why the other libraries fall short
+  - blog about how escort is constructed
+  - blog about using escort to build a markov chains based name generator
+  - blog about creating a sub command based app using escort
+  - blog about creating an app with user input using escort
+
+
