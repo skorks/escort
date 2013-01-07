@@ -72,6 +72,22 @@ my_script -g "blah" my_command --do-stuff foobar
 
 That is all for now, just some DSL around Trollop to make your script look nice (hopefully more nice things to come).
 
+### Specifying a Default Command
+
+It is possible to do this, but will only come into effect is you didn't pass anything on the command line at all. If that is the case,
+by default, you'll get the global help message i.e. if your script is named `my_script` calling `./my_script` is equivalent to calling `./my_script -h`. However you can override this like so:
+
+```ruby
+Escort::App.create do |app|
+  ...
+  app.default "-g 'local' my_command --no-do-stuff"
+  ...
+end
+
+```
+
+The above will make escort treat the string you passed to `default` as if it came from the command line, so if your script is named `my_script` calling `./my_script` would be equivalent to calling `./my_script -g 'local' my_command --no-do-stuff`.
+
 ## Alternatives
 
 * [GLI](https://github.com/davetron5000/gli)

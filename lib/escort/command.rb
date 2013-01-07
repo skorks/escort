@@ -17,6 +17,7 @@ module Escort
     end
 
     def perform_action(parent_command_options, remaining_arguments)
+      raise "Must define an action block for sub commands" unless @action_block
       @action_block.call(parent_command_options, @current_options, remaining_arguments)
     end
   end

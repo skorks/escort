@@ -2,22 +2,13 @@
 require 'escort'
 
 Escort::App.create do |app|
-  #app.default "-g"
-
   app.options do
-    banner "my script banner"
+    banner "My script banner"
     opt :global_option, "Global option", :short => '-g', :long => '--global', :type => :string, :default => "global"
+    opt :multi_option, "Option that can be specified multiple times", :short => '-m', :long => '--multi', :type => :string, :multi => true
   end
 
-  app.action do |global_options, command_options, arguments|
-    #actually do the work for this command here
-  end
-
-  #app.before do |command_name, global_options, command_options, arguments|
-    ##executes before each command
-  #end
-
-  app.on_error do |error|
-    #handle all errors here
+  app.action do |global_options, arguments|
+    puts "Action for my_command\nglobal options: #{global_options} \narguments: #{arguments}"
   end
 end
