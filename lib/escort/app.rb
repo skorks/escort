@@ -8,6 +8,7 @@ module Escort
         self.new(options_string).tap do |app|
           block.call(app)  #run the block to get the various sub blocks
           begin
+            app.use_default_options_string_if_needed
             app.parse_options # parse the global options
             app.current_command.parse_options # parse the current command options
             app.execute_before_block(app.current_command.name, app.current_options, app.current_command.current_options, app.arguments)
@@ -23,6 +24,13 @@ module Escort
 
     def initialize(options_string = nil)
       @options_string = options_string || ARGV.dup
+    end
+
+    def use_default_options_string_if_needed
+      @default_options_string ||= ['-h']
+      if @options_string.size == 0
+        @options_string = @default_options_string
+      end
     end
 
     def arguments

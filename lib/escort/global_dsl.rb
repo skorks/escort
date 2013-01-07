@@ -7,5 +7,10 @@ module Escort
     def on_error(&block)
       @error_block = block
     end
+
+    def default(options_string)
+      require 'shellwords' unless defined? Shellwords
+      @default_options_string = Shellwords.shellwords(options_string)
+    end
   end
 end
