@@ -146,16 +146,16 @@ There is an example to have a play with under `examples/default_command`. It is 
 
 ### TODO
 
-- ability to support a command line app without sub commands
-- creating a scaffold for a plain app without sub commands
-- creating a scaffold for an app with sub commands
+- ability to support a command line app without sub commands DONE
+- ability to have a default command DONE
 - a convention for how to do validation of various command line options (and validation in general)
 - a convention for how to actually do the code that will handle the commands etc.
+- support for configuration files for your command line apps
 - how to preoperly do logging and support various modes (e.g. verbose)
 - how to properly do exit codes and exception catching for the app
-- support for configuration files for your command line apps
+- creating a scaffold for a plain app without sub commands
+- creating a scaffold for an app with sub commands
 - better ways to create help text to override default trollop behaviour
-- ability to have a default command
 - maybe add some specs for it if needed
 - maybe add some cukes for it if needed
 - ability to ask for user input for some commands, using highline or something like that
