@@ -48,12 +48,26 @@ module Escort
       @current_options = Trollop::with_standard_exception_handling(parser) do
         parser.parse @options_string
       end
+      validate_options(parser, @current_options)
+    end
+
+    def validate_options(parser, option_values)
+      validation_options = Escort::ValidatioOptions.new
+      #TODO make sure all keys match an option_values key
+      @validations_block.call(validation_options)
+      validation_options.validations.each_pair do |option, validation_data|
+        raise "Unable to create validation for #{option} as no such option was defined, maybe you misspelled it" unless option_values.keys.include?(option)
+        if option_values[option] && !validation_data[:validation].call(option_values[option])
+          parser.die(option, validation_data[:message])
+        end
+      end
     end
 
     def current_command
       return @current_command if @current_command
       command_name = @options_string.shift.to_s
       command_block = @command_blocks[command_name]
+      raise "No command was passed in" unless command_block
       @current_command = Command.new(command_name, @options_string)
       command_block.call(@current_command)
       @current_command

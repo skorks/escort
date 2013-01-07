@@ -10,8 +10,8 @@ Escort::App.create do |app|
   end
 
   app.validations do |opts|
-    opts.global_option("must be either global or local") { |option| ["global", "local"].include?(option) }
-    opts.a_number("must be between 10 and 20 exclusive") { |option| option > 10 && options < 20 }
+    opts.validate(:global_option, "must be either global or local") { |option| ["global", "local"].include?(option) }
+    opts.validate(:a_number, "must be between 10 and 20 exclusive") { |option| option > 10 && option < 20 }
   end
 
   app.command :my_command do |command|

@@ -16,5 +16,9 @@ module Escort
     def action(&block)
       @action_block = block
     end
+
+    def validations(&block)
+      @validations_block = block
+    end
   end
 end
