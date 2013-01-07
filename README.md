@@ -149,6 +149,13 @@ There is an example to have a play with under `examples/default_command`. It is 
 - ability to support a command line app without sub commands DONE
 - ability to have a default command DONE
 - a convention for how to do validation of various command line options (and validation in general)
+  - validations for commands
+  - more examples
+  - make sure it is more robust
+  - make it possible to define it on the option itself, although this pollutes the option somewhat so maybe not????
+  - make multiple validations for the same option possible for finer grained validation messages
+  - make sure there is minimum code duplication
+  - update the readme to explain validations
 - support for configuration files for your command line apps
 - a convention for how to actually do the code that will handle the commands etc.
 - how to preoperly do logging and support various modes (e.g. verbose)
