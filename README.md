@@ -28,7 +28,7 @@ Or install it yourself as:
 
 ## Usage
 
-Really easy, here is an example:
+Let's say you want to do a basic app. As long as `escort` is installed as a gem, you might do something like this:
 
 ```ruby
 #!/usr/bin/env ruby
@@ -36,41 +36,78 @@ require 'escort'
 
 Escort::App.create do |app|
   app.options do
-    banner "my script banner"
+    banner "My script banner"
+    opt :global_option, "Global option", :short => '-g', :long => '--global', :type => :string, :default => "global"
+    opt :multi_option, "Option that can be specified multiple times", :short => '-m', :long => '--multi', :type => :string, :multi => true
+  end
+
+  app.action do |global_options, arguments|
+    puts "Action for my_command\nglobal options: #{global_options} \narguments: #{arguments}"
+  end
+end
+```
+
+If your file is called `app.rb` you is executable, you can then call it like this:
+
+```
+./app.rb
+./app.rb -h
+./app.rb -g "hello"
+./app.rb -m "foo" -m "bar" --global="yadda"
+```
+
+You can have a play with it under `examples/basic`. How about something a bit more complex. Let's say we want to do an app with sub commands. Our `app.rb` file might look like this:
+
+```ruby
+#!/usr/bin/env ruby
+require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "..", "lib", "escort"))
+
+Escort::App.create do |app|
+  app.options do
+    banner "My script banner"
     opt :global_option, "Global option", :short => '-g', :long => '--global', :type => :string, :default => "global"
   end
 
   app.command :my_command do |command|
     command.options do
-      banner "Sub command"
+      banner "Command"
       opt :do_stuff, "Do stuff", :short => :none, :long => '--do-stuff', :type => :boolean, :default => true
     end
 
     command.action do |global_options, command_options, arguments|
-      #actually do the work for this command here
+      puts "Action for my_command\nglobal options: #{global_options} \ncommand options: #{command_options}\narguments: #{arguments}"
     end
-  end
-
-  app.before do |command_name, global_options, command_options, arguments|
-    #executes before each command
-  end
-
-  app.on_error do |error|
-    #handle all errors here
   end
 end
 ```
 
-That's all there is to it, now if your script is named `my_script` you'll be able to do things like:
+Now you'll be able to do things like:
 
 ```
-my_script my_command
-my_script my_command foobar
-my_script my_command --no-do-stuff foobar
-my_script -g "blah" my_command --do-stuff foobar
+./app.rb --help
+./app.rb my_command
+./app.rb my_command foobar
+./app.rb my_command --no-do-stuff foobar
+./app.rb -g "blah" my_command --do-stuff foobar
 ```
 
-That is all for now, just some DSL around Trollop to make your script look nice (hopefully more nice things to come).
+You can have a play with it under `examples/sub_commands`.
+
+Note that nesting sub commands is currently not supported, so you can have `./app.rb my_command --help`, but you can't have `./app.rb my_command my_sub_command --help`, this is not Inception you can't go deeper (I might support it in the future if I decide it's worth the trouble).
+
+Also note that when specifying options, you MUST provide global options before the sub command and command options after, so in the above case, this is fine:
+
+```
+./app.rb -g "blah" my_command --do-stuff foobar
+```
+
+But this is not:
+
+```
+./app.rb my_command -g "blah" --do-stuff foobar
+```
+
+You will get an error as `-g` will not be recognised as an option.
 
 ### Specifying a Default Command
 
@@ -87,6 +124,8 @@ end
 ```
 
 The above will make escort treat the string you passed to `default` as if it came from the command line, so if your script is named `my_script` calling `./my_script` would be equivalent to calling `./my_script -g 'local' my_command --no-do-stuff`.
+
+There is an example to have a play with under `examples/default_command`. It is possible to specify a default for an app with or without sub commands.
 
 ## Alternatives
 
