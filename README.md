@@ -1,6 +1,6 @@
 # Escort
 
-Basically we take the excellent Trollop command line options parser and dress it up a little with some DSL to make writing CLI apps a bit nicer, but still retain the full power of the awesome Trollop.
+Basically we take the excellent [Trollop](http://trollop.rubyforge.org/) command line options parser and dress it up a little with some DSL to make writing CLI apps a bit nicer, but still retain the full power of the awesome Trollop.
 
 ## Why Write Another CLI Tool
 
@@ -127,6 +127,64 @@ The above will make escort treat the string you passed to `default` as if it cam
 
 There is an example to have a play with under `examples/default_command`. It is possible to specify a default for an app with or without sub commands.
 
+### Validation
+
+Some validation is already provided by [Trollop](http://trollop.rubyforge.org/) when you specify the options. Specifically, you specify the basic type so the fact that your option is an integer, a float, a string etc. will already be ensured. Also you may also specify that an option is required (via `:required => true`) which will produce an error if it wasn't supplied. For more complex things we have validation support. Here is an example:
+
+```ruby
+#!/usr/bin/env ruby
+require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "..", "lib", "escort"))
+
+Escort::App.create do |app|
+  app.options do
+    banner "My script banner"
+    opt :global_option, "Global option", :short => '-g', :long => '--global', :type => :string, :default => "global"
+    opt :multi_option, "Option that can be specified multiple times", :short => '-m', :long => '--multi', :type => :string, :multi => true
+    opt :a_number, "Do stuff", :short => "-n", :long => '--number', :type => :int
+  end
+
+  app.validations do |opts|
+    opts.validate(:global_option, "must be either global or local") { |option| ["global", "local"].include?(option) }
+    opts.validate(:a_number, "must be between 10 and 20 exclusive") { |option| option > 10 && option < 20 }
+  end
+
+  app.command :my_command do |command|
+    command.options do
+      banner "Command"
+      opt :do_stuff, "Do stuff", :short => :none, :long => '--do-stuff', :type => :boolean, :default => true
+      opt :string_with_format, "String with format", :short => "-f", :long => '--format', :type => :string, :default => "blah yadda11111111111"
+    end
+
+    command.validations do |opts|
+      opts.validate(:string_with_format, "should be two words") {|option| option =~ /\w\s\w/}
+      opts.validate(:string_with_format, "should be at least 20 characters long") {|option| option.length >= 20}
+    end
+
+    command.action do |global_options, command_options, arguments|
+      puts "Action for my_command\nglobal options: #{global_options} \ncommand options: #{command_options}\narguments: #{arguments}"
+    end
+  end
+end
+
+```
+
+As you can see we can validate global and command level options using a separate `validations` call with a block. All you do is provide the identifier for the option and a message to print out if the validation wasn't fulfilled. The validation itself is performed by executing the supplied block which should evaluate to `true` for a successful validation. Since the block can contain arbitrary Ruby code the possibilities are pretty endless. If there is ever a need for much more complex validations it would be trivial to support providing a class as a validator, but for now I think the above is more than sufficient. You can provide multiple valiation rules for the same option in case you want to do fine grained validation messages.
+
+In the above case if our script is called `app.rb` then doing the following:
+
+```
+./app.rb -g "blah" my_command --do-stuff foobar
+```
+
+Will produce an error message like this:
+
+```
+Error: argument --global must be either 'global' or 'local'.
+Try --help for help.
+```
+
+The above example is under `examples/validation_basic`, so you can have a play.
+
 ## Alternatives
 
 * [GLI](https://github.com/davetron5000/gli)
@@ -148,30 +206,30 @@ There is an example to have a play with under `examples/default_command`. It is 
 
 - ability to support a command line app without sub commands DONE
 - ability to have a default command DONE
-- a convention for how to do validation of various command line options (and validation in general)
-  - validations for commands
-  - more examples
-  - make sure it is more robust
-  - make it possible to define it on the option itself, although this pollutes the option somewhat so maybe not????
-  - make multiple validations for the same option possible for finer grained validation messages
-  - make sure there is minimum code duplication
-  - update the readme to explain validations
+- a convention for how to do validation of various command line options (and validation in general) DONE
+  - validations for commands DONE
+  - make sure it is more robust DONE
+  - more examples DONE
+  - update the readme to explain validations DONE
+  - make it possible to define it on the option itself, although this pollutes the option somewhat so maybe not???? DONE
+  - make multiple validations for the same option possible for finer grained validation messages DONE
+  - make sure there is minimum code duplication DONE
 - support for configuration files for your command line apps
 - a convention for how to actually do the code that will handle the commands etc.
 - how to preoperly do logging and support various modes (e.g. verbose)
 - how to properly do exit codes and exception catching for the app
 - better support for before and after blocks with explanations and examples of usage
 - better support for on_error blocks with explanations and examples of usage (roll exit code support into here)
+- better exception handling for the whole gem
 - creating a scaffold for a plain app without sub commands
 - creating a scaffold for an app with sub commands
 - better ways to create help text to override default trollop behaviour
-- maybe add some specs for it if needed
-- maybe add some cukes for it if needed
-- ability to ask for user input for some commands, using highline or something like that
-- support for infinitely nesting sub commands
+- maybe add some specs for it if needed (via aruba)
+- ability to ask for user input for some commands, using highline or something like that (is this really necessary???, maybe for passwords)
+- support for infinitely nesting sub commands (is this really necessary)
 - much better documentation and usage patterns
   - blog about what makes a good command line app (this and the one below are possibly one post)
-  - blog about how to use escort and why the other libraries fall short
+  - blog about how to use escort and why the other libraries possibly fall short
   - blog about how escort is constructed
   - blog about using escort to build a markov chains based name generator
   - blog about creating a sub command based app using escort

@@ -14,6 +14,7 @@ module Escort
       @current_options = Trollop::with_standard_exception_handling(parser) do
         parser.parse @options_string
       end
+      Escort::Validations.validate(@current_options, parser, &@validations_block) if @validations_block
     end
 
     def perform_action(parent_command_options, remaining_arguments)
