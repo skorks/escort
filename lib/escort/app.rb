@@ -13,7 +13,7 @@ module Escort
             if !app.command_names.nil? && app.command_names.size > 0
               app.current_command.parse_options # parse the current command options
               app.execute_before_block(app.current_command.name, app.current_options, app.current_command.current_options, app.arguments)
-              app.current_command.perform_action(app.current_options, app.arguments)
+              app.current_command.perform_action(app.current_options, app.arguments, app.valid_with_no_arguments)
             else
               app.perform_action(app.current_options, app.arguments)
             end
@@ -42,6 +42,10 @@ module Escort
 
     def arguments
       @options_string
+    end
+
+    def valid_with_no_arguments
+      @no_arguments_valid
     end
 
     def parse_options
@@ -73,7 +77,7 @@ module Escort
       if command_names.nil? || command_names.size == 0
         raise "Must define a global action block if there are no sub-commands" unless @action_block
         raise "Can't define before blocks if there are no sub-commands" if @before_block
-        @action_block.call(current_options, arguments)
+        @action_block.call(current_options, Escort::Arguments.read(arguments, @no_arguments_valid))
       else
         raise "Can't define global actions for an app with sub-commands"
       end

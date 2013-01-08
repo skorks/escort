@@ -18,9 +18,9 @@ module Escort
       Escort::Validations.validate(@current_options, parser, &@validations_block) if @validations_block
     end
 
-    def perform_action(parent_command_options, remaining_arguments)
+    def perform_action(parent_command_options, remaining_arguments, no_arguments_valid)
       raise "Must define an action block for sub commands" unless @action_block
-      @action_block.call(parent_command_options, @current_options, remaining_arguments)
+      @action_block.call(parent_command_options, @current_options, Escort::Arguments.read(remaining_arguments, no_arguments_valid))
     end
   end
 end

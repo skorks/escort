@@ -52,8 +52,8 @@ If your file is called `app.rb` you is executable, you can then call it like thi
 ```
 ./app.rb
 ./app.rb -h
-./app.rb -g "hello"
-./app.rb -m "foo" -m "bar" --global="yadda"
+./app.rb -g "hello" foobar
+./app.rb -m "foo" -m "bar" --global="yadda" foobar
 ```
 
 You can have a play with it under `examples/basic`. How about something a bit more complex. Let's say we want to do an app with sub commands. Our `app.rb` file might look like this:
@@ -85,7 +85,6 @@ Now you'll be able to do things like:
 
 ```
 ./app.rb --help
-./app.rb my_command
 ./app.rb my_command foobar
 ./app.rb my_command --no-do-stuff foobar
 ./app.rb -g "blah" my_command --do-stuff foobar
@@ -124,7 +123,7 @@ end
 Both the description and the aliases are completely optional, you can specify a single alias or an array. When you call the command you can substitute any of the aliases:
 
 ```
-./app.rb mc
+./app.rb mc foobar
 ./app.rb -g "blah" myc --do-stuff foobar
 ```
 
@@ -206,6 +205,75 @@ Try --help for help.
 
 The above example is under `examples/validation_basic`, so you can have a play.
 
+### Command Line Arguments (As Opposed to Flags and Options)
+
+What do we mean by arguments? Well, let's take CURL as an example. You must always pass a url to CURL since that is what CURL is all about (you're GETting a url or POSTing etc.), this url is the argument you pass to CURL. You may also pass a bunch of options and flags (e.g. -X POST, -d "") which affect what/how you handle the argument url, but the url is the important part.
+
+We have specified flags, options and commands, but up till now we have assumed that arguments will take care of themselves. By default an Escort expects that your executable will need at least one argument to operate on. If you don't supply this argument on the command line when you execute your script, Escort will ask you to input this argument via STDIN (i.e. you will see a prompt `> `). For example if we have `examples/argument_handling/basic.rb`:
+
+```ruby
+#!/usr/bin/env ruby
+require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "..", "lib", "escort"))
+
+Escort::App.create do |app|
+  app.options do
+    banner "My script banner"
+    opt :global_option, "Global option", :short => '-g', :long => '--global', :type => :string, :default => "global"
+  end
+
+  app.action do |global_options, arguments|
+    puts "Action for my_command\nglobal options: #{global_options} \narguments: #{arguments}"
+  end
+end
+```
+
+When you execute it like so `bundle exec examples/argument_handling/basic.rb -g 'local'`, we will see the following:
+
+```
+>
+>
+> blah
+>
+```
+
+That is the script will keep asking us for input until we press `Ctrl-D`, at which point if we have managed to enter any strings ('blah' in the above case), this will be passed as the arguments to our script. This is how unix scripts are supposed to work and because of this we can pipe input to our script like so:
+
+```
+echo hello | bundle exec examples/argument_handling/basic.rb -g 'local'
+```
+
+In this case 'hello' will be argument to our script.
+
+Of course sometimes we want to write a script where the above default behaviour would be a bit of a drag, we don't care about piping input to it and we don't need any arguments, just some options/flags. In this case we can disable the default behaviour `examples/argument_handling/no_arguments.rb`:
+
+```ruby
+#!/usr/bin/env ruby
+require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "..", "lib", "escort"))
+
+Escort::App.create do |app|
+  app.no_arguments_valid
+
+  app.options do
+    banner "My script banner"
+    opt :global_option, "Global option", :short => '-g', :long => '--global', :type => :string, :default => "global"
+  end
+
+  app.action do |global_options, arguments|
+    puts "Action for my_command\nglobal options: #{global_options} \narguments: #{arguments}"
+  end
+end
+```
+
+We tell our script that no arguments is a perfectly valid state. So if we execute `bundle exec examples/argument_handling/no_arguments.rb -g 'local'` we get:
+
+```
+Action for my_command
+global options: {:global_option=>"local", :help=>false, :global_option_given=>true}
+arguments: []
+```
+
+No input from STDIN necessary. This works just as well when you have commands in your app, see `examples/argument_handling/basic_command.rb` and `examples/argument_handling/no_arguments_command.rb`.
+
 ## Alternatives
 
 * [GLI](https://github.com/davetron5000/gli)
@@ -224,9 +292,19 @@ The above example is under `examples/validation_basic`, so you can have a play.
 5. Create new Pull Request
 
 ### TODO
-- if no arguments are provided should take argument/arguments from STDIN (ctrl-d to stop inputting arguments)
+- if no arguments are provided should take argument/arguments from STDIN (ctrl-d to stop inputting arguments) unless configured via app.no_arguments_valid to be a valid without any arguments passed, just options/flags DONE
+  - do readme on no arguments and mandatory arguments DONE
 - exception hierarchy for gem and better exit codes (better exception handling for the whole gem)
-- support for configuration files for your command line apps (ability to switch on and off default creation of config file, an option to read specific config file instead of the default, a flag to create a default config in a specific directory, the ability to by default read a config file by walking up the directory tree, the ability to set the config file name, config file options should be validated just like the command line options, ability to configure global options and command specific options, ability to configure extra user data that may be needed)
+- support for configuration files for your command line apps
+  - the ability to set the config file name
+  - ability to switch on and off default creation of config file
+  - an option to read specific config file instead of the default
+  - a flag to create a default config in a specific directory
+  - the ability to by default read a config file by walking up the directory tree
+  - config file options should be validated just like the command line options
+  - ability to configure global options and command specific options (through the file)
+  - ability to configure extra user data that may be needed (through the file)
+- refactor so that objects passed into the dsl only have dsl methods available to call
 - how to preoperly do logging and support various modes (e.g. verbose, log anything other than output to STDERR, use rubies logging facilities, with some kind of sensible default log format, should a logger be accessible to the whole app automagically)
 - how to properly do exit codes and exception catching for the app
 - better support for before and after blocks with explanations and examples of usage
@@ -234,6 +312,7 @@ The above example is under `examples/validation_basic`, so you can have a play.
 - a convention for how to actually do the code that will handle the commands etc.
 - creating a scaffold for a plain app without sub commands
 - creating a scaffold for an app with sub commands
+- revisit all the examples and readme to make sure all examples still work as expected after all features have been implemented
 - better ways to create help text to override default trollop behaviour
 - maybe add some specs for it if needed (aruba ???)
 - ability to ask for user input for some commands, using highline or something like that (is this really necessary???, maybe for passwords)
