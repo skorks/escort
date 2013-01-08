@@ -17,8 +17,11 @@ module Escort
             else
               app.perform_action(app.current_options, app.arguments)
             end
+            exit(0) #everything executed successfully so returning 0 as exit status
           rescue => e
             app.execute_error_block(e)
+            #TODO once we have a standard exception hierarchy we can have different exit codes for the various different exceptions here
+            exit(1) #execution finished unsuccessfully
           end
         end
       end

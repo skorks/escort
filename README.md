@@ -203,28 +203,20 @@ The above example is under `examples/validation_basic`, so you can have a play.
 5. Create new Pull Request
 
 ### TODO
-
-- ability to support a command line app without sub commands DONE
-- ability to have a default command DONE
-- a convention for how to do validation of various command line options (and validation in general) DONE
-  - validations for commands DONE
-  - make sure it is more robust DONE
-  - more examples DONE
-  - update the readme to explain validations DONE
-  - make it possible to define it on the option itself, although this pollutes the option somewhat so maybe not???? DONE
-  - make multiple validations for the same option possible for finer grained validation messages DONE
-  - make sure there is minimum code duplication DONE
-- support for configuration files for your command line apps
-- a convention for how to actually do the code that will handle the commands etc.
-- how to preoperly do logging and support various modes (e.g. verbose)
+- allow to specify multiple aliases for command
+- allow to specify description for command
+- if no arguments are provided should take argument/arguments from STDIN (ctrl-d to stop inputting arguments)
+- exception hierarchy for gem and better exit codes (better exception handling for the whole gem)
+- support for configuration files for your command line apps (ability to switch on and off default creation of config file, an option to read specific config file instead of the default, a flag to create a default config in a specific directory, the ability to by default read a config file by walking up the directory tree, the ability to set the config file name, config file options should be validated just like the command line options, ability to configure global options and command specific options, ability to configure extra user data that may be needed)
+- how to preoperly do logging and support various modes (e.g. verbose, log anything other than output to STDERR, use rubies logging facilities, with some kind of sensible default log format, should a logger be accessible to the whole app automagically)
 - how to properly do exit codes and exception catching for the app
 - better support for before and after blocks with explanations and examples of usage
-- better support for on_error blocks with explanations and examples of usage (roll exit code support into here)
-- better exception handling for the whole gem
+- better support for on_error blocks with explanations and examples of usage (roll exit code support into here), default handling of errors in block
+- a convention for how to actually do the code that will handle the commands etc.
 - creating a scaffold for a plain app without sub commands
 - creating a scaffold for an app with sub commands
 - better ways to create help text to override default trollop behaviour
-- maybe add some specs for it if needed (via aruba)
+- maybe add some specs for it if needed (aruba ???)
 - ability to ask for user input for some commands, using highline or something like that (is this really necessary???, maybe for passwords)
 - support for infinitely nesting sub commands (is this really necessary)
 - much better documentation and usage patterns
@@ -234,5 +226,7 @@ The above example is under `examples/validation_basic`, so you can have a play.
   - blog about using escort to build a markov chains based name generator
   - blog about creating a sub command based app using escort
   - blog about creating an app with user input using escort
+
+- choosing default output format based on where the output is going STDOUT.tty?
 
 

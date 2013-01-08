@@ -518,7 +518,7 @@ class Parser
       $stderr.puts "Error: #{arg}."
     end
     $stderr.puts "Try --help for help."
-    exit(-1)
+    exit(1)
   end
 
 private
@@ -741,7 +741,7 @@ def with_standard_exception_handling parser
   rescue CommandlineError => e
     $stderr.puts "Error: #{e.message}."
     $stderr.puts "Try --help for help."
-    exit(-1)
+    exit(1)
   rescue HelpNeeded
     parser.educate
     exit
