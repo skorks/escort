@@ -109,6 +109,27 @@ But this is not:
 
 You will get an error as `-g` will not be recognised as an option.
 
+You may also specify a description and one or more aliases for any command you define, so taking the above example:
+```ruby
+...
+Escort::App.create do |app|
+...
+  app.command :my_command, :description => "Command that does stuff", :aliases => [:mc, myc] do |command|
+    ...
+  end
+...
+end
+```
+
+Both the description and the aliases are completely optional, you can specify a single alias or an array. When you call the command you can substitute any of the aliases:
+
+```
+./app.rb mc
+./app.rb -g "blah" myc --do-stuff foobar
+```
+
+You can have a play with it under `examples/command_aliases`.
+
 ### Specifying a Default Command
 
 It is possible to do this, but will only come into effect is you didn't pass anything on the command line at all. If that is the case,
@@ -203,8 +224,6 @@ The above example is under `examples/validation_basic`, so you can have a play.
 5. Create new Pull Request
 
 ### TODO
-- allow to specify multiple aliases for command
-- allow to specify description for command
 - if no arguments are provided should take argument/arguments from STDIN (ctrl-d to stop inputting arguments)
 - exception hierarchy for gem and better exit codes (better exception handling for the whole gem)
 - support for configuration files for your command line apps (ability to switch on and off default creation of config file, an option to read specific config file instead of the default, a flag to create a default config in a specific directory, the ability to by default read a config file by walking up the directory tree, the ability to set the config file name, config file options should be validated just like the command line options, ability to configure global options and command specific options, ability to configure extra user data that may be needed)

@@ -58,8 +58,9 @@ module Escort
       return @current_command if @current_command
       command_name = @options_string.shift.to_s
       command_block = @command_blocks[command_name]
+      command_description = @command_descriptions[command_name] || nil
       raise "No command was passed in" unless command_block
-      @current_command = Command.new(command_name, @options_string)
+      @current_command = Command.new(command_name, command_description, @options_string)
       command_block.call(@current_command)
       @current_command
     end

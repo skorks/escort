@@ -4,8 +4,9 @@ module Escort
 
     attr_reader :current_options, :name
 
-    def initialize(name, options_string)
+    def initialize(name, description, options_string)
       @name = name
+      @description = description
       @options_string = options_string
     end
 
