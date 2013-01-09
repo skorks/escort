@@ -1,7 +1,5 @@
 module Escort
   class Command
-    include Dsl
-
     attr_reader :current_options, :name
 
     def initialize(name, description, options_string)
@@ -19,6 +17,7 @@ module Escort
     end
 
     def perform_action(parent_command_options, remaining_arguments, no_arguments_valid)
+      #TODO what should be raised here (ClientError), should anything
       raise "Must define an action block for sub commands" unless @action_block
       @action_block.call(parent_command_options, @current_options, Escort::Arguments.read(remaining_arguments, no_arguments_valid))
     end

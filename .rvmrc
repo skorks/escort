@@ -2,7 +2,7 @@
 
 failed=1
 gemset=escort
-rubies="ruby-1.9.3-p362 ruby-1.9.2-p290 ruby-1.9.3-p194"
+rubies="ruby-1.9.3-p362 ruby-1.9.3-p194 ruby-1.9.2-p290 "
 
 for ruby in $rubies; do
   rvm use $ruby@$gemset --create 1>/dev/null 2>&1

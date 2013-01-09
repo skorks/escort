@@ -8,7 +8,7 @@ Escort::App.create do |app|
     opt :multi_option, "Option that can be specified multiple times", :short => '-m', :long => '--multi', :type => :string, :multi => true
   end
 
-  app.action do |global_options, arguments|
-    puts "Action for my_command\nglobal options: #{global_options} \narguments: #{arguments}"
+  app.action do |options, arguments|
+    puts "Action for my_command\nglobal options: #{options} \narguments: #{arguments}"
   end
 end

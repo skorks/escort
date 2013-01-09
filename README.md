@@ -294,7 +294,7 @@ No input from STDIN necessary. This works just as well when you have commands in
 ### TODO
 - if no arguments are provided should take argument/arguments from STDIN (ctrl-d to stop inputting arguments) unless configured via app.no_arguments_valid to be a valid without any arguments passed, just options/flags DONE
   - do readme on no arguments and mandatory arguments DONE
-- exception hierarchy for gem and better exit codes (better exception handling for the whole gem)
+- exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions)
 - support for configuration files for your command line apps
   - the ability to set the config file name
   - ability to switch on and off default creation of config file

@@ -5,6 +5,7 @@ module Escort
         validations_instance = self.new
         block.call(validations_instance)
         validations_instance.validations.each_pair do |option, validations_array|
+          #TODO what should be raised here (ClientError), should anything?, possibly should just print a message and exit
           raise "Unable to create validation for #{option} as no such option was defined, maybe you misspelled it" unless option_values.keys.include?(option)
           validations_array.each do |validation_data|
             if option_values[option] && !validation_data[:validation].call(option_values[option])
