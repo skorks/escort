@@ -1,25 +1,44 @@
 module Escort
   class Command
-    attr_reader :current_options, :name
+    attr_reader :command_setup, :command_setup_accessor, :app, :options, :parser
 
-    def initialize(name, description, options_string)
-      @name = name
-      @description = description
-      @options_string = options_string
+    def initialize(command_setup, app)
+      @command_setup = command_setup
+      @command_setup_accessor = Escort::Setup::Accessor::Command.new(command_setup)
+      @app = app
     end
 
     def parse_options
-      parser = Trollop::Parser.new(&@options_block)
-      @current_options = Trollop::with_standard_exception_handling(parser) do
-        parser.parse @options_string
+      @parser = Trollop::Parser.new(&command_setup_accessor.options_block)
+      @options = Trollop::with_standard_exception_handling(@parser) do
+        @parser.parse(app.global_setup_accessor.options_string)
       end
-      Escort::Validations.validate(@current_options, parser, &@validations_block) if @validations_block
     end
 
-    def perform_action(parent_command_options, remaining_arguments, no_arguments_valid)
-      #TODO what should be raised here (ClientError), should anything
-      raise "Must define an action block for sub commands" unless @action_block
-      @action_block.call(parent_command_options, @current_options, Escort::Arguments.read(remaining_arguments, no_arguments_valid))
+    def parse_validations
+      Escort::Validations.new(options, parser, &command_setup_accessor.validations_block).validate if command_setup_accessor.validations_block
+    end
+
+    def perform_action
+      ensure_no_global_action_block
+      ensure_action_block_for_command
+      command_setup_accessor.action_block.call(app.options, options, Escort::Arguments.read(command_setup.global_setup_accessor.arguments, command_setup.global_setup_accessor.valid_with_no_arguments))
+    end
+
+    private
+
+    def ensure_action_block_for_command
+      unless command_setup_accessor.action_block
+        STDERR.puts "Must define an action block for command '#{command_setup_accessor.command_name}'"
+        exit(Escort::CLIENT_ERROR_EXIT_CODE)
+      end
+    end
+
+    def ensure_no_global_action_block
+      if command_setup.global_setup_accessor.action_block
+        STDERR.puts "Can't define a global action block for app with sub-commands"
+        exit(Escort::CLIENT_ERROR_EXIT_CODE)
+      end
     end
   end
 end

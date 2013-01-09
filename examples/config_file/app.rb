@@ -3,10 +3,8 @@ require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "..",
 
 Escort::App.create do |app|
   app.config_file_name ".blahrc"
-  #app.no_arguments_valid
 
   app.options do
-    banner "My script banner"
     opt :global_option, "Global option", :short => '-g', :long => '--global', :type => :string, :default => "global"
   end
 

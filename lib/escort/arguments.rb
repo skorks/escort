@@ -9,8 +9,10 @@ module Escort
             arguments << command
           end
           arguments = arguments.compact.keep_if{|value| value.length > 0}
-          #TODO what should be raised here (UserError), should anything
-          raise "You must provider some arguments to this script" if arguments.empty?
+          if arguments.empty?
+            STDERR.puts "You must provide some arguments to this script"
+            exit(Escort::USER_ERROR_EXIT_CODE)
+          end
         end
         arguments
       end

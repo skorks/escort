@@ -8,11 +8,11 @@ module Escort
       end
     end
 
-    attr_reader :global_setup, :options, :global_setup_accessor
+    attr_reader :global_setup, :options, :global_setup_accessor, :parser
 
     def initialize(global_setup)
       @global_setup = global_setup
-      @global_setup_accessor = GlobalSetupAccessor.new(global_setup)
+      @global_setup_accessor = Escort::Setup::Accessor::Global.new(global_setup)
     end
 
     def has_sub_commands?
@@ -22,17 +22,18 @@ module Escort
     end
 
     def execute_global_action
-      parse_options
+      parse_global_setup_data
       perform_action
     rescue => e
       handle_error(e)
     end
 
     def execute_active_command
-      parse_options   # we still need to parse the global options
+      parse_global_setup_data   # still need the global options and validations
       current_command_setup = Escort::Setup::Command.new(global_setup)
       command = Command.new(current_command_setup, self)
       command.parse_options
+      command.parse_validations
       command.perform_action
     rescue => e
       handle_error(e)
@@ -43,32 +44,38 @@ module Escort
     def handle_error(e)
       e.extend(Escort::Error)
       raise e
-      exit(1) #execution finished unsuccessfully
+      exit(Escort::INTERNAL_ERROR_EXIT_CODE) #execution finished unsuccessfully
+    end
+
+    def parse_global_setup_data
+      parse_options
+      parse_validations
     end
 
     def parse_options
       @parser = Trollop::Parser.new(&global_setup_accessor.options_block)
-      @parser.stop_on(global_setup_accessor.command_names)
+      @parser.stop_on(global_setup_accessor.command_names) #make sure we halt parsing if we see a command
 
       @options = Trollop::with_standard_exception_handling(@parser) do
         @parser.parse(global_setup_accessor.options_string)
       end
-      #Escort::Validations.validate(@current_options, parser, &@validations_block) if @validations_block
+    end
+
+    def parse_validations
+      Escort::Validations.new(options, parser, &global_setup_accessor.validations_block).validate if global_setup_accessor.validations_block
     end
 
     def perform_action
-      #TODO should this even raise, or should it just print an error to stderr and jump to an exit block
-      raise Escort::ClientError, "Must define a global action block if there are no sub-commands" unless global_setup_accessor.action_block
-      global_setup_accessor.action_block.call(options, Escort::Arguments.read(global_setup_accessor.arguments))
-      #if command_names.nil? || command_names.size == 0
-        ##TODO what should be raised here (ClientError), should anything
-        #raise "Must define a global action block if there are no sub-commands" unless @action_block
-        #raise "Can't define before blocks if there are no sub-commands" if @before_block
-        #@action_block.call(current_options, Escort::Arguments.read(arguments, @no_arguments_valid))
-      #else
-        ##TODO what should be raised here (ClientError), should anything
-        #raise "Can't define global actions for an app with sub-commands"
-      #end
+      ensure_action_block
+      global_setup_accessor.action_block.call(options, Escort::Arguments.read(global_setup_accessor.arguments, global_setup_accessor.valid_with_no_arguments))
+      #raise "Can't define before blocks if there are no sub-commands" if @before_block
+    end
+
+    def ensure_action_block
+      unless global_setup_accessor.action_block
+        STDERR.puts "Must define a global action block if there are no sub-commands"
+        exit(Escort::CLIENT_ERROR_EXIT_CODE)
+      end
     end
 
 
@@ -78,51 +85,13 @@ module Escort
 
 
 
-
-    #def arguments
-      #@options_string
-    #end
 
     #def valid_with_no_arguments
       #@no_arguments_valid
     #end
 
-    #def parse_options
-      #parser = Trollop::Parser.new(&@options_block)
-      #parser.stop_on(@command_names)
-
-      #@current_options = Trollop::with_standard_exception_handling(parser) do
-        #parser.parse @options_string
-      #end
-      #Escort::Validations.validate(@current_options, parser, &@validations_block) if @validations_block
-    #end
-
-    #def current_command
-      #return @current_command if @current_command
-      #command_name = @options_string.shift.to_s
-      #command_block = @command_blocks[command_name]
-      #command_description = @command_descriptions[command_name] || nil
-      ##TODO what should be raised here (UserError), should anything
-      #raise "No command was passed in" unless command_block
-      #@current_command = Command.new(command_name, command_description, @options_string)
-      #command_block.call(@current_command)
-      #@current_command
-    #end
-
     #def execute_before_block(command_name, global_options, command_options, arguments)
       #@before_block.call(command_name, global_options, command_options, arguments) if @before_block
-    #end
-
-    #def perform_action(current_options, arguments)
-      #if command_names.nil? || command_names.size == 0
-        ##TODO what should be raised here (ClientError), should anything
-        #raise "Must define a global action block if there are no sub-commands" unless @action_block
-        #raise "Can't define before blocks if there are no sub-commands" if @before_block
-        #@action_block.call(current_options, Escort::Arguments.read(arguments, @no_arguments_valid))
-      #else
-        ##TODO what should be raised here (ClientError), should anything
-        #raise "Can't define global actions for an app with sub-commands"
-      #end
     #end
 
     #def execute_error_block(error)

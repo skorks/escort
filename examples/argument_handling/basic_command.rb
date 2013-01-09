@@ -3,13 +3,11 @@ require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "..",
 
 Escort::App.create do |app|
   app.options do
-    banner "My script banner"
     opt :global_option, "Global option", :short => '-g', :long => '--global', :type => :string, :default => "global"
   end
 
   app.command :my_command do |command|
     command.options do
-      banner "Command"
       opt :do_stuff, "Do stuff", :short => :none, :long => '--do-stuff', :type => :boolean, :default => true
     end
 

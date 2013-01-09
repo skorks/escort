@@ -1,5 +1,8 @@
 module Escort
+  INTERNAL_ERROR_EXIT_CODE = 1
   CLIENT_ERROR_EXIT_CODE = 2
+  USER_ERROR_EXIT_CODE = 3
+
   #module to tag all exceptions coming out of Escort with
   module Error
   end

@@ -292,11 +292,11 @@ No input from STDIN necessary. This works just as well when you have commands in
 5. Create new Pull Request
 
 ### TODO
-- if no arguments are provided should take argument/arguments from STDIN (ctrl-d to stop inputting arguments) unless configured via app.no_arguments_valid to be a valid without any arguments passed, just options/flags DONE
-  - do readme on no arguments and mandatory arguments DONE
-- exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions)
+- better ways to create help text to override default trollop behaviour
+- exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions) DONE
+  - do a readme entry on exception handling and exit codes
 - support for configuration files for your command line apps
-  - the ability to set the config file name
+  - the ability to set the config file name DONE
   - ability to switch on and off default creation of config file
   - an option to read specific config file instead of the default
   - a flag to create a default config in a specific directory
@@ -304,16 +304,17 @@ No input from STDIN necessary. This works just as well when you have commands in
   - config file options should be validated just like the command line options
   - ability to configure global options and command specific options (through the file)
   - ability to configure extra user data that may be needed (through the file)
-- refactor so that objects passed into the dsl only have dsl methods available to call
+- refactor so that objects passed into the dsl only have dsl methods available to call DONE
+- via method missing we can make the dsl classes more robust by printing errors and exting when non-dsl methods are attempted
+- rejig all the readme entries to be more inline with the state of the world
+- rejig all the examples for less directories
 - how to preoperly do logging and support various modes (e.g. verbose, log anything other than output to STDERR, use rubies logging facilities, with some kind of sensible default log format, should a logger be accessible to the whole app automagically)
-- how to properly do exit codes and exception catching for the app
 - better support for before and after blocks with explanations and examples of usage
 - better support for on_error blocks with explanations and examples of usage (roll exit code support into here), default handling of errors in block
 - a convention for how to actually do the code that will handle the commands etc.
 - creating a scaffold for a plain app without sub commands
 - creating a scaffold for an app with sub commands
 - revisit all the examples and readme to make sure all examples still work as expected after all features have been implemented
-- better ways to create help text to override default trollop behaviour
 - maybe add some specs for it if needed (aruba ???)
 - ability to ask for user input for some commands, using highline or something like that (is this really necessary???, maybe for passwords)
 - support for infinitely nesting sub commands (is this really necessary)
