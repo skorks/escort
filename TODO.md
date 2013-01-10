@@ -1,15 +1,14 @@
-- perhaps add a copyright with license
+- gemspec summary and description should be taken from the app definition/maybe
+- perhaps add a copyright with license to readme
 - provide version via configuration DONE
 - automatically include version (not just version, automatically include commands in general) DONE
 - better ways to create help text to override default trollop behaviour (use below as a default)
-  - refactor it all so that it is a bit nicer DONE
-  - do the command one DONE
   - add default values to help text
   - add validation messages to help text
   - do a readme for how trollop was slightly modified to accept a formatter
-  - do if elses around all the things that can potentially not exist DONE
-  - add the ability to add a long description for cli app
   - how do we describe what the arguments should be??
+- do a readme for help formatting
+- do a readme for providing summary and description
 - accessors can probably be rejigged into one guy that can handle any setup object using method_missing
 - exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions) DONE
   - do a readme entry on exception handling and exit codes DONE

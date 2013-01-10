@@ -4,6 +4,14 @@ module Escort
       class Global
         include InstanceVariable
 
+        def summary
+          fetch_instance_variable_from_setup(:summary)
+        end
+
+        def description
+          fetch_instance_variable_from_setup(:description)
+        end
+
         def arguments
           fetch_instance_variable_from_setup(:options_string)
         end

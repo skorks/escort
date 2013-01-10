@@ -20,8 +20,8 @@ module Escort
         TerminalFormatter.display do |d|
           d.string("NAME", 1)
           d.indent(4) do
-            two_column_wrapped_at_second(d, script_name.size, script_name, "Describe your application here", :newlines => 2, :separator => " - ")
-            d.string("Some kind of really long description blah blah blah blah blah blah jjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjasdfadfadfafad", 2)
+            two_column_wrapped_at_second(d, script_name.size, script_name, global_setup_accessor.summary || '', :newlines => 2, :separator => " - ")
+            d.string(global_setup_accessor.description, 2) if global_setup_accessor.description
           end
           d.string("USAGE", 1)
           d.indent(4) {
@@ -40,7 +40,7 @@ module Escort
           d.string("GLOBAL OPTIONS", 1)
           d.indent(4) {
             option_strings.each_pair do |key, value|
-              two_column_wrapped_at_second(d, option_string_field_width, value, options[key][:desc] || '', :newlines => 1, :separator => " - ")
+              two_column_wrapped_at_second(d, option_string_field_width, value[:string], value[:desc] || '', :newlines => 1, :separator => " - ")
             end
             d.newline
           }

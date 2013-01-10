@@ -23,8 +23,5 @@ require 'escort/setup/validation'
 require 'escort/validations'
 require 'escort/arguments'
 
-#TODO take this out later
-require 'escort/default_formatter'
-
 require 'escort/command'
 require 'escort/app'

@@ -28,7 +28,7 @@ module Escort
           d.string("COMMAND OPTIONS", 1)
           d.indent(4) {
             option_strings.each_pair do |key, value|
-              two_column_wrapped_at_second(d, option_string_field_width, value, options[key][:desc] || '', :newlines => 1, :separator => " - ")
+              two_column_wrapped_at_second(d, option_string_field_width, value[:string], value[:desc] || '', :newlines => 1, :separator => " - ")
             end
             d.newline
           }

@@ -66,6 +66,8 @@ class Parser
   ## for testing.)
   attr_reader :specs
 
+  attr_reader :order
+
   ## Initializes the parser, and instance-evaluates any block given.
   def initialize *a, &b
     @version = nil

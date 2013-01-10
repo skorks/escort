@@ -34,11 +34,41 @@ module Escort
           when :dates; " <date+>"
           end
         end
+
+        parser.order.each do |what, opt|
+          if what == :text
+            next
+          end
+          spec = parser.specs[opt]
+          desc = spec[:desc] + begin
+            default_s = case spec[:default]
+            when $stdout; "<stdout>"
+            when $stdin; "<stdin>"
+            when $stderr; "<stderr>"
+            when Array
+              spec[:default].join(", ")
+            else
+              spec[:default].to_s
+            end
+
+            if spec[:default]
+              if spec[:desc] =~ /\.$/
+                " (Default: #{default_s})"
+              else
+                " (default: #{default_s})"
+              end
+            else
+              ""
+            end
+          end
+          options[opt] = {:string => options[opt]}
+          options[opt][:desc] = desc
+        end
         options
       end
 
       def option_field_width(option_strings)
-        leftcol_width = option_strings.values.map { |s| s.length }.max || 0
+        leftcol_width = option_strings.values.map{|v| v[:string]}.map { |s| s.length }.max || 0
         rightcol_start = leftcol_width + 6
       end
     end
