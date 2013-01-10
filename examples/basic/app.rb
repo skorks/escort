@@ -2,9 +2,12 @@
 require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "..", "lib", "escort"))
 
 Escort::App.create do |app|
+  app.version "0.2.4"
+  #app.format_help_with(:default_formatter)
+
   app.options do
     opt :global_option, "Global option", :short => '-g', :long => '--global', :type => :string, :default => "global"
-    opt :multi_option, "Option that can be specified multiple times", :short => '-m', :long => '--multi', :type => :string, :multi => true
+    opt :multi_option, "Option that can be specified multiple times alksjdfh lakjdfh adf alksdfh alkdfjh alsdfjhaskdjfh alsdkfjh alksfdjh akdfjh alkdsjf alksdjfh alksdfjh asdfjklh aslkdfhj aslkdfjh adfjkhl", :short => '-m', :long => '--multi', :type => :string, :multi => true
   end
 
   app.action do |options, arguments|

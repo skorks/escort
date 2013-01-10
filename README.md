@@ -274,6 +274,21 @@ arguments: []
 
 No input from STDIN necessary. This works just as well when you have commands in your app, see `examples/argument_handling/basic_command.rb` and `examples/argument_handling/no_arguments_command.rb`.
 
+### Error Handling And Reporting Issues
+
+Usually when Escort encounters errors it will do it's best to continue, but when things go wrong beyond recovery it will quit (as you would expect). Escort will do it's best not to chuck stack traces at you, but will instead print out a meaningful message to STDERR and then exit with a specific exit code. The message should tell a human what's wrong, and the exit code can tell a machine what's wrong. There are 4 possible exit codes:
+
+```
+0 - Successful exit (as per most Unixy apps)
+1 - Internal error (unexpected error with the operation of Escort most likely a bug and you should probably report it)
+2 - Client error (a problem with how you are using Escort, perhaps you're trying to do something it doesn't support, or spelling things wrong)
+3 - User error (problem with how a user is invoking an app written with Escort, e.g. the command line is malformed etc.)
+```
+
+However, since you provide the implementation of commands you've defined with Escort, this code may also produce errors. Escort should catch all of these and decorate them as `Escort::Error` (so the error object will be a `kind_of? Escort::Error`), before it will re-raise them by default.
+
+As a general rule, if you see a stack trace that is an Escort::InternalError, then report it as an issue.
+
 ## Alternatives
 
 * [GLI](https://github.com/davetron5000/gli)
@@ -292,9 +307,46 @@ No input from STDIN necessary. This works just as well when you have commands in
 5. Create new Pull Request
 
 ### TODO
-- better ways to create help text to override default trollop behaviour
+- automatically include version
+- ability to provide some default command line arguments via an environment variable
+- better ways to create help text to override default trollop behaviour (use below as a default)
+Global formatter
+
+NAME
+    todo - Describe your application here
+
+USAGE
+    todo [global options] command [command options] [arguments...]
+
+VERSION
+    0.0.1
+
+GLOBAL OPTIONS
+    -f, --flagname=The name of the argument - Describe some flag here (default: the default)
+    --help                                  - Show this message
+    -s, --[no-]switch                       - Describe some switch here
+
+COMMANDS
+    add      - Describe add here
+    complete - Describe complete here
+    help     - Shows a list of commands or help for one command
+    list     - Describe list here
+
+Command formatter
+
+NAME
+    list - Describe list here
+
+SYNOPSIS
+    todo [global options] list [command options] Describe arguments to list here
+
+COMMAND OPTIONS
+    -f arg - Describe a flag to list (default: default)
+    -s     - Describe a switch to list
+
+- accessors can probably be rejigged into one guy that can handle any setup object using method_missing
 - exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions) DONE
-  - do a readme entry on exception handling and exit codes
+  - do a readme entry on exception handling and exit codes DONE
 - support for configuration files for your command line apps
   - the ability to set the config file name DONE
   - ability to switch on and off default creation of config file

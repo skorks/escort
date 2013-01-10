@@ -8,6 +8,11 @@ require 'escort/setup/accessor/global'
 require 'escort/setup/accessor/command'
 require 'escort/setup/accessor/validation'
 
+require 'escort/formatter/terminal_formatter'
+require 'escort/formatter/common'
+require 'escort/formatter/default_global'
+require 'escort/formatter/default_command'
+
 require 'escort/setup/option_string_tokenizer'
 
 require 'escort/setup/common'
@@ -17,6 +22,9 @@ require 'escort/setup/validation'
 
 require 'escort/validations'
 require 'escort/arguments'
+
+#TODO take this out later
+require 'escort/default_formatter'
 
 require 'escort/command'
 require 'escort/app'

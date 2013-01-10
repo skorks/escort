@@ -24,6 +24,10 @@ module Escort
         @config_file_name = file_name
       end
 
+      def version(version)
+        @version = version
+      end
+
       def default(options_string)
         @default_options_string = OptionStringTokenizer.tokenize(options_string)
       rescue => e
@@ -42,6 +46,7 @@ module Escort
       private
 
       def reset
+        @version = nil
         @valid_with_no_arguments = false
         @config_file_name = nil
         @default_options_string = ['--help']

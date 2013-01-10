@@ -1,6 +1,6 @@
 module Escort
   class Command
-    attr_reader :command_setup, :command_setup_accessor, :app, :options, :parser
+    attr_reader :command_setup, :command_setup_accessor, :app, :options
 
     def initialize(command_setup, app)
       @command_setup = command_setup
@@ -9,9 +9,8 @@ module Escort
     end
 
     def parse_options
-      @parser = Trollop::Parser.new(&command_setup_accessor.options_block)
-      @options = Trollop::with_standard_exception_handling(@parser) do
-        @parser.parse(app.global_setup_accessor.options_string)
+      @options = Trollop::with_standard_exception_handling(parser) do
+        parser.parse(app.global_setup_accessor.options_string)
       end
     end
 
@@ -26,6 +25,12 @@ module Escort
     end
 
     private
+    def parser
+      return @parser if @parser
+      @parser = Trollop::Parser.new(&command_setup_accessor.options_block)
+      @parser.help_formatter(Escort::Formatter::DefaultCommand.new(command_setup_accessor, app.global_setup_accessor))
+      @parser
+    end
 
     def ensure_action_block_for_command
       unless command_setup_accessor.action_block

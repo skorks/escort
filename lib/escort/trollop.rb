@@ -77,6 +77,7 @@ class Parser
     @constraints = []
     @stop_words = []
     @stop_on_unknown = false
+    @help_formatter = nil
 
     #instance_eval(&b) if b # can't take arguments
     cloaker(&b).bind(self).call(*a) if b
@@ -237,6 +238,14 @@ class Parser
   ## #opt to build a multi-section help page.
   def banner s; @order << [:text, s] end
   alias :text :banner
+
+  def help_formatter(formatter)
+    @help_formatter = formatter
+  end
+
+  def current_help_formatter
+    @help_formatter
+  end
 
   ## Marks two (or more!) options as requiring each other. Only handles
   ## undirected (i.e., mutual) dependencies. Directed dependencies are
@@ -735,7 +744,7 @@ end
 ##
 ## Requires passing in the parser object.
 
-def with_standard_exception_handling parser
+def with_standard_exception_handling(parser)
   begin
     yield
   rescue CommandlineError => e
@@ -743,7 +752,7 @@ def with_standard_exception_handling parser
     $stderr.puts "Try --help for help."
     exit(1)
   rescue HelpNeeded
-    parser.educate
+    parser.current_help_formatter ? parser.current_help_formatter.print(parser) : parser.educate
     exit
   rescue VersionNeeded
     puts parser.version

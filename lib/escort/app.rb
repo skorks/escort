@@ -8,7 +8,7 @@ module Escort
       end
     end
 
-    attr_reader :global_setup, :options, :global_setup_accessor, :parser
+    attr_reader :global_setup, :options, :global_setup_accessor
 
     def initialize(global_setup)
       @global_setup = global_setup
@@ -42,9 +42,24 @@ module Escort
     private
 
     def handle_error(e)
-      e.extend(Escort::Error)
-      raise e
+      if e.kind_of? Escort::InternalError
+        raise e # we need to raise an Escort InternalError no matter what as it is a problem with Escort
+      else
+        e.extend(Escort::Error)
+        raise e
+      end
       exit(Escort::INTERNAL_ERROR_EXIT_CODE) #execution finished unsuccessfully
+    end
+
+    def parser
+      return @parser if @parser
+      @parser = Trollop::Parser.new(&global_setup_accessor.options_block)
+      @parser.stop_on(global_setup_accessor.command_names) #make sure we halt parsing if we see a command
+      @parser.version(global_setup_accessor.version)       #set the version if it was provided
+      @parser.help_formatter(Escort::Formatter::DefaultGlobal.new(global_setup_accessor))
+
+      #@parser.opt :config, "Config", :short => 'c', :long => 'config', :type => :flag, :default => true
+      @parser
     end
 
     def parse_global_setup_data
@@ -53,12 +68,10 @@ module Escort
     end
 
     def parse_options
-      @parser = Trollop::Parser.new(&global_setup_accessor.options_block)
-      @parser.stop_on(global_setup_accessor.command_names) #make sure we halt parsing if we see a command
-
-      @options = Trollop::with_standard_exception_handling(@parser) do
-        @parser.parse(global_setup_accessor.options_string)
+      @options = Trollop::with_standard_exception_handling(parser) do
+        parser.parse(global_setup_accessor.options_string)
       end
+      puts parser.specs
     end
 
     def parse_validations
@@ -78,24 +91,11 @@ module Escort
       end
     end
 
-
-
-
-
-
-
-
-
-    #def valid_with_no_arguments
-      #@no_arguments_valid
-    #end
-
     #def execute_before_block(command_name, global_options, command_options, arguments)
       #@before_block.call(command_name, global_options, command_options, arguments) if @before_block
     #end
 
     #def execute_error_block(error)
-      ##TODO make sure we tag the error here if we're going to re-raise it
       #@error_block ? @error_block.call(error) : (raise error)
     #end
   end

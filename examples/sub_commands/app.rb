@@ -6,7 +6,7 @@ Escort::App.create do |app|
     opt :global_option, "Global option", :short => '-g', :long => '--global', :type => :string, :default => "global"
   end
 
-  app.command :my_command do |command|
+  app.command :my_command, :description => "KJHLKJH askj aldkjfhakldfjh akdjfh alkdfhj alkdjhf alkjsdhf alkjsdhf aklsjdhf aklsjdhf akljdhf alkdjfh" do |command|
     command.options do
       opt :do_stuff, "Do stuff", :short => :none, :long => '--do-stuff', :type => :boolean, :default => true
     end

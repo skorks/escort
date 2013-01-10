@@ -1,0 +1,48 @@
+- perhaps add a copyright with license
+- provide version via configuration DONE
+- automatically include version (not just version, automatically include commands in general) DONE
+- better ways to create help text to override default trollop behaviour (use below as a default)
+  - refactor it all so that it is a bit nicer DONE
+  - do the command one DONE
+  - add default values to help text
+  - add validation messages to help text
+  - do a readme for how trollop was slightly modified to accept a formatter
+  - do if elses around all the things that can potentially not exist DONE
+  - add the ability to add a long description for cli app
+  - how do we describe what the arguments should be??
+- accessors can probably be rejigged into one guy that can handle any setup object using method_missing
+- exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions) DONE
+  - do a readme entry on exception handling and exit codes DONE
+- support for configuration files for your command line apps
+  - the ability to set the config file name DONE
+  - ability to switch on and off default creation of config file
+  - an option to read specific config file instead of the default
+  - a flag to create a default config in a specific directory
+  - the ability to by default read a config file by walking up the directory tree
+  - config file options should be validated just like the command line options
+  - ability to configure global options and command specific options (through the file)
+  - ability to configure extra user data that may be needed (through the file)
+- refactor so that objects passed into the dsl only have dsl methods available to call DONE
+- via method missing we can make the dsl classes more robust by printing errors and exting when non-dsl methods are attempted
+- rejig all the readme entries to be more inline with the state of the world
+- rejig all the examples for less directories
+- how to preoperly do logging and support various modes (e.g. verbose, log anything other than output to STDERR, use rubies logging facilities, with some kind of sensible default log format, should a logger be accessible to the whole app automagically)
+- better support for before and after blocks with explanations and examples of usage
+- better support for on_error blocks with explanations and examples of usage (roll exit code support into here), default handling of errors in block
+- a convention for how to actually do the code that will handle the commands etc.
+- creating a scaffold for a plain app without sub commands
+- creating a scaffold for an app with sub commands
+- revisit all the examples and readme to make sure all examples still work as expected after all features have been implemented
+- maybe add some specs for it if needed (aruba ???)
+- ability to ask for user input for some commands, using highline or something like that (is this really necessary???, maybe for passwords)
+- support for infinitely nesting sub commands (is this really necessary)
+- ability to provide some default command line arguments via an environment variable
+- much better documentation and usage patterns
+  - blog about what makes a good command line app (this and the one below are possibly one post)
+  - blog about how to use escort and why the other libraries possibly fall short
+  - blog about how escort is constructed
+  - blog about using escort to build a markov chains based name generator
+  - blog about creating a sub command based app using escort
+  - blog about creating an app with user input using escort
+
+- choosing default output format based on where the output is going STDOUT.tty?
