@@ -4,6 +4,18 @@ module Escort
       class Global
         include InstanceVariable
 
+        def autocreate_config?
+          (fetch_instance_variable_from_setup(:config_file) || {})[:autocreate]
+        end
+
+        def default_config_file_name
+          (fetch_instance_variable_from_setup(:config_file) || {})[:default_file_name]
+        end
+
+        def config_file
+          fetch_instance_variable_from_setup(:config_file)
+        end
+
         def summary
           fetch_instance_variable_from_setup(:summary)
         end

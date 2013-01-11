@@ -1,0 +1,16 @@
+{
+  "global_options": {
+    "global_option": "local",
+    "another_option": "world",
+    "blah": true
+  },
+  "command_options": {
+    "my_command": {
+      "command_option": "foo"
+    }
+  },
+  "user_data": {
+    "hello": "world",
+    "foo": null
+  }
+}

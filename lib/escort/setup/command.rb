@@ -5,10 +5,9 @@ module Escort
 
       attr_reader :global_setup_accessor
 
-      def initialize(global_setup)
+      def initialize(global_setup_accessor)
         reset
-        @global_setup = global_setup
-        @global_setup_accessor = Escort::Setup::Accessor::Global.new(global_setup)
+        @global_setup_accessor = global_setup_accessor
         @command_name = ensure_command_name
         @command_block = ensure_command_block(@command_name)
         @command_description = global_setup_accessor.command_descriptions[@command_name] || nil

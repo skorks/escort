@@ -8,11 +8,30 @@ module Escort
       end
     end
 
-    attr_reader :global_setup, :options, :global_setup_accessor
+    attr_reader :global_setup, :options, :global_setup_accessor, :configuration
 
     def initialize(global_setup)
       @global_setup = global_setup
       @global_setup_accessor = Escort::Setup::Accessor::Global.new(global_setup)
+      @configuration = Escort::Setup::Configuration.find_and_load(global_setup_accessor.default_config_file_name)
+      if @configuration.nil?
+        #create a default config file if autocreate is true
+        #default_config_file_data = {}
+        blah = Escort::Setup::DefaultConfigurationData.new(app, global_setup_accessor).generate
+        p blah
+        #global_setup_accessor.command_aliases.each_pair do |command_name, aliases|
+          #current_command_setup = Escort::Setup::Command.new(global_setup)
+          #@global_setup = global_setup
+          #@global_setup_accessor = Escort::Setup::Accessor::Global.new(global_setup)
+          #@command_name = ensure_command_name
+          #@command_block = ensure_command_block(@command_name)
+          #@command_description = global_setup_accessor.command_descriptions[@command_name] || nil
+          #@command_block.call(self)
+        #end
+        #p current_command.parser.specs
+        #@configuration = Escort::Setup::Configuration.create_default(global_setup_accessor.default_config_file_name, config_file_values)
+      end
+      #if we have the configuration then don't need to create a config file even if autocreate is true
     end
 
     def has_sub_commands?
@@ -30,13 +49,25 @@ module Escort
 
     def execute_active_command
       parse_global_setup_data   # still need the global options and validations
-      current_command_setup = Escort::Setup::Command.new(global_setup)
+      current_command_setup = Escort::Setup::Command.new(global_setup_accessor)
       command = Command.new(current_command_setup, self)
       command.parse_options
+      command.merge_configuration_options_with_command_line_options(configuration)
       command.parse_validations
       command.perform_action
     rescue => e
       handle_error(e)
+    end
+
+    def parser
+      return @parser if @parser
+      @parser = Trollop::Parser.new(&global_setup_accessor.options_block)
+      @parser.stop_on(global_setup_accessor.command_names) #make sure we halt parsing if we see a command
+      @parser.version(global_setup_accessor.version)       #set the version if it was provided
+      @parser.help_formatter(Escort::Formatter::DefaultGlobal.new(global_setup_accessor))
+      add_config_file_options(@parser) if global_setup_accessor.config_file
+
+      @parser
     end
 
     private
@@ -51,27 +82,33 @@ module Escort
       exit(Escort::INTERNAL_ERROR_EXIT_CODE) #execution finished unsuccessfully
     end
 
-    def parser
-      return @parser if @parser
-      @parser = Trollop::Parser.new(&global_setup_accessor.options_block)
-      @parser.stop_on(global_setup_accessor.command_names) #make sure we halt parsing if we see a command
-      @parser.version(global_setup_accessor.version)       #set the version if it was provided
-      @parser.help_formatter(Escort::Formatter::DefaultGlobal.new(global_setup_accessor))
-
-      #@parser.opt :config, "Config", :short => 'c', :long => 'config', :type => :flag, :default => true
-      @parser
+    def add_config_file_options(parser)
+      @parser.opt :config, "Path to the configuration file to use for this invocation", :short => :none, :long => 'config', :type => :string
+      @parser.opt :create_config, "Create configuration file using the specified path populated with default values for options", :short => :none, :long => 'create-config', :type => :string
+      @parser.opt :create_default_config, "Create configuration file using default name and location (i.e. #{ENV['HOME']}/#{global_setup_accessor.default_config_file_name}) populated with default values for options", :short => :none, :long => 'create-default-config', :type => :boolean, :default => false
     end
 
     def parse_global_setup_data
       parse_options
+      merge_configuration_options_with_command_line_options(configuration)
       parse_validations
+    end
+
+    def merge_configuration_options_with_command_line_options(configuration)
+      if configuration
+        global_options_from_configuration = configuration.global_options || {}
+        global_options_from_configuration.each_pair do |key, value|
+          next unless Escort::Utils.valid_config_key?(key)
+          is_given = :"#{key.to_s}_given"
+          options[key] = value if !options[is_given]
+        end
+      end
     end
 
     def parse_options
       @options = Trollop::with_standard_exception_handling(parser) do
         parser.parse(global_setup_accessor.options_string)
       end
-      puts parser.specs
     end
 
     def parse_validations
@@ -80,7 +117,9 @@ module Escort
 
     def perform_action
       ensure_action_block
-      global_setup_accessor.action_block.call(options, Escort::Arguments.read(global_setup_accessor.arguments, global_setup_accessor.valid_with_no_arguments))
+      config = {}
+      config = configuration.user_data if global_setup_accessor.config_file
+      global_setup_accessor.action_block.call(options, Escort::Arguments.read(global_setup_accessor.arguments, global_setup_accessor.valid_with_no_arguments), config)
       #raise "Can't define before blocks if there are no sub-commands" if @before_block
     end
 

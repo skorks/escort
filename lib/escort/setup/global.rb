@@ -20,8 +20,9 @@ module Escort
         @valid_with_no_arguments = true
       end
 
-      def config_file_name(file_name)
-        @config_file_name = file_name
+      def config_file(file_name, options = {})
+        options = {:autocreate => false}.merge!(options)
+        @config_file = {:default_file_name => file_name, :autocreate => options[:autocreate]}
       end
 
       def version(version)
@@ -58,7 +59,7 @@ module Escort
         @summary = nil
         @description = nil
         @valid_with_no_arguments = false
-        @config_file_name = nil
+        @config_file = nil
         @default_options_string = ['--help']
         @options_string = []
         @command_names ||= []

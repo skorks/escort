@@ -1,17 +1,3 @@
-- gemspec summary and description should be taken from the app definition/maybe
-- perhaps add a copyright with license to readme
-- provide version via configuration DONE
-- automatically include version (not just version, automatically include commands in general) DONE
-- better ways to create help text to override default trollop behaviour (use below as a default)
-  - add default values to help text
-  - add validation messages to help text
-  - do a readme for how trollop was slightly modified to accept a formatter
-  - how do we describe what the arguments should be??
-- do a readme for help formatting
-- do a readme for providing summary and description
-- accessors can probably be rejigged into one guy that can handle any setup object using method_missing
-- exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions) DONE
-  - do a readme entry on exception handling and exit codes DONE
 - support for configuration files for your command line apps
   - the ability to set the config file name DONE
   - ability to switch on and off default creation of config file
@@ -21,6 +7,24 @@
   - config file options should be validated just like the command line options
   - ability to configure global options and command specific options (through the file)
   - ability to configure extra user data that may be needed (through the file)
+  - configuring array :multi data via the configuration file
+  - configuring multi of multi
+  - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
+- exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions) DONE
+  - do a readme entry on exception handling and exit codes DONE
+- provide version via configuration DONE
+- automatically include version (not just version, automatically include commands in general) DONE
+- better ways to create help text to override default trollop behaviour (use below as a default) DONE
+  - add default values to help text DONE
+  - add validation messages to help text
+  - do a readme for how trollop was slightly modified to accept a formatter
+  - how do we describe what the arguments should be??
+  - BUG the help formatting is still not quite right as far as respecting the char limits and wrapping properly when doing tabular output!!!!
+- gemspec summary and description should be taken from the app definition/maybe
+- perhaps add a copyright with license to readme
+- do a readme for help formatting
+- do a readme for providing summary and description
+- accessors can probably be rejigged into one guy that can handle any setup object using method_missing
 - refactor so that objects passed into the dsl only have dsl methods available to call DONE
 - via method missing we can make the dsl classes more robust by printing errors and exting when non-dsl methods are attempted
 - rejig all the readme entries to be more inline with the state of the world
@@ -43,5 +47,10 @@
   - blog about using escort to build a markov chains based name generator
   - blog about creating a sub command based app using escort
   - blog about creating an app with user input using escort
+  - blog about instance_eval and the fact that it doesn't do closure properly (why), and the trick from trollop for how to get it to accept arguments
+  - blog about exception hierarchy for apps, what exceptions to have, when to raise exceptions, touch on throw/catch and why they are bad/good, touch on exit codes for command line apps in the context of exception throwing
+  - blog about dependencies with bundler, the spermy operator and what version will be chosen
+- improve the terminal formatter, allowing wrapping text to anywhere, and tabular like output without an actual table, allowing configuring terminal of any size not just 80, spin it off a little separate project, with an example of how to possibly build a menu in it or something
+- look at ruby curses support a bit more closely and maybe use that for terminal stuff instead as it would be much better at it
 
 - choosing default output format based on where the output is going STDOUT.tty?
