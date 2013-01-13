@@ -17,8 +17,8 @@ module Escort
       if @configuration.nil?
         #create a default config file if autocreate is true
         #default_config_file_data = {}
-        blah = Escort::Setup::DefaultConfigurationData.new(app, global_setup_accessor).generate
-        p blah
+        blah = Escort::Setup::DefaultConfigurationData.new(self, global_setup_accessor).generate
+        puts JSON.pretty_generate blah
         #global_setup_accessor.command_aliases.each_pair do |command_name, aliases|
           #current_command_setup = Escort::Setup::Command.new(global_setup)
           #@global_setup = global_setup

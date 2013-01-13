@@ -42,7 +42,7 @@ module Escort
 
       def default_command_option_values(command_name)
         hash = {}
-        command_block = ensure_command_block(@command_name)
+        command_block = ensure_command_block(command_name)
         command_setup = BareCommand.new
         command_block.call(command_setup)
         hash
