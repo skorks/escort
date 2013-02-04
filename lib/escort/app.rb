@@ -4,35 +4,48 @@ module Escort
     #TODO ensure that every command must have an action
     class << self
       def create(&block)
-        #Escort::Setup::Dsl::Global.new(&block)
-        global_setup_accessor = Escort::Setup::Accessor::Global.new(Escort::Setup::Dsl::Global.new(&block))
-        app = self.new(global_setup_accessor)
+        setup = Escort::SetupAccessor.new(Escort::Setup::Dsl::Global.new(&block))
+        app = self.new(setup)
         app.execute
         exit(0)
       end
     end
 
-    attr_reader :global_setup_accessor
+    attr_reader :setup
 
-    def initialize(global_setup_accessor)
-      #@global_setup_accessor = global_setup_accessor
+    def initialize(setup)
+      @setup = setup
     end
 
     def execute
-      configuration = Escort::Setup::Configuration.find_and_load(setup)
-      invoked_options, arguments = Escort::OptionParser.new(configuration, setup).parse
-      setup.action.execute(invoked_options, arguments)
-
-      #parser = Trollop::Parser.new
-      #parser.stop_on(global_setup_accessor.command_names) #make sure we halt parsing if we see a command
-      #parser.version(global_setup_accessor.version)       #set the version if it was provided
-      #parser.help_formatter(Escort::Formatter::DefaultGlobal.new(global_setup_accessor))
-      #add_config_file_options(@parser) if global_setup_accessor.config_file
-      #options = Trollop::with_standard_exception_handling(parser) do
-        #parser.parse(global_setup_accessor.options_string)
-      #end
-      #setup.action.execute(config, arguments)
+      cli_options = ARGV.dup
+      configuration = {}
+      #configuration = Escort::Setup::Configuration.find_and_load(setup)
+      invoked_options, arguments = Escort::OptionParser.new(configuration, setup).parse(cli_options)
+      #p context_from_options(invoked_options[:global])
+      #p invoked_options
+      #p arguments
+      setup.action_for(context_from_options(invoked_options[:global])).call(invoked_options, arguments)
     end
+
+    private
+
+    def context_from_options(options)
+      commands_in_order(options)
+    end
+
+    def commands_in_order(options, commands = [])
+      if options[:commands].keys.empty?
+        commands
+      else
+        command = options[:commands].keys.first
+        commands << command
+        commands_in_order(options[:commands][command], commands)
+      end
+    end
+
+    #def run_action(action)
+    #end
 
     #attr_reader :global_setup, :options, :global_setup_accessor, :configuration
 

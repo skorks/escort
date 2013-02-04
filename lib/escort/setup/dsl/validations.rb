@@ -23,11 +23,6 @@ module Escort
           @validations[name] = {:desc => description, :block => block}
         end
 
-        def opt(name, desc="", opts={})
-          opts[:desc] ||= desc
-          @options[name] ||= opts
-        end
-
         private
 
         def reset

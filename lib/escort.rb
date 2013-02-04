@@ -13,7 +13,8 @@ require 'escort/setup/dsl/command'
 require 'escort/setup/dsl/global'
 
 require 'escort/setup/configuration'
-require 'escort/setup/option_string_tokenizer'
+#require 'escort/setup/option_string_tokenizer'
+require 'escort/setup_accessor'
 
 require 'escort/option_parser'
 

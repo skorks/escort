@@ -8,6 +8,6 @@ Escort::App.create do |app|
   end
 
   app.action do |options, arguments|
-    puts "Action for my_command\nglobal options: #{options} \narguments: #{arguments}"
+    puts "Action \nglobal options: #{options} \narguments: #{arguments}"
   end
 end
