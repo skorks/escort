@@ -1,13 +1,13 @@
 - support for configuration files for your command line apps
-  - the ability to set the config file name DONE
-  - ability to switch on and off default creation of config file
+  - the ability to set the config file name
+  - ability to switch on and off default creation of config file DONE
+  - the ability to by default read a config file by walking up the directory tree DONE
+  - ability to configure global options and command specific options (through the file) DONE
+  - ability to configure extra user data that may be needed (through the file) DONE
   - an option to read specific config file instead of the default
   - a flag to create a default config in a specific directory
-  - the ability to by default read a config file by walking up the directory tree
   - config file options should be validated just like the command line options
-  - ability to configure global options and command specific options (through the file)
-  - ability to configure extra user data that may be needed (through the file)
-  - configuring array :multi data via the configuration file
+  - configuring array :multi data via the configuration file DONE
   - configuring multi of multi
   - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
 - exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions) DONE

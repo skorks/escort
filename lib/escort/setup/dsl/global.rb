@@ -64,7 +64,7 @@ module Escort
         end
 
         def null_action_block
-          lambda{|x,y|}
+          lambda{|x,y,z|}
         end
 
         def set_instance_variable_on(instance, instance_variable, value)

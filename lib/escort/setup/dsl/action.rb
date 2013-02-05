@@ -6,9 +6,9 @@ module Escort
           @block = block
         end
 
-        def execute(options, arguments)
-          @block.call(options, arguments)
-        end
+        #def execute(options, arguments)
+          #@block.call(options, arguments)
+        #end
       end
     end
   end
