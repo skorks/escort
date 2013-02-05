@@ -3,11 +3,10 @@ module Escort
     class DefaultCommand
       include Escort::Formatter::Common
 
-      attr_reader :global_setup_accessor, :command_setup_accessor
+      attr_reader :setup
 
-      def initialize(command_setup_accessor, global_setup_accessor)
-        @global_setup_accessor = global_setup_accessor
-        @command_setup_accessor = command_setup_accessor
+      def initialize(setup)
+        @setup = setup
       end
 
       def print(parser)

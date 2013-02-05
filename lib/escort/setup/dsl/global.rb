@@ -29,7 +29,6 @@ module Escort
           aliases.each do |name|
             @commands[name.to_sym] = command
           end
-          #p @commands
         end
 
         #def validations(&block)
@@ -48,9 +47,24 @@ module Escort
           @config_file = ConfigFile.new(name, options)
         end
 
+        def version(version)
+          @version = version
+        end
+
+        def summary(summary)
+          @summary = summary
+        end
+
+        def description(description)
+          @description = description
+        end
+
         private
 
         def reset
+          @version = nil
+          @summary = nil
+          @description = nil
           @commands = {}
           @requires_arguments = false
           @options = Options.new(&null_options_block)

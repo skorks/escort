@@ -25,10 +25,10 @@ require 'escort/arguments'
 #require 'escort/setup/accessor/command'
 #require 'escort/setup/accessor/validation'
 
-#require 'escort/formatter/terminal_formatter'
-#require 'escort/formatter/common'
-#require 'escort/formatter/default_global'
-#require 'escort/formatter/default_command'
+require 'escort/formatter/terminal_formatter'
+require 'escort/formatter/common'
+require 'escort/formatter/default_global'
+require 'escort/formatter/default_command'
 
 #require 'escort/setup/option_string_tokenizer'
 

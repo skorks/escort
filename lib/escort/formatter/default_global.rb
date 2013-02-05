@@ -3,10 +3,10 @@ module Escort
     class DefaultGlobal
       include Escort::Formatter::Common
 
-      attr_reader :global_setup_accessor
+      attr_reader :setup
 
-      def initialize(global_setup_accessor)
-        @global_setup_accessor = global_setup_accessor
+      def initialize(setup)
+        @setup = setup
       end
 
       def print(parser)
@@ -20,21 +20,21 @@ module Escort
         TerminalFormatter.display do |d|
           d.string("NAME", 1)
           d.indent(4) do
-            two_column_wrapped_at_second(d, script_name.size, script_name, global_setup_accessor.summary || '', :newlines => 2, :separator => " - ")
-            d.string(global_setup_accessor.description, 2) if global_setup_accessor.description
+            two_column_wrapped_at_second(d, script_name.size, script_name, setup.summary || '', :newlines => 2, :separator => " - ")
+            d.string(setup.description, 2) if setup.description
           end
           d.string("USAGE", 1)
           d.indent(4) {
-            if global_setup_accessor.command_names.nil? || global_setup_accessor.command_names.length == 0
+            if setup.canonical_command_names_for([]).nil? || setup.canonical_command_names_for([]).length == 0
               d.string("#{script_name} [options] [arguments...]", 2)
             else
               d.string("#{script_name} [global options] command [command options] [arguments...]", 2)
             end
           }
-          if global_setup_accessor.version
+          if setup.version
             d.string("VERSION", 1)
             d.indent(4) {
-              d.string(global_setup_accessor.version, 2)
+              d.string(setup.version, 2)
             }
           end
           d.string("GLOBAL OPTIONS", 1)
@@ -58,11 +58,13 @@ module Escort
 
       def command_output_strings
         commands = {}
-        global_setup_accessor.command_aliases.each_pair do |command_name, command_aliases|
-          command_name = command_name.to_s
-          command_description = global_setup_accessor.command_descriptions[command_name] || ""
+        context = []
+        setup.canonical_command_names_for(context).each do |command_name|
+          command_description = setup.command_description_for(command_name, context) || ""
+          command_aliases = setup.command_aliases_for(command_name, context)
           command_alias_string = command_aliases.join(", ") if command_aliases && command_aliases.size > 0
           command_string = (command_aliases && command_aliases.size > 0 ? "#{command_name}, #{command_alias_string}" : "#{command_name}" )
+          command_name = command_name.to_s
           commands[command_name] = [command_string, command_description]
         end
         commands

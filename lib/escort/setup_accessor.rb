@@ -48,6 +48,32 @@ module Escort
       name = fetch_instance_variable_from(config_file_object, :name)
     end
 
+    def version
+      version_string = fetch_instance_variable_from(global_instance, :version)
+    end
+
+    def summary
+      summary = fetch_instance_variable_from(global_instance, :summary)
+    end
+
+    def description
+      description = fetch_instance_variable_from(global_instance, :description)
+    end
+
+    def command_description_for(command_name, context = [])
+      with_context(context) do |current_context|
+        commands = fetch_instance_variable_from(current_context, :commands)
+        description = fetch_instance_variable_from(commands[command_name], :description)
+      end
+    end
+
+    def command_aliases_for(command_name, context = [])
+      with_context(context) do |current_context|
+        commands = fetch_instance_variable_from(current_context, :commands)
+        description = fetch_instance_variable_from(commands[command_name], :aliases)
+      end
+    end
+
     private
 
     def config_file_object
