@@ -64,27 +64,41 @@ module Escort
     end
 
     def default_option_values_from_config_for(parser, context)
-      parser.specs.each do |sym, opts|
-        default = config_value_for_context(sym, context)
-        opts[:default] = default
-        if opts[:multi] && default.nil?
-          opts[:default] = []  # multi arguments default to [], not nil
-        elsif opts[:multi] && !default.kind_of?(Array)
-          opts[:default] = [default]
-        else
-          opts[:default] = default
+      unless configuration.empty?
+        parser.specs.each do |sym, opts|
+          if config_has_value_for_context?(sym, context)
+            default = config_value_for_context(sym, context)
+            opts[:default] = default
+            if opts[:multi] && default.nil?
+              opts[:default] = []  # multi arguments default to [], not nil
+            elsif opts[:multi] && !default.kind_of?(Array)
+              opts[:default] = [default]
+            else
+              opts[:default] = default
+            end
+          end
         end
       end
       parser
     end
 
+    def config_has_value_for_context?(option, context)
+      relevant_config_hash = config_hash_for_context(context)
+      relevant_config_hash[:options].include?(option)
+    end
+
     def config_value_for_context(option, context)
-      relevant_config_hash = configuration[:global]#[:options]
+      relevant_config_hash = config_hash_for_context(context)
+      relevant_config_hash[:options][option]
+    end
+
+    def config_hash_for_context(context)
+      relevant_config_hash = configuration[:global]
       context.each do |command_name|
         command_name = command_name.to_sym
-        relevant_config_hash = relevant_config_hash[:commands][command_name]#[:options]
+        relevant_config_hash = relevant_config_hash[:commands][command_name]
       end
-      relevant_config_hash[:options][option]
+      relevant_config_hash
     end
 
     def cli_option_is_a_command?(cli_options, context)

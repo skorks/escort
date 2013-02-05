@@ -44,7 +44,8 @@ module Escort
       invoked_options, arguments = Escort::OptionParser.new(configuration, setup).parse(cli_options)
       context = context_from_options(invoked_options[:global])
       action = setup.action_for(context)
-      action.call(invoked_options, Escort::Arguments.read(arguments, setup.arguments_required_for(context)))
+      user_config = configuration[:user] || {}
+      action.call(invoked_options, Escort::Arguments.read(arguments, setup.arguments_required_for(context)), user_config)
     end
 
     private

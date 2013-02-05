@@ -31,7 +31,7 @@ Escort::App.create do |app|
     end
   end
 
-  app.action do |options, arguments|
-    puts "Action \nglobal options: #{options} \narguments: #{arguments}"
+  app.action do |options, arguments, config|
+    puts "Action \nglobal options: #{options} \narguments: #{arguments}\nconfig: #{config}"
   end
 end
