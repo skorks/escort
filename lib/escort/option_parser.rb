@@ -28,14 +28,7 @@ module Escort
 
     def parse_global_options(cli_options, options)
       context = []
-      stop_words = setup.command_names_for(context).map(&:to_s)
-      parser = init_parser(stop_words)
-      parser = add_setup_options_to(parser, context)
-      parser = default_option_values_from_config_for(parser, context)
-      parser.version(setup.version)                                   #set the version if it was provided
-      parser.help_formatter(Escort::Formatter::DefaultGlobal.new(setup))
-      parsed_options = parse_options_string(parser, cli_options)
-      options.merge!(parsed_options)
+      options.merge!(parse_options(cli_options, context))
     end
 
     def parse_command_options(cli_options, context, options)
@@ -57,6 +50,8 @@ module Escort
       parser = init_parser(stop_words)
       parser = add_setup_options_to(parser, context)
       parser = default_option_values_from_config_for(parser, context)
+      parser.version(setup.version)                                   #set the version if it was provided
+      parser.help_formatter(Escort::Formatter::Default.new(setup, context))
       parse_options_string(parser, cli_options)
     end
 

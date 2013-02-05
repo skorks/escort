@@ -5,7 +5,7 @@ module Escort
         def initialize(name, options = {}, &block)
           reset
           @name = name
-          @description = options[:desc] || ""
+          @description = options[:description] || options[:desc] || ""
           @aliases = [options[:aliases] || []].flatten
           @requires_arguments ||= options[:requires_arguments]
           block.call(self) if block_given?

@@ -27,8 +27,8 @@ require 'escort/arguments'
 
 require 'escort/formatter/terminal_formatter'
 require 'escort/formatter/common'
-require 'escort/formatter/default_global'
-require 'escort/formatter/default_command'
+require 'escort/formatter/default'
+#require 'escort/formatter/default_command'
 
 #require 'escort/setup/option_string_tokenizer'
 

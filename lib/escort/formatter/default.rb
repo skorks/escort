@@ -1,12 +1,13 @@
 module Escort
   module Formatter
-    class DefaultGlobal
+    class Default
       include Escort::Formatter::Common
 
-      attr_reader :setup
+      attr_reader :setup, :context
 
-      def initialize(setup)
+      def initialize(setup, context)
         @setup = setup
+        @context = context
       end
 
       def print(parser)
@@ -25,11 +26,12 @@ module Escort
           end
           d.string("USAGE", 1)
           d.indent(4) {
-            if setup.canonical_command_names_for([]).nil? || setup.canonical_command_names_for([]).length == 0
-              d.string("#{script_name} [options] [arguments...]", 2)
-            else
-              d.string("#{script_name} [global options] command [command options] [arguments...]", 2)
-            end
+            context_usage_part = context.map { |command_name| "#{command_name} [#{command_name} options]" }.join(" ")
+            context_usage_part ||= ""
+            nested_command_part = "command [command options]" if !setup.canonical_command_names_for(context).nil? && setup.canonical_command_names_for(context).length > 0
+            nested_command_part ||= ""
+            usage_string = "#{script_name} [options] #{context_usage_part} #{nested_command_part} [arguments...]".gsub(/\s+/, ' ')
+            d.string(usage_string, 2)
           }
           if setup.version
             d.string("VERSION", 1)
@@ -37,13 +39,15 @@ module Escort
               d.string(setup.version, 2)
             }
           end
-          d.string("GLOBAL OPTIONS", 1)
-          d.indent(4) {
-            option_strings.each_pair do |key, value|
-              two_column_wrapped_at_second(d, option_string_field_width, value[:string], value[:desc] || '', :newlines => 1, :separator => " - ")
-            end
-            d.newline
-          }
+          if option_strings.keys.size > 0
+            d.string("OPTIONS", 1)
+            d.indent(4) {
+              option_strings.each_pair do |key, value|
+                two_column_wrapped_at_second(d, option_string_field_width, value[:string], value[:desc] || '', :newlines => 1, :separator => " - ")
+              end
+              d.newline
+            }
+          end
           if command_strings.keys.size > 0
             d.string("COMMANDS", 1)
             d.indent(4) {
@@ -58,7 +62,6 @@ module Escort
 
       def command_output_strings
         commands = {}
-        context = []
         setup.canonical_command_names_for(context).each do |command_name|
           command_description = setup.command_description_for(command_name, context) || ""
           command_aliases = setup.command_aliases_for(command_name, context)
