@@ -6,34 +6,43 @@ module Escort
   module Setup
     class Configuration
       class << self
-        def find_and_load(file_name)
+        def find_or_create_and_load(setup)
+          file_name = setup.config_file
           config_path = nil
           config_path = find(file_name) if file_name
-          config_path ? load_config(config_path) : nil
+          config_path ? load_config(config_path) : create_default(setup, file_name)
         end
 
-        def create_default(file_name, data)
-          config_path = write(default_path(file_name), data)
+        def find_and_load(setup)
+          file_name = setup.config_file
+          config_path = nil
+          config_path = find(file_name) if file_name
+          config_path ? load_config(config_path) : {}
+        end
+
+        private
+
+        def create_default(setup, file_name)
+          default_data = Escort::Setup::ConfigurationGenerator.new(setup).generate
+          config_path = write(default_path(file_name), default_data)
           load_config(config_path)
         rescue => e
           STDERR.puts "Unable to create default config file at #{config_path}. Continuing without config file..."
-          nil
+          {}
         end
 
         def load_config(file_path)
           config_path = file_path
           json = File.read(config_path)
           config_hash = JSON.parse(json)
-          self.new(Escort::Utils.symbolize_keys(config_hash))
+          Escort::Utils.symbolize_keys(config_hash)
         rescue => e
+          #p e
+          #puts e.backtrace
           STDERR.puts "Found config at #{config_path}, but failed to load it, perhaps your JSON syntax is invalid. Continuing without config file..."
-          nil
+          {}
         end
 
-        def default_configuration_hash()
-        end
-
-        private
         def find(file_name)
           configs = []
           Pathname.new(Dir.pwd).descend do |path|
@@ -57,24 +66,23 @@ module Escort
           file_path = File.join(File.expand_path(ENV["HOME"]), file_name)
         end
       end
+      #attr_reader :config_hash
 
-      attr_reader :config_hash
+      #def initialize(config_hash)
+        #@config_hash = config_hash
+      #end
 
-      def initialize(config_hash)
-        @config_hash = config_hash
-      end
+      #def global_options
+        #config_hash[:global_options] || {}
+      #end
 
-      def global_options
-        config_hash[:global_options] || {}
-      end
+      #def command_options
+        #config_hash[:command_options] || {}
+      #end
 
-      def command_options
-        config_hash[:command_options] || {}
-      end
-
-      def user_data
-        config_hash[:user_data] || {}
-      end
+      #def user_data
+        #config_hash[:user_data] || {}
+      #end
     end
   end
 end

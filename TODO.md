@@ -54,3 +54,11 @@
 - look at ruby curses support a bit more closely and maybe use that for terminal stuff instead as it would be much better at it
 
 - choosing default output format based on where the output is going STDOUT.tty?
+
+
+
+- basic config with just options and no commands, by default does not require arguments to be supplied
+- basic config but with requires_arguments will require arguments to be supplied and if none are, then you will need to enter them on the command line
+- command config with one level of nesting, when no require_arguments, it inherits from the global, but can override require_arguments for the command, which means global can not require arguments while a command will require them
+- command config with multiple levels of nesting, once again inherits require_arguments from the parent context
+- when no action found in the context we want to execute, it should error or at least print an error

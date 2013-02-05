@@ -7,6 +7,7 @@ module Escort
           @name = name
           @description = options[:desc] || ""
           @aliases = [options[:aliases] || []].flatten
+          @requires_arguments ||= options[:requires_arguments]
           block.call(self) if block_given?
         rescue => e
           STDERR.puts "Problem with syntax of command '#{@name}' configuration"
@@ -26,6 +27,7 @@ module Escort
         end
 
         def command(name, options = {}, &block)
+          options[:requires_arguments] = @requires_arguments
           command = Command.new(name.to_sym, options, &block)
           aliases = [options[:aliases] || []].flatten + [name]
           aliases.each do |name|
@@ -33,20 +35,37 @@ module Escort
           end
         end
 
-        def validations(&block)
-          @validations = Validations.new(@name, &block)
+        def requires_arguments(boolean = true)
+          #TODO raise a client error if the value is anything besides true or false
+          @requires_arguments = boolean
+          @commands.each do |command|
+            command.requires_arguments(boolean)
+          end
         end
+
+        #def validations(&block)
+          #@validations = Validations.new(@name, &block)
+        #end
 
         private
 
         def reset
+          @requires_arguments = false
           @commands = {}
-          @options = nil
-          @action = nil
-          @validations = nil
+          @options = Options.new(&null_options_block)
+          @action = Action.new(&null_action_block)
+          #@validations = nil
           @name = nil
           @description = nil
           @aliases = []
+        end
+
+        def null_options_block
+          lambda{|x|}
+        end
+
+        def null_action_block
+          lambda{|x,y|}
         end
       end
     end

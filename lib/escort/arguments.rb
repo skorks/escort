@@ -3,8 +3,8 @@ require 'readline'
 module Escort
   class Arguments
     class << self
-      def read(arguments, no_arguments_valid=false)
-        if arguments.empty? && !no_arguments_valid
+      def read(arguments, requires_arguments=false)
+        if arguments.empty? && requires_arguments
           while command = Readline.readline("> ", true)
             arguments << command
           end

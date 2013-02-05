@@ -1,6 +1,6 @@
 module Escort
   class OptionParser
-    attr_reader :setup
+    attr_reader :setup, :configuration
 
     def initialize(configuration, setup)
       @configuration = configuration
@@ -14,6 +14,10 @@ module Escort
 
       [options, arguments_from(cli_options)]
     end
+
+    #def parse_global_options(cli_options)
+      #parse_global_options(cli_options, {})
+    #end
 
     private
 
@@ -45,9 +49,10 @@ module Escort
     end
 
     def parse_options(cli_options, context = [])
-      stop_words = setup.command_names_for(context)
+      stop_words = setup.command_names_for(context).map(&:to_s)
       parser = init_parser(stop_words)
       parser = add_setup_options_to(parser, context)
+      parser = default_option_values_from_config_for(parser, context)
       parse_options_string(parser, cli_options)
     end
 
@@ -56,6 +61,30 @@ module Escort
         parser.opt name, opts[:desc] || "", opts
       end
       parser
+    end
+
+    def default_option_values_from_config_for(parser, context)
+      parser.specs.each do |sym, opts|
+        default = config_value_for_context(sym, context)
+        opts[:default] = default
+        if opts[:multi] && default.nil?
+          opts[:default] = []  # multi arguments default to [], not nil
+        elsif opts[:multi] && !default.kind_of?(Array)
+          opts[:default] = [default]
+        else
+          opts[:default] = default
+        end
+      end
+      parser
+    end
+
+    def config_value_for_context(option, context)
+      relevant_config_hash = configuration[:global]#[:options]
+      context.each do |command_name|
+        command_name = command_name.to_sym
+        relevant_config_hash = relevant_config_hash[:commands][command_name]#[:options]
+      end
+      relevant_config_hash[:options][option]
     end
 
     def cli_option_is_a_command?(cli_options, context)

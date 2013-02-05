@@ -18,14 +18,33 @@ module Escort
     end
 
     def execute
+      #by default no config since no name for it
+      #if configured then config gets created by default in home directory unless autocreate is false
+      #config can be created in another directory by using command line option
+      #default config can be created using an option for when autocreate was false
+      #a particular config file can be used for an invocation
+
       cli_options = ARGV.dup
       configuration = {}
-      #configuration = Escort::Setup::Configuration.find_and_load(setup)
+      #figure out which config file we need to use for this invocation, i.e. the default or one supplied by command line option
+      #to figure out which file we need to pre-parse the global options and see if the config parameter was defined
+      #if supplied by command line option we need to just load it and then parse everything again from scratch
+      #if the default then try to load it and if it doesn't exit then create it and then load it
+
+      #simplest
+      #there is a file defined with autocreate then we need to find_or_create_and_load it
+      if setup.has_config_file?
+        if setup.config_file_autocreatable?
+          configuration = Escort::Setup::Configuration.find_or_create_and_load(setup)
+        else
+          configuration = Escort::Setup::Configuration.find_and_load(setup)
+        end
+      end
+
       invoked_options, arguments = Escort::OptionParser.new(configuration, setup).parse(cli_options)
-      #p context_from_options(invoked_options[:global])
-      #p invoked_options
-      #p arguments
-      setup.action_for(context_from_options(invoked_options[:global])).call(invoked_options, arguments)
+      context = context_from_options(invoked_options[:global])
+      action = setup.action_for(context)
+      action.call(invoked_options, Escort::Arguments.read(arguments, setup.arguments_required_for(context)))
     end
 
     private
