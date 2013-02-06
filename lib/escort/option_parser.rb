@@ -95,7 +95,7 @@ module Escort
       relevant_config_hash = configuration[:global]
       context.each do |command_name|
         command_name = command_name.to_sym
-        relevant_config_hash = relevant_config_hash[:commands][command_name]
+        relevant_config_hash = relevant_config_hash[:commands][command_name] || {:commands => {}, :options => {}}
       end
       relevant_config_hash
     end
