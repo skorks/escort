@@ -20,12 +20,12 @@ Escort::App.create do |app|
     end
 
     command.validations do |opts|
-      opts.validate(:string_with_format, "should be two words") {|option| option =~ /\w\s\w/}
+      opts.validate(:string_with_format, "should be at least two words") {|option| option =~ /\w\s\w/}
       opts.validate(:string_with_format, "should be at least 20 characters long") {|option| option.length >= 20}
     end
 
     command.action do |options, arguments|
-      puts "Action for my_command\nglobal options: #{global_options} \ncommand options: #{command_options}\narguments: #{arguments}"
+      puts "Action for my_command\noptions: #{options} \narguments: #{arguments}"
     end
   end
 end

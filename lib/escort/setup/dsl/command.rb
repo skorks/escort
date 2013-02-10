@@ -43,9 +43,9 @@ module Escort
           end
         end
 
-        #def validations(&block)
-          #@validations = Validations.new(@name, &block)
-        #end
+        def validations(&block)
+          @validations = Validations.new(&block)
+        end
 
         private
 
@@ -54,13 +54,17 @@ module Escort
           @commands = {}
           @options = Options.new(&null_options_block)
           @action = Action.new(&null_action_block)
-          #@validations = nil
+          @validations = Validations.new(&null_validations_block)
           @name = nil
           @description = nil
           @aliases = []
         end
 
         def null_options_block
+          lambda{|x|}
+        end
+
+        def null_validations_block
           lambda{|x|}
         end
 

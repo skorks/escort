@@ -2,32 +2,20 @@ module Escort
   module Setup
     module Dsl
       class Validations
-        def initialize(command_name = nil, &block)
-          reset
-          @command_name = command_name
+        #TODO validations can possibly take a command name param so that we can output which validations
+        #block we are dealing with if there is an error
+        def initialize(&block)
+          @validations = {}
           block.call(self) if block_given?
         rescue => e
-          if @command_name
-            STDERR.puts "Problem with syntax of #{@command_name} command validation block"
-          else
-            STDERR.puts "Problem with syntax of global validation block"
-          end
-          #TODO need some way to enable more verbose error output
-          #TODO remove this
-          STDERR.puts e
-          STDERR.puts e.backtrace
+          STDERR.puts "Problem with syntax of validations block"
+          #TODO better error message, loggin etc.
           exit(Escort::CLIENT_ERROR_EXIT_CODE)
         end
 
         def validate(name, description, &block)
-          @validations[name] = {:desc => description, :block => block}
-        end
-
-        private
-
-        def reset
-          @validations = {}
-          @command_name = nil
+          @validations[name] ||= []
+          @validations[name] << {:desc => description, :block => block}
         end
       end
     end

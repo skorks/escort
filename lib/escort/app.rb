@@ -26,6 +26,7 @@ module Escort
 
       cli_options = ARGV.dup
       configuration = {}
+
       #figure out which config file we need to use for this invocation, i.e. the default or one supplied by command line option
       #to figure out which file we need to pre-parse the global options and see if the config parameter was defined
       #if supplied by command line option we need to just load it and then parse everything again from scratch
@@ -63,9 +64,6 @@ module Escort
         commands_in_order(options[:commands][command], commands)
       end
     end
-
-    #def run_action(action)
-    #end
 
     #attr_reader :global_setup, :options, :global_setup_accessor, :configuration
 

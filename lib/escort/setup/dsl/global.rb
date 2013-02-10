@@ -31,10 +31,6 @@ module Escort
           end
         end
 
-        #def validations(&block)
-          #@validations = Validations.new(&block)
-        #end
-
         def requires_arguments(boolean = true)
           #TODO raise a client error if the value is anything besides true or false
           @requires_arguments = boolean
@@ -59,6 +55,10 @@ module Escort
           @description = description
         end
 
+        def validations(&block)
+          @validations = Validations.new(&block)
+        end
+
         private
 
         def reset
@@ -69,11 +69,15 @@ module Escort
           @requires_arguments = false
           @options = Options.new(&null_options_block)
           @action = Action.new(&null_action_block)
+          @validations = Validations.new(&null_validations_block)
           @config_file  = nil
-          #@validations = nil
         end
 
         def null_options_block
+          lambda{|x|}
+        end
+
+        def null_validations_block
           lambda{|x|}
         end
 

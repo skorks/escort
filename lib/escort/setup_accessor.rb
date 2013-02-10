@@ -12,6 +12,12 @@ module Escort
       end
     end
 
+    def validations_for(context = [])
+      with_context(context) do |current_context|
+        validations_hash_from(current_context)
+      end
+    end
+
     def command_names_for(context = [])
       with_context(context) do |current_context|
         command_names_from(current_context)
@@ -120,6 +126,11 @@ module Escort
       options_object = fetch_instance_variable_from(context_object, :options)
       fetch_instance_variable_from(options_object, :options)
       #TODO make sure there can be no errors here and at worst it is an empty hash
+    end
+
+    def validations_hash_from(context_object)
+      validations_object = fetch_instance_variable_from(context_object, :validations)
+      fetch_instance_variable_from(validations_object, :validations)
     end
 
     def fetch_instance_variable_from_setup(instance_variable)

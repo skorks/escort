@@ -62,16 +62,10 @@ module Escort
 
       def ensure_parent(&block)
         ensure_ancestor(1, &block)
-        #return {} unless command_context.size > 1
-        #ancestor_context = command_context.dup.slice(0, command_context.size - 2)
-        #block.call(ancestor_context)
       end
 
       def ensure_grandparent(&block)
         ensure_ancestor(2, &block)
-        #return {} unless command_context.size > 2
-        #ancestor_context = command_context.dup.slice(0, command_context.size - 2)
-        #block.call(ancestor_context)
       end
 
       def ensure_ancestor(generation_number, &block)

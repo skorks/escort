@@ -1,3 +1,5 @@
+require 'shellwords'
+
 module Escort
   class Utils
     class << self
@@ -18,6 +20,10 @@ module Escort
         else
           true
         end
+      end
+
+      def tokenize_option_string(option_string)
+        Shellwords.shellwords(option_string)
       end
     end
   end

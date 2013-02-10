@@ -38,7 +38,7 @@
 - revisit all the examples and readme to make sure all examples still work as expected after all features have been implemented
 - maybe add some specs for it if needed (aruba ???)
 - ability to ask for user input for some commands, using highline or something like that (is this really necessary???, maybe for passwords)
-- support for infinitely nesting sub commands (is this really necessary)
+- support for infinitely nesting sub commands (is this really necessary) DONE
 - ability to provide some default command line arguments via an environment variable
 - much better documentation and usage patterns
   - blog about what makes a good command line app (this and the one below are possibly one post)
@@ -55,6 +55,8 @@
 
 - choosing default output format based on where the output is going STDOUT.tty?
 
+- summary and description for nested commands
+
 
 
 - basic config with just options and no commands, by default does not require arguments to be supplied
@@ -62,3 +64,29 @@
 - command config with one level of nesting, when no require_arguments, it inherits from the global, but can override require_arguments for the command, which means global can not require arguments while a command will require them
 - command config with multiple levels of nesting, once again inherits require_arguments from the parent context
 - when no action found in the context we want to execute, it should error or at least print an error
+
+- really needs some tests and stuff
+- rewrite the help formatter to be a bit easier to understand
+
+Priorities
+- start on some tests outside in to test specific bits about the configuration, to ensure nothing has been broken by further changes
+- summary and description for commands
+- include command summary and description in help formatter
+- if app has a config, then give another param to control the extras creation, which will be an 'escort' sub command to allow manually creating and updating the config file etc.
+- do all the other config file bits such as creating default, non-default and updating etc.
+- catching all exceptions and dealing with them in a better way
+- global config param if config file
+- global verbose param always
+- lots more logging at different log levels
+- a global logger for escort which is accessible to commands etc.
+- rewrite the readme to explain all the different features
+- add validation messages to help text
+- rethink all the examples to consolidate them and so that all features are covered
+- support before and after blocks (is this really necessary)
+- support an on_error block to allow user to control what happens when errors occur
+- scaffold for app with no sub commands
+- scaffold for app with one level of commands
+- scaffold for app with nested sub commands
+- ability to ask for user input for a command (e.g. for passwords, this can possibly be done via validations)
+- default option values via env variables (if necessary)
+- blog the crap out of all aspects of how to use it, how it is constructed, some fancy things you can do with it etc.
