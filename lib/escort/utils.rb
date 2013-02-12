@@ -15,7 +15,7 @@ module Escort
       def valid_config_key?(key)
         invalid_config_keys = [:help, :version, :config, :create_config, :create_default_config]
         if invalid_config_keys.include?(key)
-          STDERR.puts "Invalid key (one of: #{invalid_config_keys.join(", ")}) found in config file, ignoring"
+          $stderr.puts "Invalid key (one of: #{invalid_config_keys.join(", ")}) found in config file, ignoring"
           false
         else
           true

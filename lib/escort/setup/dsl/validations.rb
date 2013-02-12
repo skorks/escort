@@ -8,7 +8,7 @@ module Escort
           @validations = {}
           block.call(self) if block_given?
         rescue => e
-          STDERR.puts "Problem with syntax of validations block"
+          $stderr.puts "Problem with syntax of validations block"
           #TODO better error message, loggin etc.
           exit(Escort::CLIENT_ERROR_EXIT_CODE)
         end

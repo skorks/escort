@@ -12,7 +12,7 @@ module Escort
         #TODO instead of printing to stderr do some logging e.g. Logger.error
         #this is a client usage of library error so returning with exit code 2
         #TODO we can perhaps create a method missing so that if we end up in there we know the syntax is screwed
-        STDERR.puts "Problem with syntax of app global configuration"
+        $stderr.puts "Problem with syntax of app global configuration"
         exit(Escort::CLIENT_ERROR_EXIT_CODE)
       end
 
@@ -41,7 +41,7 @@ module Escort
         @default_options_string = OptionStringTokenizer.tokenize(options_string)
       rescue => e
         #TODO instead of printing to stderr do some logging e.g. Logger.error
-        STDERR.puts "The default command is invalid: #{options_string}"
+        $stderr.puts "The default command is invalid: #{options_string}"
         exit(Escort::CLIENT_ERROR_EXIT_CODE)
       end
 

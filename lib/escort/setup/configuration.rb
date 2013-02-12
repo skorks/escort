@@ -27,7 +27,7 @@ module Escort
           config_path = write(default_path(file_name), default_data)
           load_config(config_path)
         rescue => e
-          STDERR.puts "Unable to create default config file at #{config_path}. Continuing without config file..."
+          $stderr.puts "Unable to create default config file at #{config_path}. Continuing without config file..."
           {}
         end
 
@@ -39,7 +39,7 @@ module Escort
         rescue => e
           #p e
           #puts e.backtrace
-          STDERR.puts "Found config at #{config_path}, but failed to load it, perhaps your JSON syntax is invalid. Continuing without config file..."
+          $stderr.puts "Found config at #{config_path}, but failed to load it, perhaps your JSON syntax is invalid. Continuing without config file..."
           {}
         end
 

@@ -8,7 +8,7 @@ module Escort
           @options = {}
           block.call(self) if block_given?
         rescue => e
-          STDERR.puts "Problem with syntax of options block"
+          $stderr.puts "Problem with syntax of options block"
           #TODO a better error in here
           exit(Escort::CLIENT_ERROR_EXIT_CODE)
         end

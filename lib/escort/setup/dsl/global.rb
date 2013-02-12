@@ -6,11 +6,11 @@ module Escort
           reset
           block.call(self)
         rescue => e
-          STDERR.puts "Problem with syntax of app global configuration"
+          $stderr.puts "Problem with syntax of app global configuration"
           #TODO need some way to enable more verbose error output
           #TODO remove this
-          STDERR.puts e
-          STDERR.puts e.backtrace
+          $stderr.puts e
+          $stderr.puts e.backtrace
           exit(Escort::CLIENT_ERROR_EXIT_CODE)
         end
 

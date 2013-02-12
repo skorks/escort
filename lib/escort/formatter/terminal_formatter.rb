@@ -4,13 +4,13 @@ module Escort
       DEFAULT_TERMINAL_COLUMNS = 80
 
       class << self
-        def display(stream = STDOUT, max_width = self::DEFAULT_TERMINAL_COLUMNS, &block)
+        def display(stream = $stdout, max_width = self::DEFAULT_TERMINAL_COLUMNS, &block)
           formatter = self.new(stream)
           block.call(formatter)
         end
       end
 
-      def initialize(stream = STDOUT)
+      def initialize(stream = $stdout)
         @stream = stream
         @indent_char = " "
         @indent_count = 0

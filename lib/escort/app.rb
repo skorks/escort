@@ -182,7 +182,7 @@ module Escort
 
     #def ensure_action_block
       #unless global_setup_accessor.action_block
-        #STDERR.puts "Must define a global action block if there are no sub-commands"
+        #$stderr.puts "Must define a global action block if there are no sub-commands"
         #exit(Escort::CLIENT_ERROR_EXIT_CODE)
       #end
     #end
