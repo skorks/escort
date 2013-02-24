@@ -91,3 +91,10 @@ Priorities
 - ability to ask for user input for a command (e.g. for passwords, this can possibly be done via validations)
 - default option values via env variables (if necessary)
 - blog the crap out of all aspects of how to use it, how it is constructed, some fancy things you can do with it etc.
+- make escort environment aware
+- make the configuration environment aware
+- can we flatten the configuration (as an option)
+- can we extract the json configuration stuff into a separate gem
+- json configuration should support having environment configs in multiple files
+- json configuration should support defaults config
+- create a tool to pretty print json (ppjson) using escort
