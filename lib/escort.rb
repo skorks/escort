@@ -1,7 +1,9 @@
 require 'escort/version'
 require 'escort/trollop'
-require 'escort/error/error'
 require 'escort/utils'
+require 'escort/arguments'
+
+require 'escort/error/error'
 
 require 'escort/formatter/terminal_formatter'
 require 'escort/formatter/common'
@@ -21,8 +23,6 @@ require 'escort/setup_accessor'
 
 require 'escort/validator'
 require 'escort/option_parser'
-
-require 'escort/arguments'
 
 require 'escort/action_command/base'
 

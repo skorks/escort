@@ -69,6 +69,7 @@
 - rewrite the help formatter to be a bit easier to understand
 
 Priorities
+- on Error define some class methods, such as fatal_client_error so that we don't have to sprikle exit all over the place but instead just call these method with a message
 - start on some tests outside in to test specific bits about the configuration, to ensure nothing has been broken by further changes
 - summary and description for commands
 - include command summary and description in help formatter

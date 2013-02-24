@@ -5,6 +5,10 @@ module Escort
 
   #module to tag all exceptions coming out of Escort with
   module Error
+    class << self
+      def fatal_client_error(message)
+      end
+    end
   end
 
   #all our exceptions will supported nesting other exceptions
