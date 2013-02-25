@@ -16,8 +16,15 @@ require 'escort/setup/dsl/command'
 require 'escort/setup/dsl/config_file'
 require 'escort/setup/dsl/global'
 
-require 'escort/setup/configuration_generator'
-require 'escort/setup/configuration'
+#require 'escort/setup/configuration_generator'
+#require 'escort/setup/configuration'
+require 'escort/setup/configuration/locator/base'
+require 'escort/setup/configuration/locator/descending_to_home'
+require 'escort/setup/configuration/instance'
+require 'escort/setup/configuration/reader'
+require 'escort/setup/configuration/writer'
+require 'escort/setup/configuration/generator'
+require 'escort/setup/configuration/loader'
 
 require 'escort/setup_accessor'
 

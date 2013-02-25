@@ -26,7 +26,16 @@ module Escort
         #a particular config file can be used for an invocation
 
         cli_options = ARGV.dup
-        configuration = {}
+
+        #pre-parse the global options so we can handle the auto options such as verbose and config
+        #auto_options = Escort::GlobalPreParser.new(setup).parse(cli_options.dup)
+        configuration = Escort::Setup::Configuration::Loader.new(setup).configuration.data
+        #if auto_options.alternate_config?
+        #end
+
+
+
+        #configuration = {}
 
         #figure out which config file we need to use for this invocation, i.e. the default or one supplied by command line option
         #to figure out which file we need to pre-parse the global options and see if the config parameter was defined
@@ -35,13 +44,13 @@ module Escort
 
         #simplest
         #there is a file defined with autocreate then we need to find_or_create_and_load it
-        if setup.has_config_file?
-          if setup.config_file_autocreatable?
-            configuration = Escort::Setup::Configuration.find_or_create_and_load(setup)
-          else
-            configuration = Escort::Setup::Configuration.find_and_load(setup)
-          end
-        end
+        #if setup.has_config_file?
+          #if setup.config_file_autocreatable?
+            #configuration = Escort::Setup::Configuration.find_or_create_and_load(setup)
+          #else
+            #configuration = Escort::Setup::Configuration.find_and_load(setup)
+          #end
+        #end
 
         invoked_options, arguments = Escort::OptionParser.new(configuration, setup).parse(cli_options)
         context = context_from_options(invoked_options[:global])

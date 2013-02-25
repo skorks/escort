@@ -102,3 +102,4 @@ Priorities
 - include command summary and description in help formatter
 - do for validation and action what I did for option within the dsl
 - options that are added by the system and not by the user should come at the end of the options list not sprinkled everywhere
+- test the configuration loading and writing again
