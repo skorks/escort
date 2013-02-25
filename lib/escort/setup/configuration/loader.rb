@@ -2,10 +2,11 @@ module Escort
   module Setup
     module Configuration
       class Loader
-        attr_reader :setup
+        attr_reader :setup, :auto_options
 
-        def initialize(setup)
+        def initialize(setup, auto_options)
           @setup = setup
+          @auto_options = auto_options
         end
 
         def configuration
@@ -15,6 +16,10 @@ module Escort
           end
         end
 
+        def default_config_path
+          @default_config_path ||= File.join(File.expand_path(ENV["HOME"]), config_filename)
+        end
+
         private
 
         def config_filename
@@ -22,11 +27,7 @@ module Escort
         end
 
         def config_path
-          @config_path ||= Locator::DescendingToHome.new(config_filename).locate
-        end
-
-        def default_config_path
-          @default_config_path ||= File.join(File.expand_path(ENV["HOME"]), config_filename)
+          @config_path ||= (auto_options.non_default_config_path || Locator::DescendingToHome.new(config_filename).locate || default_config_path)
         end
       end
     end

@@ -42,6 +42,10 @@ module Escort
           @validations = Validations.new(&block)
         end
 
+        def conflict(*command_names)
+          @conflicts << command_names
+        end
+
         private
 
         def reset
@@ -53,6 +57,7 @@ module Escort
           @name = nil
           @description = nil
           @aliases = []
+          @conflicts = []
         end
 
         def null_validations_block

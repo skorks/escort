@@ -36,9 +36,6 @@ module Escort
 
         def config_file(name, options = {})
           @config_file = ConfigFile.new(name, options)
-
-          #TODO this should not end up in the default configuration file when we generate that file
-          @options.opt :config, "Configuration file to use for this execution", :short => :none, :long => '--config', :type => :string
         end
 
         def version(version)
@@ -57,6 +54,10 @@ module Escort
           @validations = Validations.new(&block)
         end
 
+        def conflict(*command_names)
+          @conflicts << command_names
+        end
+
         private
 
         def reset
@@ -69,7 +70,7 @@ module Escort
           @action = Action.new(&null_action_block)
           @validations = Validations.new(&null_validations_block)
           @config_file  = nil
-          add_utility_options
+          @conflicts = []
         end
 
         def null_validations_block
@@ -85,9 +86,6 @@ module Escort
           instance.instance_variable_set(instance_variable_symbol, value)
         end
 
-        def add_utility_options
-          @options.opt :verbose, "Verbosity level of output for current execution (e.g. INFO, ERROR)", :short => :none, :long => '--verbose', :type => :string, :default => "DEBUG"
-        end
       end
     end
   end

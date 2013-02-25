@@ -12,6 +12,13 @@ module Escort
       end
     end
 
+    def conflicting_options_for(context = [])
+      with_context(context) do |current_context|
+        conflict_lists_for(current_context)
+      end
+    end
+
+
     def validations_for(context = [])
       with_context(context) do |current_context|
         validations_hash_from(current_context)
@@ -80,6 +87,22 @@ module Escort
       end
     end
 
+    def add_global_option(name, desc, options = {})
+      with_context([]) do |current_context|
+        options_object = options_object_from(current_context)
+        options_object.opt name, desc, options
+      end
+    end
+
+    def add_global_command(name, options = {}, &block)
+      global_instance.command(name, options, &block)
+
+      #with_context([]) do |current_context|
+        #commands = fetch_instance_variable_from(current_context, :commands)
+        #options_object.opt name, desc, options
+      #end
+    end
+
     private
 
     def config_file_object
@@ -123,9 +146,17 @@ module Escort
     end
 
     def options_hash_from(context_object)
-      options_object = fetch_instance_variable_from(context_object, :options)
+      options_object = options_object_from(context_object)
       fetch_instance_variable_from(options_object, :options)
       #TODO make sure there can be no errors here and at worst it is an empty hash
+    end
+
+    def options_object_from(context_object)
+      options_object = fetch_instance_variable_from(context_object, :options)
+    end
+
+    def conflict_lists_for(context_object)
+      fetch_instance_variable_from(context_object, :conflicts)
     end
 
     def validations_hash_from(context_object)

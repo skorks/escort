@@ -49,6 +49,7 @@ module Escort
       stop_words = setup.command_names_for(context).map(&:to_s)
       parser = init_parser(stop_words)
       parser = add_setup_options_to(parser, context)
+      parser = add_option_conflicts_to(parser, context)
       parser = default_option_values_from_config_for(parser, context)
       parser.version(setup.version)                                   #set the version if it was provided
       parser.help_formatter(Escort::Formatter::Default.new(setup, context))
@@ -58,7 +59,15 @@ module Escort
 
     def add_setup_options_to(parser, context = [])
       setup.options_for(context).each do |name, opts|
-        parser.opt name, opts[:desc] || "", opts
+        parser.opt name, opts[:desc] || "", opts.dup #have to make sure to dup here, otherwise opts might get stuff added to it and it
+                                                     #may cause problems later, e.g. adds default value and when parsed again trollop barfs
+      end
+      parser
+    end
+
+    def add_option_conflicts_to(parser, context = [])
+      setup.conflicting_options_for(context).each do |conflict_list|
+        parser.conflicts *conflict_list
       end
       parser
     end
@@ -93,7 +102,7 @@ module Escort
     end
 
     def config_hash_for_context(context)
-      relevant_config_hash = configuration[:global]
+      relevant_config_hash = configuration.global
       context.each do |command_name|
         command_name = command_name.to_sym
         relevant_config_hash = relevant_config_hash[:commands][command_name]

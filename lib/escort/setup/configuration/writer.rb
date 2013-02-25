@@ -13,12 +13,16 @@ module Escort
 
         def write
           if path && !File.exists?(path)
-            path = File.expand_path(path)
-            File.open(path,"w") do |f|
+            current_path = File.expand_path(path)
+            File.open(current_path,"w") do |f|
               f.puts JSON.pretty_generate(data)
             end
           end
           Instance.new(path, data)
+        end
+
+        def update
+          raise Escort::InternalError.new("Not Implemented Yet")
         end
       end
     end

@@ -20,6 +20,7 @@ module Escort
         def options_for_commands(commands, context, options = {})
           commands.each do |command_name|
             command_name = command_name.to_sym
+            #next if command_name == :escort
             options[command_name] = {}
             options[command_name][:options] = {}
             options[command_name][:commands] = {}
@@ -55,7 +56,8 @@ module Escort
 
         def add_setup_options_to(parser, context = [])
           setup.options_for(context).each do |name, opts|
-            parser.opt name, opts[:desc] || "", opts
+            parser.opt name, opts[:desc] || "", opts.dup #have to make sure to dup here, otherwise opts might get stuff added to it and it
+                                                         #may cause problems later, e.g. adds default value and when parsed again trollop barfs
           end
           parser
         end

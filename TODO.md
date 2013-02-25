@@ -1,12 +1,12 @@
 - support for configuration files for your command line apps
-  - the ability to set the config file name
+  - the ability to set the config file name DONE
   - ability to switch on and off default creation of config file DONE
   - the ability to by default read a config file by walking up the directory tree DONE
   - ability to configure global options and command specific options (through the file) DONE
   - ability to configure extra user data that may be needed (through the file) DONE
-  - an option to read specific config file instead of the default
-  - a flag to create a default config in a specific directory
-  - config file options should be validated just like the command line options
+  - an option to read specific config file instead of the default DONE
+  - a flag to create a default config in a specific directory DONE
+  - config file options should be validated just like the command line options DONE
   - configuring array :multi data via the configuration file DONE
   - configuring multi of multi
   - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
@@ -70,23 +70,23 @@
 - rewrite the help formatter to be a bit easier to understand
 
 Priorities
-- global config param if config file
+- global config param if config file                            DONE
 - if app has a config, then give another param to control the extras creation, which will be an 'escort' sub command to allow manually creating and updating the config file etc.
 - do all the other config file bits such as creating default, non-default and updating etc.
-- catching all exceptions and dealing with them in a better way
-- global verbose param always
+- catching all exceptions and dealing with them in a better way DONE
+- global verbose param always                                   DONE
 - lots more logging at different log levels
 - a global logger for escort which is accessible to commands etc.
 - rewrite the readme to explain all the different features
 - add validation messages to help text
 - rethink all the examples to consolidate them and so that all features are covered
-- support before and after blocks (is this really necessary)
-- support an on_error block to allow user to control what happens when errors occur
+- instead of before and after blocks, add before, after filters for commands, maybe
+- support an on_error block to allow user to control what happens when errors occur   N/A
 - scaffold for app with no sub commands
 - scaffold for app with one level of commands
 - scaffold for app with nested sub commands
 - ability to ask for user input for a command (e.g. for passwords, this can possibly be done via validations)
-- default option values via env variables (if necessary)
+- default option values via env variables (if necessary)    N/A
 - blog the crap out of all aspects of how to use it, how it is constructed, some fancy things you can do with it etc.
 - make escort environment aware
 - make the configuration environment aware
@@ -96,10 +96,18 @@ Priorities
 - json configuration should support defaults config
 - create a tool to pretty print json (ppjson) using escort
 - a way have helpers available when you don't want to have to create a command
-- instead of exiting and printing errors all over the place, just raise specific errors, and handle the printing and exiting in the handle block in app.rb
+- instead of exiting and printing errors all over the place, just raise specific errors, and handle the printing and exiting in the handle block in app.rb DONE
 - summary and description for commands
 - start on some tests outside in to test specific bits about the configuration, to ensure nothing has been broken by further changes
 - include command summary and description in help formatter
 - do for validation and action what I did for option within the dsl
-- options that are added by the system and not by the user should come at the end of the options list not sprinkled everywhere
+- options that are added by the system and not by the user should come at the end of the options list not sprinkled everywhere in help DONE
 - test the configuration loading and writing again
+- get the coniguration updating working (two hashes should be merged, values both in hash1 and hash2 should be left alone, values in hash1, but not in hash2 should be deleted from hash1, values in hash2 but not in hash1 should be added to hash1)
+- make help formatter be more like man output
+
+
+
+
+
+- the the config auto option is not included in the config file, same with other auto options

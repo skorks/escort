@@ -19,48 +19,30 @@ module Escort
 
     def execute
       begin
-        #by default no config since no name for it
-        #if configured then config gets created by default in home directory unless autocreate is false
-        #config can be created in another directory by using command line option
-        #default config can be created using an option for when autocreate was false
-        #a particular config file can be used for an invocation
+        #by default no config since no name for it DONE
+        #if configured then config gets created by default in home directory unless autocreate is false DONE
+        #a particular config file can be used for an invocation DONE
+
+        #config can be created in another directory by using command line option xxx escort --create-config='./blah.txt' DONE
+        #default config can be created using an option for when autocreate was false xxx escort --create-default-config DONE
+        #any config can be updated (merge what you have with what is there) xxx escort --update-config='./blah.txt'
+        #update default config xxx escort --update-default-config
+        #the auto options should not be added magically within the dsl but through a separate action DONE
+
+        AutoOptions.augment(setup)
 
         cli_options = ARGV.dup
-
-        #pre-parse the global options so we can handle the auto options such as verbose and config
-        #auto_options = Escort::GlobalPreParser.new(setup).parse(cli_options.dup)
-        configuration = Escort::Setup::Configuration::Loader.new(setup).configuration.data
-        #if auto_options.alternate_config?
-        #end
-
-
-
-        #configuration = {}
-
-        #figure out which config file we need to use for this invocation, i.e. the default or one supplied by command line option
-        #to figure out which file we need to pre-parse the global options and see if the config parameter was defined
-        #if supplied by command line option we need to just load it and then parse everything again from scratch
-        #if the default then try to load it and if it doesn't exit then create it and then load it
-
-        #simplest
-        #there is a file defined with autocreate then we need to find_or_create_and_load it
-        #if setup.has_config_file?
-          #if setup.config_file_autocreatable?
-            #configuration = Escort::Setup::Configuration.find_or_create_and_load(setup)
-          #else
-            #configuration = Escort::Setup::Configuration.find_and_load(setup)
-          #end
-        #end
+        auto_options = Escort::GlobalPreParser.new(setup).parse(cli_options.dup)
+        configuration = Escort::Setup::Configuration::Loader.new(setup, auto_options).configuration
 
         invoked_options, arguments = Escort::OptionParser.new(configuration, setup).parse(cli_options)
         context = context_from_options(invoked_options[:global])
         action = setup.action_for(context)
-        user_config = configuration[:user] || {}
         actual_arguments = Escort::Arguments.read(arguments, setup.arguments_required_for(context))
       rescue => e
         handle_escort_error(e)
       end
-      execute_action(action, invoked_options, actual_arguments, user_config)
+      execute_action(action, invoked_options, actual_arguments, configuration.user)
     end
 
     private

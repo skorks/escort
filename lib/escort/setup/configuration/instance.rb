@@ -16,7 +16,16 @@ module Escort
         end
 
         def blank?
-          hash.empty?
+          data.empty?
+        end
+        alias empty? blank?
+
+        def global
+          data[:global] || {}
+        end
+
+        def user
+          data[:user] || {}
         end
       end
     end
