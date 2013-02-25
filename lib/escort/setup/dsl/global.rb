@@ -6,16 +6,11 @@ module Escort
           reset
           block.call(self)
         rescue => e
-          $stderr.puts "Problem with syntax of app global configuration"
-          #TODO need some way to enable more verbose error output
-          #TODO remove this
-          $stderr.puts e
-          $stderr.puts e.backtrace
-          exit(Escort::CLIENT_ERROR_EXIT_CODE)
+          raise Escort::ClientError.new("Problem with syntax of global configuration", e)
         end
 
         def options(&block)
-          @options = Options.new(&block)
+          Options.options(@options, &block)
         end
 
         def action(&block)
@@ -41,6 +36,9 @@ module Escort
 
         def config_file(name, options = {})
           @config_file = ConfigFile.new(name, options)
+
+          #TODO this should not end up in the default configuration file when we generate that file
+          @options.opt :config, "Configuration file to use for this execution", :short => :none, :long => '--config', :type => :string
         end
 
         def version(version)
@@ -67,14 +65,11 @@ module Escort
           @description = nil
           @commands = {}
           @requires_arguments = false
-          @options = Options.new(&null_options_block)
+          @options = Options.new
           @action = Action.new(&null_action_block)
           @validations = Validations.new(&null_validations_block)
           @config_file  = nil
-        end
-
-        def null_options_block
-          lambda{|x|}
+          add_utility_options
         end
 
         def null_validations_block
@@ -88,6 +83,10 @@ module Escort
         def set_instance_variable_on(instance, instance_variable, value)
           instance_variable_symbol = :"@#{instance_variable.to_s}"
           instance.instance_variable_set(instance_variable_symbol, value)
+        end
+
+        def add_utility_options
+          @options.opt :verbose, "Verbosity level of output for current execution (e.g. INFO, ERROR)", :short => :none, :long => '--verbose', :type => :string, :default => "DEBUG"
         end
       end
     end

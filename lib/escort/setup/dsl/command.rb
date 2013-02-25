@@ -10,16 +10,11 @@ module Escort
           @requires_arguments ||= options[:requires_arguments]
           block.call(self) if block_given?
         rescue => e
-          $stderr.puts "Problem with syntax of command '#{@name}' configuration"
-          #TODO need some way to enable more verbose error output
-          #TODO remove this
-          $stderr.puts e
-          $stderr.puts e.backtrace
-          exit(Escort::CLIENT_ERROR_EXIT_CODE)
+          raise Escort::ClientError.new("Problem with syntax of command '#{@name}' configuration", e)
         end
 
         def options(&block)
-          @options = Options.new(&block)
+          Options.options(@options, &block)
         end
 
         def action(&block)
@@ -52,16 +47,12 @@ module Escort
         def reset
           @requires_arguments = false
           @commands = {}
-          @options = Options.new(&null_options_block)
+          @options = Options.new
           @action = Action.new(&null_action_block)
           @validations = Validations.new(&null_validations_block)
           @name = nil
           @description = nil
           @aliases = []
-        end
-
-        def null_options_block
-          lambda{|x|}
         end
 
         def null_validations_block

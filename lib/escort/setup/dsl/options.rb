@@ -2,15 +2,17 @@ module Escort
   module Setup
     module Dsl
       class Options
-        #TODO options can possibly take a command name param so that we can output which options
-        #block we are dealing with if there is an error
-        def initialize(&block)
+        class << self
+          def options(instance, &block)
+            block.call(instance) if block_given?
+          rescue => e
+            raise Escort::ClientError.new("Problem with syntax of #{instance.instance_variable_get(:"@command_name")} options block", e)
+          end
+        end
+
+        def initialize(command_name = :global)
+          @command_name = command_name
           @options = {}
-          block.call(self) if block_given?
-        rescue => e
-          $stderr.puts "Problem with syntax of options block"
-          #TODO a better error in here
-          exit(Escort::CLIENT_ERROR_EXIT_CODE)
         end
 
         def opt(name, desc="", opts={})

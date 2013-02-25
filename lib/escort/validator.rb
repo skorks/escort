@@ -18,8 +18,6 @@ module Escort
           validate_option(option, options, validations_array)
         else
           Escort::Error.fatal_client_error("Unable to create validation for '#{option}' as no such option was defined, maybe you misspelled it")
-          $stderr.puts "Unable to create validation for '#{option}' as no such option was defined, maybe you misspelled it"
-          exit(Escort::CLIENT_ERROR_EXIT_CODE)
         end
       end
       options

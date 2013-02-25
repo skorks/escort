@@ -6,7 +6,9 @@ module Escort
   #module to tag all exceptions coming out of Escort with
   module Error
     class << self
-      def fatal_client_error(message)
+      def fatal_client_error(message, error = nil)
+        $stderr.puts message
+        exit(Escort::CLIENT_ERROR_EXIT_CODE)
       end
     end
   end
@@ -20,6 +22,22 @@ module Escort
     def initialize(msg, original=$!)
       super(msg)
       @original = original
+    end
+
+    def set_backtrace(bt)
+      if original
+        original.backtrace.reverse.each do |line|
+          if bt.last == line
+            bt.pop
+          else
+            break
+          end
+        end
+        original_first = original.backtrace.shift
+        bt.concat ["#{original_first}: #{original.message}"]
+        bt.concat original.backtrace
+      end
+      super(bt)
     end
   end
 

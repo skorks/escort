@@ -69,14 +69,10 @@
 - rewrite the help formatter to be a bit easier to understand
 
 Priorities
-- on Error define some class methods, such as fatal_client_error so that we don't have to sprikle exit all over the place but instead just call these method with a message
-- start on some tests outside in to test specific bits about the configuration, to ensure nothing has been broken by further changes
-- summary and description for commands
-- include command summary and description in help formatter
+- global config param if config file
 - if app has a config, then give another param to control the extras creation, which will be an 'escort' sub command to allow manually creating and updating the config file etc.
 - do all the other config file bits such as creating default, non-default and updating etc.
 - catching all exceptions and dealing with them in a better way
-- global config param if config file
 - global verbose param always
 - lots more logging at different log levels
 - a global logger for escort which is accessible to commands etc.
@@ -98,3 +94,10 @@ Priorities
 - json configuration should support having environment configs in multiple files
 - json configuration should support defaults config
 - create a tool to pretty print json (ppjson) using escort
+- a way have helpers available when you don't want to have to create a command
+- instead of exiting and printing errors all over the place, just raise specific errors, and handle the printing and exiting in the handle block in app.rb
+- summary and description for commands
+- start on some tests outside in to test specific bits about the configuration, to ensure nothing has been broken by further changes
+- include command summary and description in help formatter
+- do for validation and action what I did for option within the dsl
+- options that are added by the system and not by the user should come at the end of the options list not sprinkled everywhere
