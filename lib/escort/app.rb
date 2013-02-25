@@ -79,28 +79,37 @@ module Escort
     end
 
     def handle_escort_error(e)
-      #TODO user and client errors should be outputted with error messages about what the problem is (and then exit with approprate exit code)
-      #TODO if the verbosity level is high enough it should still dump the stack trace
-      #TODO other types of escort errors are internal fatal errors and should be treated as such (print the stack trace and exit with the right exit code)
-      p "HELO"
-      raise e
-      #TODO what kind of errors can we rescue here
-      #perhaps we don't exit or output anything anywhere in the app except here, just need to create error objects with enough info to do it here
-      #if e.kind_of? Escort::InternalError
-        ##TODO rather than raising an error here, we need to print out the message and backtrace
-        #raise e                                 # we need to raise an Escort InternalError no matter what as it is a problem with Escort
-      #else
-        #e.extend(Escort::Error)
-        #raise e
-      #end
-      #exit(Escort::INTERNAL_ERROR_EXIT_CODE)
+      if e.kind_of?(Escort::UserError)
+        print_escort_error_message(e)
+        exit(Escort::USER_ERROR_EXIT_CODE)
+      elsif e.kind_of?(Escort::ClientError)
+        print_escort_error_message(e)
+        exit(Escort::CLIENT_ERROR_EXIT_CODE)
+      else
+        print_escort_error_message(e)
+        exit(Escort::INTERNAL_ERROR_EXIT_CODE)
+      end
     end
 
     def handle_action_error(e)
-      #TODO if an escort error type comes through here then handle it as an escort fatal error type (print the stack trace and exit with the right exit code)
-      #TODO also for escort errors print a message that it is an escort error and it is perhaps a bug with escort and what to do about it
-      #TODO otherwise print the stack trace and exit with a different exit code
-      raise e
+      if e.kind_of?(Escort::Error)
+        print_escort_error_message(e)
+        exit(Escort::INTERNAL_ERROR_EXIT_CODE)
+      else
+        print_stacktrace(e)
+        exit(Escort::EXTERNAL_ERROR_EXIT_CODE)
+      end
+    end
+
+    def print_stacktrace(e)
+      $stderr.puts e.message
+      $stderr.puts e.backtrace
+    end
+
+    def print_escort_error_message(e)
+      print_stacktrace(e)
+      $stderr.puts "\n\n"
+      $stderr.puts "An internal Escort error has occurred, you should probably report it by creating an issue on github!"
     end
   end
 end

@@ -10,8 +10,7 @@ module Escort
           end
           arguments = arguments.compact.keep_if{|value| value.length > 0}
           if arguments.empty?
-            $stderr.puts "You must provide some arguments to this script"
-            exit(Escort::USER_ERROR_EXIT_CODE)
+            raise Escort::UserError.new("You must provide some arguments to this script")
           end
         end
         arguments

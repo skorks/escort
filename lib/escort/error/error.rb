@@ -2,15 +2,10 @@ module Escort
   INTERNAL_ERROR_EXIT_CODE = 1
   CLIENT_ERROR_EXIT_CODE = 2
   USER_ERROR_EXIT_CODE = 3
+  EXTERNAL_ERROR_EXIT_CODE = 10
 
   #module to tag all exceptions coming out of Escort with
   module Error
-    class << self
-      def fatal_client_error(message, error = nil)
-        $stderr.puts message
-        exit(Escort::CLIENT_ERROR_EXIT_CODE)
-      end
-    end
   end
 
   #all our exceptions will supported nesting other exceptions
