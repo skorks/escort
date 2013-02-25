@@ -49,6 +49,7 @@
   - blog about creating an app with user input using escort
   - blog about instance_eval and the fact that it doesn't do closure properly (why), and the trick from trollop for how to get it to accept arguments
   - blog about exception hierarchy for apps, what exceptions to have, when to raise exceptions, touch on throw/catch and why they are bad/good, touch on exit codes for command line apps in the context of exception throwing
+  - blog about nested exceptions and how to make them nice in your app, also metion exceptional ruby book as well as nestegg gem
   - blog about dependencies with bundler, the spermy operator and what version will be chosen
 - improve the terminal formatter, allowing wrapping text to anywhere, and tabular like output without an actual table, allowing configuring terminal of any size not just 80, spin it off a little separate project, with an example of how to possibly build a menu in it or something
 - look at ruby curses support a bit more closely and maybe use that for terminal stuff instead as it would be much better at it

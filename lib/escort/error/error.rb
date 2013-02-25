@@ -27,11 +27,7 @@ module Escort
     def set_backtrace(bt)
       if original
         original.backtrace.reverse.each do |line|
-          if bt.last == line
-            bt.pop
-          else
-            break
-          end
+          bt.last == line ? bt.pop : break
         end
         original_first = original.backtrace.shift
         bt.concat ["#{original_first}: #{original.message}"]
