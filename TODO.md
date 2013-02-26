@@ -12,6 +12,9 @@ v1.0.0
 - rework the examples again to show of some/most of the features
 - up the version to 1.0.0
 - tag and release
+- get the blog updated with a new theme
+- put a new subscriber count widget on blog
+- blog Build Command-Line Apps Like a Pro With Escort
 
 v1.0.1
 - lots more logging at different levels for debug purposes
