@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Escort::VERSION
   gem.authors       = ["Alan Skorkin"]
   gem.email         = ["alan@skorks.com"]
-  gem.summary       = %q{An escort is still a trollop just dressed up}
-  gem.description   = %q{Basically we take the excellent Trollop command line options parser and dress it up a little with some DSL to make writing CLI apps a bit nicer, but still retain the full power of the awesome Trollop.}
+  gem.summary       = %q{A library that makes building command line apps in ruby so easy, you'll feel like an expert is guiding you through it}
+  gem.description   = %q{Writing even complex command-line apps should be quick, easy and fun. Escort takes the excellent Trollop option parser and adds a whole bunch of awesome features to produce a library you will always want to turn to when a 'quick script' is in order.}
   gem.homepage      = "https://github.com/skorks/escort"
 
   gem.files         = `git ls-files`.split($/)

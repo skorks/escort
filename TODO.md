@@ -1,114 +1,113 @@
-- support for configuration files for your command line apps
-  - the ability to set the config file name DONE
-  - ability to switch on and off default creation of config file DONE
-  - the ability to by default read a config file by walking up the directory tree DONE
-  - ability to configure global options and command specific options (through the file) DONE
-  - ability to configure extra user data that may be needed (through the file) DONE
-  - an option to read specific config file instead of the default DONE
-  - a flag to create a default config in a specific directory DONE
-  - config file options should be validated just like the command line options DONE
-  - configuring array :multi data via the configuration file DONE
-  - configuring multi of multi
-  - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
-- exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions) DONE
-  - do a readme entry on exception handling and exit codes DONE
-- provide version via configuration DONE
-- automatically include version (not just version, automatically include commands in general) DONE
-- better ways to create help text to override default trollop behaviour (use below as a default) DONE
-  - add default values to help text DONE
-  - add validation messages to help text
-  - do a readme for how trollop was slightly modified to accept a formatter
-  - how do we describe what the arguments should be??
-  - BUG the help formatting is still not quite right as far as respecting the char limits and wrapping properly when doing tabular output!!!!
-- gemspec summary and description should be taken from the app definition/maybe
-- perhaps add a copyright with license to readme
-- do a readme for help formatting
-- do a readme for providing summary and description
-- accessors can probably be rejigged into one guy that can handle any setup object using method_missing
-- refactor so that objects passed into the dsl only have dsl methods available to call DONE
-- via method missing we can make the dsl classes more robust by printing errors and exting when non-dsl methods are attempted
-- rejig all the readme entries to be more inline with the state of the world
-- rejig all the examples for less directories
-- how to preoperly do logging and support various modes (e.g. verbose, log anything other than output to STDERR, use rubies logging facilities, with some kind of sensible default log format, should a logger be accessible to the whole app automagically)
-- better support for before and after blocks with explanations and examples of usage
-- better support for on_error blocks with explanations and examples of usage (roll exit code support into here), default handling of errors in block
-- a convention for how to actually do the code that will handle the commands etc.
-- creating a scaffold for a plain app without sub commands
-- creating a scaffold for an app with sub commands
-- revisit all the examples and readme to make sure all examples still work as expected after all features have been implemented
-- maybe add some specs for it if needed (aruba ???)
-- ability to ask for user input for some commands, using highline or something like that (is this really necessary???, maybe for passwords)
-- support for infinitely nesting sub commands (is this really necessary) DONE
-- ability to provide some default command line arguments via an environment variable
-- much better documentation and usage patterns
-  - blog about what makes a good command line app (this and the one below are possibly one post)
-  - blog about how to use escort and why the other libraries possibly fall short
-  - blog about how escort is constructed
-  - blog about using escort to build a markov chains based name generator
-  - blog about creating a sub command based app using escort
-  - blog about creating an app with user input using escort
-  - blog about instance_eval and the fact that it doesn't do closure properly (why), and the trick from trollop for how to get it to accept arguments
-  - blog about exception hierarchy for apps, what exceptions to have, when to raise exceptions, touch on throw/catch and why they are bad/good, touch on exit codes for command line apps in the context of exception throwing
-  - blog about nested exceptions and how to make them nice in your app, also metion exceptional ruby book as well as nestegg gem
-  - blog about dependencies with bundler, the spermy operator and what version will be chosen
-- improve the terminal formatter, allowing wrapping text to anywhere, and tabular like output without an actual table, allowing configuring terminal of any size not just 80, spin it off a little separate project, with an example of how to possibly build a menu in it or something
-- look at ruby curses support a bit more closely and maybe use that for terminal stuff instead as it would be much better at it
+ROADMAP
 
-- choosing default output format based on where the output is going STDOUT.tty?
-
-- summary and description for nested commands
-
-
-
-- basic config with just options and no commands, by default does not require arguments to be supplied
-- basic config but with requires_arguments will require arguments to be supplied and if none are, then you will need to enter them on the command line
-- command config with one level of nesting, when no require_arguments, it inherits from the global, but can override require_arguments for the command, which means global can not require arguments while a command will require them
-- command config with multiple levels of nesting, once again inherits require_arguments from the parent context
-- when no action found in the context we want to execute, it should error or at least print an error
-
-- really needs some tests and stuff
-- rewrite the help formatter to be a bit easier to understand
-
-Priorities
-- global config param if config file                            DONE
-- if app has a config, then give another param to control the extras creation, which will be an 'escort' sub command to allow manually creating and updating the config file etc.
-- do all the other config file bits such as creating default, non-default and updating etc.
-- catching all exceptions and dealing with them in a better way DONE
-- global verbose param always                                   DONE
-- lots more logging at different log levels
-- a global logger for escort which is accessible to commands etc. DONE
+v1.0.0
 - rewrite the readme to explain all the different features
+- readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
+- really needs some basic specs and integration tests
+- summary and description for commands
+- include command summary and description in help formatter
+- do for validation and action what I did for option within the dsl
+- rewrite the help formatter to be a bit easier to understand (more like man output for output)
+- add depends support to dsl
+- rework the examples again to show of some/most of the features
+- up the version to 1.0.0
+- tag and release
+
+v1.0.1
+- lots more logging at different levels for debug purposes
 - add validation messages to help text
-- rethink all the examples to consolidate them and so that all features are covered
-- instead of before and after blocks, add before, after filters for commands, maybe
-- support an on_error block to allow user to control what happens when errors occur   N/A
+- a way have helpers available when you don't want to have to create a command
+- the config auto option should not be included in the config file, same with other auto options
+
+
+v1.0.2
 - scaffold for app with no sub commands
 - scaffold for app with one level of commands
 - scaffold for app with nested sub commands
-- ability to ask for user input for a command (e.g. for passwords, this can possibly be done via validations)
-- default option values via env variables (if necessary)    N/A
-- blog the crap out of all aspects of how to use it, how it is constructed, some fancy things you can do with it etc.
-- make escort environment aware
+
+
+v1.0.3
+- an option for setup that indicates it is a project specific CLI app
+- an options for setup that indicates it is an environment aware CLI app
 - make the configuration environment aware
+- make escort environment aware
+- json configuration should support defaults config
+- much better documentation and usage patterns
+
+
+
+
+BUCKET
+- instead of before and after blocks, add before, after filters for commands, maybe
+- when no action found in the context we want to execute, it should error or at least print an error
 - can we flatten the configuration (as an option)
 - can we extract the json configuration stuff into a separate gem
 - json configuration should support having environment configs in multiple files
-- json configuration should support defaults config
+- blog the crap out of all aspects of how to use it, how it is constructed, some fancy things you can do with it etc.
+- ability to ask for user input for a command (e.g. for passwords, this can possibly be done via validations)
+
+- blog about what makes a good command line app (this and the one below are possibly one post)
+- blog about how to use escort and why the other libraries possibly fall short
+- blog about how escort is constructed
+- blog about using escort to build a markov chains based name generator
+- blog about creating a sub command based app using escort
+- blog about creating an app with user input using escort
+- blog about instance_eval and the fact that it doesn't do closure properly (why), and the trick from trollop for how to get it to accept arguments
+- blog about exception hierarchy for apps, what exceptions to have, when to raise exceptions, touch on throw/catch and why they are bad/good, touch on exit codes for command line apps in the context of exception throwing
+- blog about nested exceptions and how to make them nice in your app, also metion exceptional ruby book as well as nestegg gem
+- blog about dependencies with bundler, the spermy operator and what version will be chosen
+- blog about ppjson and how to use it
+
+- improve the terminal formatter, allowing wrapping text to anywhere, and tabular like output without an actual table, allowing configuring terminal of any size not just 80, spin it off a little separate project, with an example of how to possibly build a menu in it or something
+- BUG the help formatting is still not quite right as far as respecting the char limits and wrapping properly when doing tabular output!!!!
+- do a readme for how trollop was slightly modified to accept a formatter DONE
+- gemspec summary and description should be taken from the app definition/maybe
+- perhaps add a copyright with license to readme
+- via method missing we can make the dsl classes more robust by printing errors and exting when non-dsl methods are attempted
+- configuring multi of multi
+- how do we describe what the arguments should be??
+- blog about the convention for implementing the escort actions
+- ability to provide some default command line arguments via an environment variable
+
+
+PIE IN SKY
+- choosing default output format based on where the output is going STDOUT.tty?
+- look at ruby curses support a bit more closely and maybe use that for terminal stuff instead as it would be much better at it
+
+
+
+DONE
 - create a tool to pretty print json (ppjson) using escort
-- a way have helpers available when you don't want to have to create a command
-- instead of exiting and printing errors all over the place, just raise specific errors, and handle the printing and exiting in the handle block in app.rb DONE
-- summary and description for commands
-- start on some tests outside in to test specific bits about the configuration, to ensure nothing has been broken by further changes
-- include command summary and description in help formatter
-- do for validation and action what I did for option within the dsl
-- options that are added by the system and not by the user should come at the end of the options list not sprinkled everywhere in help DONE
+- global config param if config file
+- if app has a config, then give another param to control the extras creation, which will be an 'escort' sub command to allow manually creating and updating the config file etc.
+- do all the other config file bits such as creating default, non-default and updating etc.
+- catching all exceptions and dealing with them in a better way
+- global verbose param always
+- a global logger for escort which is accessible to commands etc.
+- support an on_error block to allow user to control what happens when errors occur
+- default option values via env variables (if necessary)
+- instead of exiting and printing errors all over the place, just raise specific errors, and handle the printing and exiting in the handle block in app.rb
+- options that are added by the system and not by the user should come at the end of the options list not sprinkled everywhere in help
 - test the configuration loading and writing again
 - get the coniguration updating working (two hashes should be merged, values both in hash1 and hash2 should be left alone, values in hash1, but not in hash2 should be deleted from hash1, values in hash2 but not in hash1 should be added to hash1)
-- make help formatter be more like man output
-- add depends support to dsl
-
-
-
-
-
-- the the config auto option is not included in the config file, same with other auto options
+- support for configuration files for your command line apps DONE
+- the ability to set the config file name DONE
+- ability to switch on and off default creation of config file DONE
+- the ability to by default read a config file by walking up the directory tree DONE
+- ability to configure global options and command specific options (through the file) DONE
+- ability to configure extra user data that may be needed (through the file) DONE
+- an option to read specific config file instead of the default DONE
+- a flag to create a default config in a specific directory DONE
+- config file options should be validated just like the command line options DONE
+- configuring array :multi data via the configuration file DONE
+- exception hierarchy for gem and better exit codes (better exception handling for the whole gem, UserError, LogicErrors(InternalError, ClientError), TransientError, no raise library api, tagging exceptions) DONE
+- do a readme entry on exception handling and exit codes DONE
+- provide version via configuration DONE
+- automatically include version (not just version, automatically include commands in general) DONE
+- better ways to create help text to override default trollop behaviour (use below as a default) DONE
+- add default values to help text DONE
+- refactor so that objects passed into the dsl only have dsl methods available to call DONE
+- better support for before and after blocks with explanations and examples of usage N/A
+- better support for on_error blocks with explanations and examples of usage (roll exit code support into here), default handling of errors in block N/A
+- a convention for how to actually do the code that will handle the commands etc. DONE
+- support for infinitely nesting sub commands (is this really necessary) DONE
