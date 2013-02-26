@@ -3,7 +3,7 @@ module Escort
     module Dsl
       class Command
         def initialize(name, options = {}, &block)
-          reset
+          reset(name)
           @name = name
           @description = options[:description] || options[:desc] || ""
           @aliases = [options[:aliases] || []].flatten
@@ -14,7 +14,7 @@ module Escort
         end
 
         def options(&block)
-          Options.options(@options, &block)
+          Options.options(@name, @options, &block)
         end
 
         def action(&block)
@@ -48,10 +48,10 @@ module Escort
 
         private
 
-        def reset
+        def reset(name)
           @requires_arguments = false
           @commands = {}
-          @options = Options.new
+          @options = Options.new(name)
           @action = Action.new(&null_action_block)
           @validations = Validations.new(&null_validations_block)
           @name = nil

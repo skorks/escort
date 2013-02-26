@@ -76,7 +76,7 @@ Priorities
 - catching all exceptions and dealing with them in a better way DONE
 - global verbose param always                                   DONE
 - lots more logging at different log levels
-- a global logger for escort which is accessible to commands etc.
+- a global logger for escort which is accessible to commands etc. DONE
 - rewrite the readme to explain all the different features
 - add validation messages to help text
 - rethink all the examples to consolidate them and so that all features are covered
@@ -105,6 +105,7 @@ Priorities
 - test the configuration loading and writing again
 - get the coniguration updating working (two hashes should be merged, values both in hash1 and hash2 should be left alone, values in hash1, but not in hash2 should be deleted from hash1, values in hash2 but not in hash1 should be added to hash1)
 - make help formatter be more like man output
+- add depends support to dsl
 
 
 

@@ -10,7 +10,7 @@ module Escort
         end
 
         def options(&block)
-          Options.options(@options, &block)
+          Options.options(:global, @options, &block)
         end
 
         def action(&block)
@@ -85,7 +85,6 @@ module Escort
           instance_variable_symbol = :"@#{instance_variable.to_s}"
           instance.instance_variable_set(instance_variable_symbol, value)
         end
-
       end
     end
   end

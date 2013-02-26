@@ -19,20 +19,17 @@ module Escort
 
     def execute
       begin
-        #by default no config since no name for it DONE
-        #if configured then config gets created by default in home directory unless autocreate is false DONE
-        #a particular config file can be used for an invocation DONE
-
-        #config can be created in another directory by using command line option xxx escort --create-config='./blah.txt' DONE
-        #default config can be created using an option for when autocreate was false xxx escort --create-default-config DONE
-        #any config can be updated (merge what you have with what is there) xxx escort --update-config='./blah.txt'
-        #update default config xxx escort --update-default-config
-        #the auto options should not be added magically within the dsl but through a separate action DONE
-
         AutoOptions.augment(setup)
 
         cli_options = ARGV.dup
+
         auto_options = Escort::GlobalPreParser.new(setup).parse(cli_options.dup)
+        Escort::Logger.setup_error_logger(auto_options)
+
+        #now we can start doing error logging everything above here has to be rock solid
+        error_logger.debug {"HELLO1"}
+        error_logger.error {"HELLO2"}
+
         configuration = Escort::Setup::Configuration::Loader.new(setup, auto_options).configuration
 
         invoked_options, arguments = Escort::OptionParser.new(configuration, setup).parse(cli_options)
@@ -72,12 +69,15 @@ module Escort
     def handle_escort_error(e)
       if e.kind_of?(Escort::UserError)
         print_escort_error_message(e)
+        error_logger.debug{ "Escort app failed to execute successfully, due to user error" }
         exit(Escort::USER_ERROR_EXIT_CODE)
       elsif e.kind_of?(Escort::ClientError)
         print_escort_error_message(e)
+        error_logger.debug{ "Escort app failed to execute successfully, due to client setup error" }
         exit(Escort::CLIENT_ERROR_EXIT_CODE)
       else
         print_escort_error_message(e)
+        error_logger.debug{ "Escort app failed to execute successfully, due to internal error" }
         exit(Escort::INTERNAL_ERROR_EXIT_CODE)
       end
     end
@@ -85,22 +85,23 @@ module Escort
     def handle_action_error(e)
       if e.kind_of?(Escort::Error)
         print_escort_error_message(e)
+        error_logger.debug{ "Escort app failed to execute successfully, due to internal error" }
         exit(Escort::INTERNAL_ERROR_EXIT_CODE)
       else
         print_stacktrace(e)
+        error_logger.debug{ "Escort app failed to execute successfully, due to unknown error" }
         exit(Escort::EXTERNAL_ERROR_EXIT_CODE)
       end
     end
 
     def print_stacktrace(e)
-      $stderr.puts e.message
-      $stderr.puts e.backtrace
+      error_logger.error{ e }
     end
 
     def print_escort_error_message(e)
       print_stacktrace(e)
-      $stderr.puts "\n\n"
-      $stderr.puts "An internal Escort error has occurred, you should probably report it by creating an issue on github!"
+      error_logger.warn{ "\n\n" }
+      error_logger.warn{ "An internal Escort error has occurred, you should probably report it by creating an issue on github!" }
     end
   end
 end
