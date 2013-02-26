@@ -12,15 +12,15 @@ module Escort
         end
       end
 
-      def valid_config_key?(key)
-        invalid_config_keys = [:help, :version, :config, :create_config, :create_default_config]
-        if invalid_config_keys.include?(key)
-          $stderr.puts "Invalid key (one of: #{invalid_config_keys.join(", ")}) found in config file, ignoring"
-          false
-        else
-          true
-        end
-      end
+      #def valid_config_key?(key)
+        #invalid_config_keys = [:help, :version, :config, :create_config, :create_default_config]
+        #if invalid_config_keys.include?(key)
+          #$stderr.puts "Invalid key (one of: #{invalid_config_keys.join(", ")}) found in config file, ignoring"
+          #false
+        #else
+          #true
+        #end
+      #end
 
       def tokenize_option_string(option_string)
         Shellwords.shellwords(option_string)

@@ -26,6 +26,8 @@ module Escort
             data = Escort::Utils.symbolize_keys(hash)
           rescue => e
             $stderr.puts "Found config at #{path}, but failed to load it, perhaps your JSON syntax is invalid. Attempting to continue without..."
+            puts e.message
+            puts e.backtrace
             #TODO more verbose logging once we have verbose loggin
           end
           data

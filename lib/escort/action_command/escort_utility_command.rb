@@ -1,6 +1,6 @@
 module Escort
   module ActionCommand
-    class Escort < Base
+    class EscortUtilityCommand < Base
       attr_reader :setup
 
       def initialize(setup, options, arguments, config = {})
@@ -25,20 +25,20 @@ module Escort
 
       def create_config(path)
         config_path = absolute_path(path)
-        ::Escort::Setup::Configuration::Writer.new(config_path, ::Escort::Setup::Configuration::Generator.new(setup).default_data).write
+        Escort::Setup::Configuration::Writer.new(config_path, Escort::Setup::Configuration::Generator.new(setup).default_data).write
       end
 
       def create_default_config
-        ::Escort::Setup::Configuration::Writer.new(default_config_path, ::Escort::Setup::Configuration::Generator.new(setup).default_data).write
+        Escort::Setup::Configuration::Writer.new(default_config_path, Escort::Setup::Configuration::Generator.new(setup).default_data).write
       end
 
       def update_config(path)
         config_path = absolute_path(path)
-        ::Escort::Setup::Configuration::Writer.new(config_path, ::Escort::Setup::Configuration::Generator.new(setup).default_data).update
+        Escort::Setup::Configuration::Writer.new(config_path, Escort::Setup::Configuration::Generator.new(setup).default_data).update
       end
 
       def update_default_config
-        ::Escort::Setup::Configuration::Writer.new(default_config_path, ::Escort::Setup::Configuration::Generator.new(setup).default_data).update
+        Escort::Setup::Configuration::Writer.new(default_config_path, Escort::Setup::Configuration::Generator.new(setup).default_data).update
       end
 
       def absolute_path(path)
@@ -46,7 +46,7 @@ module Escort
       end
 
       def default_config_path
-        ::Escort::Setup::Configuration::Loader.new(setup, nil).default_config_path
+        Escort::Setup::Configuration::Loader.new(setup, nil).default_config_path
       end
     end
   end

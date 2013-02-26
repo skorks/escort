@@ -13,16 +13,30 @@ module Escort
 
         def write
           if path && !File.exists?(path)
-            current_path = File.expand_path(path)
-            File.open(current_path,"w") do |f|
-              f.puts JSON.pretty_generate(data)
-            end
+            save_to_file
+            Instance.new(path, data)
+          else
+            Instance.blank
           end
-          Instance.new(path, data)
         end
 
         def update
-          raise Escort::InternalError.new("Not Implemented Yet")
+          current_data = {}
+          if File.exists? path
+            current_data = Reader.new(path).read.data
+          end
+          @data = Escort::Setup::Configuration::MergeTool.new(data, current_data).config_hash
+          save_to_file
+          Instance.new(path, data)
+        end
+
+        private
+
+        def save_to_file
+          current_path = File.expand_path(path)
+          File.open(current_path,"w") do |f|
+            f.puts JSON.pretty_generate(data)
+          end
         end
       end
     end

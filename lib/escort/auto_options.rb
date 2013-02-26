@@ -18,7 +18,7 @@ module Escort
             command.conflict :create_config, :create_default_config, :update_config, :update_default_config
 
             command.action do |options, arguments|
-              ActionCommand::Escort.new(setup, options, arguments).execute
+              ActionCommand::EscortUtilityCommand.new(setup, options, arguments).execute
             end
           end
         end
