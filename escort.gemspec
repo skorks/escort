@@ -12,6 +12,8 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Writing even complex command-line apps should be quick, easy and fun. Escort takes the excellent Trollop option parser and adds a whole bunch of awesome features to produce a library you will always want to turn to when a 'quick script' is in order.}
   gem.homepage      = "https://github.com/skorks/escort"
 
+  gem.add_development_dependency('rspec')
+
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
