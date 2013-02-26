@@ -68,12 +68,12 @@ TODO
 
 ## Alternatives
 
-* [GLI](/davetron5000/gli)
-* [Commander](/visionmedia/commander)
-* [CRI](/ddfreyne/cri)
-* [main](/ahoward/main)
-* [thor](/wycats/thor)
-* [slop](/injekt/slop)
+* https://github.com/davetron5000/gli
+* https://github.com/visionmedia/commander
+* https://github.com/ddfreyne/cri
+* https://github.com/ahoward/main
+* https://github.com/wycats/thor
+* https://github.com/injekt/slop
 
 ## Contributing
 
