@@ -13,6 +13,8 @@ module Escort
           if setup.has_config_file?
             Writer.new(config_path, Generator.new(setup).default_data).write if setup.config_file_autocreatable?
             Reader.new(config_path).read
+          else
+            Instance.blank
           end
         end
 

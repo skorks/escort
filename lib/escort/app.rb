@@ -27,8 +27,6 @@ module Escort
         Escort::Logger.setup_error_logger(auto_options)
 
         #now we can start doing error logging everything above here has to be rock solid
-        error_logger.debug {"HELLO1"}
-        error_logger.error {"HELLO2"}
 
         configuration = Escort::Setup::Configuration::Loader.new(setup, auto_options).configuration
 
