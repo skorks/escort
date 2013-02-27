@@ -1,14 +1,25 @@
 ROADMAP
 
-v1.0.0
+v0.9.0
 - some spec infrastructure                          DONE
 - a couple of basic specs                           DONE
 - some integration test infrastructure              DONE
 - a couple of basic integration tests               DONE
+- pull classes for formatting out into files
+- refactor the formatting code some more
+- pull some formatting code into separate classes
+- test some of the utility formatting code
 - summary and description for commands
 - include command summary and description in help formatter
+- rework how help is displayed for commands with summary and description
 - do for validation and action what I did for option within the dsl
 - look again at conflicts support in dsl, we can probably do better naming for it
+- a few more tests
+- a few more integration tests
+- up the version to 0.9.0
+- tag and release
+
+v1.0.0
 - rewrite the readme to explain:
   - a basic app with no options
   - a basic app with options
@@ -23,8 +34,6 @@ v1.0.0
   - a command app with options, validations, description, summary, require arguments and config file
   - a sub command app with options, validations, description, summary, require arguments and config file
 - rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)
-- a few more tests
-- a few more integration tests
 - extract all the dsl command stuff into a helper module so that global and command can be handled by the same code
 - up the version to 1.0.0
 - tag and release
@@ -44,13 +53,11 @@ v1.0.1
 - rewrite the help formatter to be a bit easier to understand (more like man output for output)
 - add depends support to dsl
 
-
 v1.0.2
 - more specs
 - scaffold for app with no sub commands
 - scaffold for app with one level of commands
 - scaffold for app with nested sub commands
-
 
 v1.0.3
 - an option for setup that indicates it is a project specific CLI app
@@ -59,6 +66,7 @@ v1.0.3
 - make escort environment aware
 - json configuration should support defaults config
 - much better documentation and usage patterns
+- pull the terminal formatting stuff into separate gem
 
 
 

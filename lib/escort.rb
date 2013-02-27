@@ -6,6 +6,7 @@ require 'escort/logger'
 
 require 'escort/error/error'
 
+require 'escort/formatter/string_splitter'
 require 'escort/formatter/terminal_formatter'
 require 'escort/formatter/common'
 require 'escort/formatter/default'
