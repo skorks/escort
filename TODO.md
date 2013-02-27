@@ -1,9 +1,12 @@
 ROADMAP
 
 v1.0.0
+- some spec infrastructure DONE
+- a couple of basic specs DONE
+- some integration test infrastructure
+- a couple of basic integration tests
 - rewrite the readme to explain all the different features
 - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
-- really needs some basic specs and integration tests
 - summary and description for commands
 - include command summary and description in help formatter
 - do for validation and action what I did for option within the dsl
@@ -17,6 +20,7 @@ v1.0.0
 - blog Build Command-Line Apps Like a Pro Using Ruby and Escort
 
 v1.0.1
+- more specs (setup accessor etc)
 - lots more logging at different levels for debug purposes
 - add validation messages to help text
 - a way have helpers available when you don't want to have to create a command
@@ -24,6 +28,7 @@ v1.0.1
 
 
 v1.0.2
+- more specs
 - scaffold for app with no sub commands
 - scaffold for app with one level of commands
 - scaffold for app with nested sub commands

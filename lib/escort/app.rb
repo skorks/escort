@@ -2,26 +2,27 @@ module Escort
   class App
     #TODO ensure that every command must have an action
     class << self
-      def create(&block)
+      def create(option_string = '', &block)
         cli_app_configuration = Escort::Setup::Dsl::Global.new(&block)
         setup = Escort::SetupAccessor.new(cli_app_configuration)
-        app = self.new(setup)
+        app = self.new(option_string, setup)
         app.execute
         exit(0)
       end
     end
 
-    attr_reader :setup
+    attr_reader :setup, :option_string
 
-    def initialize(setup)
+    def initialize(option_string, setup)
       @setup = setup
+      @option_string = option_string
     end
 
     def execute
       begin
         AutoOptions.augment(setup)
 
-        cli_options = ARGV.dup
+        cli_options = current_cli_options(option_string)
 
         auto_options = Escort::GlobalPreParser.new(setup).parse(cli_options.dup)
         Escort::Logger.setup_error_logger(auto_options)
@@ -41,6 +42,11 @@ module Escort
     end
 
     private
+
+    def current_cli_options(option_string)
+      passed_in_options = Escort::Utils.tokenize_option_string(option_string)
+      passed_in_options.empty? ? ARGV.dup : passed_in_options
+    end
 
     def execute_action(action, options, arguments, user_config)
       begin

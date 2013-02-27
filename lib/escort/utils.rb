@@ -13,6 +13,7 @@ module Escort
       end
 
       def tokenize_option_string(option_string)
+        option_string ||= ''
         Shellwords.shellwords(option_string)
       end
     end
