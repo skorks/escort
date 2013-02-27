@@ -146,13 +146,16 @@ module Escort
     end
 
     def options_hash_from(context_object)
-      options_object = options_object_from(context_object)
-      fetch_instance_variable_from(options_object, :options)
-      #TODO make sure there can be no errors here and at worst it is an empty hash
+      ensure_context_object(context_object, {}) do
+        options_object = options_object_from(context_object)
+        fetch_instance_variable_from(options_object, :options)
+      end
     end
 
     def options_object_from(context_object)
-      options_object = fetch_instance_variable_from(context_object, :options)
+      ensure_context_object(context_object, nil) do
+        fetch_instance_variable_from(context_object, :options)
+      end
     end
 
     def conflict_lists_for(context_object)
@@ -171,6 +174,10 @@ module Escort
     def fetch_instance_variable_from(instance, instance_variable)
       instance_variable_symbol = :"@#{instance_variable.to_s}"
       instance.instance_variable_get(instance_variable_symbol)
+    end
+
+    def ensure_context_object(context_object, default_value, &block)
+      context_object ? block.call : default_value
     end
   end
 end

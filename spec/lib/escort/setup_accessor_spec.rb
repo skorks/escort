@@ -17,6 +17,9 @@ describe Escort::SetupAccessor do
   let(:sub_command_app_configuration) do
   end
 
+  #context is nil
+  #no context supplied at all
+  #context is not an array
   describe '#options_for' do
     subject {setup.options_for(context)}
 
@@ -30,7 +33,9 @@ describe Escort::SetupAccessor do
 
       context "and context is an unknown command" do
         let(:context) { ['hello'] }
-        it(":option1 should not be present") {subject[:option1].should be_nil}
+        it("should not raise an exception") { expect{subject}.to_not raise_error }
+        it("result should be a hash") { subject.class.should == Hash }
+        it("result should be empty") { subject.should be_empty }
       end
     end
   end
