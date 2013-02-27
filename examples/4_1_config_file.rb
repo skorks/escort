@@ -9,8 +9,13 @@ Escort::App.create do |app|
 
   app.config_file ".apprc", :autocreate => true
 
+  app.summary "Sum1"
+  app.description "Desc1"
+
   app.command :my_command, :description => "KJHLKJH askj aldkjfhakldfjh akdjfh alkdfhj alkdjhf alkjsdhf alkjsdhf aklsjdhf aklsjdhf akljdhf alkdjfh", :aliases => [:my1, :my2] do |command|
     #command.requires_arguments
+    command.summary "Sum2"
+    command.description "Desc2"
 
     command.options do |opts|
       opts.opt :do_stuff, "Do stuff", :short => :none, :long => '--do-stuff', :type => :boolean, :default => true

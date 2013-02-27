@@ -46,6 +46,14 @@ module Escort
           @conflicts << command_names
         end
 
+        def summary(summary)
+          @summary = summary
+        end
+
+        def description(description)
+          @description = description
+        end
+
         private
 
         def reset(name)
@@ -58,6 +66,7 @@ module Escort
           @description = nil
           @aliases = []
           @conflicts = []
+          @summary = nil
         end
 
         def null_validations_block

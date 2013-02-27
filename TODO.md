@@ -25,6 +25,7 @@ v1.0.0
 - rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)
 - a few more tests
 - a few more integration tests
+- extract all the dsl command stuff into a helper module so that global and command can be handled by the same code
 - up the version to 1.0.0
 - tag and release
 - get the blog updated with a new theme
@@ -33,7 +34,7 @@ v1.0.0
 
 v1.0.1
 - more specs (setup accessor etc)
-- more integration specs
+- more integration specs (more specs for the different types of options)
 - rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.)
 - lots more logging at different levels for debug purposes
 - add validation messages to help text
