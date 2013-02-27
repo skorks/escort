@@ -1,18 +1,30 @@
 ROADMAP
 
 v1.0.0
-- some spec infrastructure DONE
-- a couple of basic specs DONE
-- some integration test infrastructure
-- a couple of basic integration tests
-- rewrite the readme to explain all the different features
-- readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
+- some spec infrastructure                          DONE
+- a couple of basic specs                           DONE
+- some integration test infrastructure              DONE
+- a couple of basic integration tests               DONE
 - summary and description for commands
 - include command summary and description in help formatter
 - do for validation and action what I did for option within the dsl
-- rewrite the help formatter to be a bit easier to understand (more like man output for output)
-- add depends support to dsl
-- rework the examples again to show of some/most of the features
+- look again at conflicts support in dsl, we can probably do better naming for it
+- rewrite the readme to explain:
+  - a basic app with no options
+  - a basic app with options
+    - supplying multiple of the same parameter using multi
+  - a basic app with require arguments
+  - a basic app specifying version, description and summary
+  - a basic app with options and validations
+  - implementing and action for a basic app
+  - a basic app with config file (don't worry about explaining all the helper stuff that gets created)
+  - a basic app with conflicting options
+  - a basic app with dependent options
+  - a command app with options, validations, description, summary, require arguments and config file
+  - a sub command app with options, validations, description, summary, require arguments and config file
+- rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)
+- a few more tests
+- a few more integration tests
 - up the version to 1.0.0
 - tag and release
 - get the blog updated with a new theme
@@ -21,10 +33,15 @@ v1.0.0
 
 v1.0.1
 - more specs (setup accessor etc)
+- more integration specs
+- rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.)
 - lots more logging at different levels for debug purposes
 - add validation messages to help text
 - a way have helpers available when you don't want to have to create a command
 - the config auto option should not be included in the config file, same with other auto options
+- readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
+- rewrite the help formatter to be a bit easier to understand (more like man output for output)
+- add depends support to dsl
 
 
 v1.0.2
