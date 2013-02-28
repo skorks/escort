@@ -1,6 +1,6 @@
 ROADMAP
 
-v0.9.0
+v0.1.0
 - some spec infrastructure                                                          DONE
 - a couple of basic specs                                                           DONE
 - some integration test infrastructure                                              DONE
@@ -12,15 +12,19 @@ v0.9.0
 - the sub commands for command should use summary instead of description            DONE
 - do for validation and action what I did for option within the dsl                 DONE
 - look again at conflicts support in dsl, we can probably do better naming for it   DONE
+- up the version to 0.1.0
+- tag and release
+
+v0.9.0
 - a few more tests
 - a few more integration tests
+- refactor the formatting code some more
+- pull some formatting code into separate classes
+- test some of the utility formatting code
 - up the version to 0.9.0
 - tag and release
 
 v1.0.0
-- refactor the formatting code some more
-- pull some formatting code into separate classes
-- test some of the utility formatting code
 - rewrite the readme to explain:
   - a basic app with no options
   - a basic app with options
