@@ -18,7 +18,7 @@ module Escort
           d.puts "NAME"
           d.indent(4) do
             d.table(:columns => 3, :newlines => 1) do |t|
-              t.row script_name_with_command, '-', setup.summary_for(context) || ''
+              t.row script_name_with_command, '-', current_command_summary
             end
             d.put(setup.description_for(context), :newlines => 2) if setup.description_for(context)
           end
@@ -52,7 +52,7 @@ module Escort
             d.indent(4) {
               d.table(:columns => 3, :newlines => 1) do |t|
                 command_strings.each_pair do |command_name, values_array|
-                  t.row values_array[0], '-', values_array[1] || ''
+                  t.row values_array[0], '-', command_outline(values_array)
                 end
               end
             }
@@ -78,18 +78,26 @@ module Escort
         context.last || :global
       end
 
-      #def current_command_summary
-      #end
+      def command_outline(command_data)
+        result = command_data[1] || ''
+        result = command_data[2] || '' if result.nil? || result.empty?
+        result
+      end
+
+      def current_command_summary
+        setup.summary_for(context) || ''
+      end
 
       def command_output_strings
         commands = {}
         setup.canonical_command_names_for(context).each do |command_name|
           command_description = setup.command_description_for(command_name, context) || ""
+          command_summary = setup.command_summary_for(command_name, context) || ""
           command_aliases = setup.command_aliases_for(command_name, context)
           command_alias_string = command_aliases.join(", ") if command_aliases && command_aliases.size > 0
           command_string = (command_aliases && command_aliases.size > 0 ? "#{command_name}, #{command_alias_string}" : "#{command_name}" )
           command_name = command_name.to_s
-          commands[command_name] = [command_string, command_description]
+          commands[command_name] = [command_string, command_summary, command_description]
         end
         commands
       end

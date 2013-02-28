@@ -14,7 +14,11 @@ module Escort
         end
 
         def action(&block)
-          @action = Action.new(&block)
+          Action.action(:global, @action, &block)
+        end
+
+        def validations(&block)
+          Validations.validations(:global, @validations, &block)
         end
 
         def command(name, options = {}, &block)
@@ -50,11 +54,8 @@ module Escort
           @description = description
         end
 
-        def validations(&block)
-          @validations = Validations.new(&block)
-        end
 
-        def conflict(*command_names)
+        def conflicting_options(*command_names)
           @conflicts << command_names
         end
 
@@ -67,18 +68,10 @@ module Escort
           @commands = {}
           @requires_arguments = false
           @options = Options.new
-          @action = Action.new(&null_action_block)
-          @validations = Validations.new(&null_validations_block)
+          @action = Action.new
+          @validations = Validations.new
           @config_file  = nil
           @conflicts = []
-        end
-
-        def null_validations_block
-          lambda{|x|}
-        end
-
-        def null_action_block
-          lambda{|x,y,z|}
         end
 
         def set_instance_variable_on(instance, instance_variable, value)

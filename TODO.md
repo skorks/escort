@@ -1,25 +1,26 @@
 ROADMAP
 
 v0.9.0
-- some spec infrastructure                          DONE
-- a couple of basic specs                           DONE
-- some integration test infrastructure              DONE
-- a couple of basic integration tests               DONE
-- pull classes for formatting out into files
-- refactor the formatting code some more
-- pull some formatting code into separate classes
-- test some of the utility formatting code
-- summary and description for commands
-- include command summary and description in help formatter
-- rework how help is displayed for commands with summary and description
-- do for validation and action what I did for option within the dsl
-- look again at conflicts support in dsl, we can probably do better naming for it
+- some spec infrastructure                                                          DONE
+- a couple of basic specs                                                           DONE
+- some integration test infrastructure                                              DONE
+- a couple of basic integration tests                                               DONE
+- pull classes for formatting out into files                                        DONE
+- summary and description for commands                                              DONE
+- include command summary and description in help formatter                         DONE
+- rework how help is displayed for commands with summary and description            DONE
+- the sub commands for command should use summary instead of description            DONE
+- do for validation and action what I did for option within the dsl                 DONE
+- look again at conflicts support in dsl, we can probably do better naming for it   DONE
 - a few more tests
 - a few more integration tests
 - up the version to 0.9.0
 - tag and release
 
 v1.0.0
+- refactor the formatting code some more
+- pull some formatting code into separate classes
+- test some of the utility formatting code
 - rewrite the readme to explain:
   - a basic app with no options
   - a basic app with options

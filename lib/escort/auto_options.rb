@@ -15,7 +15,7 @@ module Escort
               opts.opt :update_default_config, "Update the default configuration file", :short => :none, :long => '--update-default-config', :type => :boolean, :default => false
             end
 
-            command.conflict :create_config, :create_default_config, :update_config, :update_default_config
+            command.conflicting_options :create_config, :create_default_config, :update_config, :update_default_config
 
             command.action do |options, arguments|
               ActionCommand::EscortUtilityCommand.new(setup, options, arguments).execute

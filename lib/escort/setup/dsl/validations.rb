@@ -2,13 +2,17 @@ module Escort
   module Setup
     module Dsl
       class Validations
-        #TODO validations can possibly take a command name param so that we can output which validations
-        #block we are dealing with if there is an error
-        def initialize(&block)
+        class << self
+          def validations(command_name, instance, &block)
+            block.call(instance) if block_given?
+          rescue => e
+            raise Escort::ClientError.new("Problem with syntax of #{instance.instance_variable_get(:"@command_name")} validations block", e)
+          end
+        end
+
+        def initialize(command_name = :global)
+          @command_name = command_name
           @validations = {}
-          block.call(self) if block_given?
-        rescue => e
-          raise Escort::ClientError.new("Problem with syntax of validations block", e)
         end
 
         def validate(name, description, &block)
