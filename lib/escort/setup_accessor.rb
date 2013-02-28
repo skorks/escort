@@ -65,12 +65,24 @@ module Escort
       version_string = fetch_instance_variable_from(global_instance, :version)
     end
 
-    def summary
-      summary = fetch_instance_variable_from(global_instance, :summary)
+    #def global_summary
+      #summary_for([])
+    #end
+
+    #def global_description
+      #description_for([])
+    #end
+
+    def summary_for(context = [])
+      with_context(context) do |current_context|
+        fetch_instance_variable_from(current_context, :summary)
+      end
     end
 
-    def description
-      description = fetch_instance_variable_from(global_instance, :description)
+    def description_for(context = [])
+      with_context(context) do |current_context|
+        fetch_instance_variable_from(current_context, :description)
+      end
     end
 
     def command_description_for(command_name, context = [])

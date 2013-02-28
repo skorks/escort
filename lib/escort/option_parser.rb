@@ -52,7 +52,7 @@ module Escort
       parser = add_option_conflicts_to(parser, context)
       parser = default_option_values_from_config_for(parser, context)
       parser.version(setup.version)                                   #set the version if it was provided
-      parser.help_formatter(Escort::Formatter::Default.new(setup, context))
+      parser.help_formatter(Escort::Formatter::DefaultHelpFormatter.new(setup, context))
       parsed_options = parse_options_string(parser, cli_options)
       Escort::Validator.for(parser).validate(parsed_options, setup.validations_for(context))
     end

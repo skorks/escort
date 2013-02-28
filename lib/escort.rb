@@ -6,10 +6,12 @@ require 'escort/logger'
 
 require 'escort/error/error'
 
+require 'escort/formatter/terminal'
 require 'escort/formatter/string_splitter'
 require 'escort/formatter/terminal_formatter'
+require 'escort/formatter/borderless_table'
 require 'escort/formatter/common'
-require 'escort/formatter/default'
+require 'escort/formatter/default_help_formatter'
 
 require 'escort/setup/dsl/options'
 require 'escort/setup/dsl/action'

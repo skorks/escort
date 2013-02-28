@@ -17,7 +17,7 @@ module Escort
       parser = init_parser(stop_words)
       parser = add_setup_options_to(parser, context)
       parser.version(setup.version)                                   #set the version if it was provided
-      parser.help_formatter(Escort::Formatter::Default.new(setup, context))
+      parser.help_formatter(Escort::Formatter::DefaultHelpFormatter.new(setup, context))
       parsed_options = parse_options_string(parser, cli_options)
     end
 
