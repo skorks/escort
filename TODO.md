@@ -1,37 +1,25 @@
 ROADMAP
 
-v0.1.0
-- some spec infrastructure                                                          DONE
-- a couple of basic specs                                                           DONE
-- some integration test infrastructure                                              DONE
-- a couple of basic integration tests                                               DONE
-- pull classes for formatting out into files                                        DONE
-- summary and description for commands                                              DONE
-- include command summary and description in help formatter                         DONE
-- rework how help is displayed for commands with summary and description            DONE
-- the sub commands for command should use summary instead of description            DONE
-- do for validation and action what I did for option within the dsl                 DONE
-- look again at conflicts support in dsl, we can probably do better naming for it   DONE
-- up the version to 0.1.0
-- tag and release
-
 v0.9.0
+- depends_on support
+- BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case
 - a few more tests
 - a few more integration tests
 - refactor the formatting code some more
 - pull some formatting code into separate classes
 - test some of the utility formatting code
-- up the version to 0.9.0
-- tag and release
-
-v1.0.0
-- rewrite the readme to explain:
+- improve the readme to explain:
   - a basic app with no options
   - a basic app with options
     - supplying multiple of the same parameter using multi
   - a basic app with require arguments
   - a basic app specifying version, description and summary
   - a basic app with options and validations
+- up the version to 0.9.0
+- tag and release
+
+v1.0.0
+- improve the readme to explain:
   - implementing and action for a basic app
   - a basic app with config file (don't worry about explaining all the helper stuff that gets created)
   - a basic app with conflicting options
@@ -57,6 +45,7 @@ v1.0.1
 - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
 - rewrite the help formatter to be a bit easier to understand (more like man output for output)
 - add depends support to dsl
+- ability to specify a different command based on options declaratively or a convention for how to do different things for the same action based on options (bunch of options that are flags, options that are a clump of values etc)
 
 v1.0.2
 - more specs
@@ -150,3 +139,18 @@ DONE
 - better support for on_error blocks with explanations and examples of usage (roll exit code support into here), default handling of errors in block N/A
 - a convention for how to actually do the code that will handle the commands etc. DONE
 - support for infinitely nesting sub commands (is this really necessary) DONE
+
+v0.1.0
+- some spec infrastructure                                                          DONE
+- a couple of basic specs                                                           DONE
+- some integration test infrastructure                                              DONE
+- a couple of basic integration tests                                               DONE
+- pull classes for formatting out into files                                        DONE
+- summary and description for commands                                              DONE
+- include command summary and description in help formatter                         DONE
+- rework how help is displayed for commands with summary and description            DONE
+- the sub commands for command should use summary instead of description            DONE
+- do for validation and action what I did for option within the dsl                 DONE
+- look again at conflicts support in dsl, we can probably do better naming for it   DONE
+- up the version to 0.1.0                                                           DONE
+- tag and release                                                                   DONE
