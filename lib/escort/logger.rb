@@ -41,20 +41,20 @@ module Escort
 
       def basic_error_formatter
         proc do |severity, datetime, progname, msg|
-          "\"#{msg2str(msg)}\"\n"
+          "#{msg2str(msg)}\n"
         end
       end
 
       #"#{severity} [#{datetime.strftime("%d/%b/%Y %H:%M:%S")}] \"#{msg}\"\n"
       def advanced_error_formatter
         proc do |severity, datetime, progname, msg|
-          sprintf("%-8s \"#{msg2str(msg, 10)}\"\n", severity)
+          sprintf("%-8s #{msg2str(msg, 10)}\n", severity)
         end
       end
 
       def output_formatter
         proc do |severity, datetime, progname, msg|
-          "\"#{msg}\"\n"
+          "#{msg}\n"
         end
       end
 
@@ -64,7 +64,7 @@ module Escort
           msg
         when ::Exception
           "#{msg.message} (#{ msg.class })\n" <<
-          (msg.backtrace || []).map{|line| sprintf("%#{backtrace_indent}s#{line}", " ")}.join("\n")
+          (msg.backtrace || []).map{|line| sprintf("%#{backtrace_indent}s#{line}", "")}.join("\n")
         else
           msg.inspect
         end

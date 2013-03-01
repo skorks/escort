@@ -72,11 +72,11 @@ module Escort
 
     def handle_escort_error(e)
       if e.kind_of?(Escort::UserError)
-        print_escort_error_message(e)
+        print_stacktrace(e)
         error_logger.debug{ "Escort app failed to execute successfully, due to user error" }
         exit(Escort::USER_ERROR_EXIT_CODE)
       elsif e.kind_of?(Escort::ClientError)
-        print_escort_error_message(e)
+        print_stacktrace(e)
         error_logger.debug{ "Escort app failed to execute successfully, due to client setup error" }
         exit(Escort::CLIENT_ERROR_EXIT_CODE)
       else
@@ -104,7 +104,6 @@ module Escort
 
     def print_escort_error_message(e)
       print_stacktrace(e)
-      error_logger.warn{ "\n\n" }
       error_logger.warn{ "An internal Escort error has occurred, you should probably report it by creating an issue on github!" }
     end
   end

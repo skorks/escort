@@ -1,10 +1,10 @@
 ROADMAP
 
 v0.9.0
-- depends_on support
-- BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case
+- BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case DONE
 - a few more tests
 - a few more integration tests
+- depends_on support
 - refactor the formatting code some more
 - pull some formatting code into separate classes
 - test some of the utility formatting code
