@@ -6,7 +6,7 @@ describe "Escort basic app that requires arguments", :integration => true do
       app.requires_arguments
 
       app.action do |options, arguments|
-        Command.new(options, arguments).execute(result)
+        Escort::IntegrationTestCommand.new(options, arguments).execute(result)
       end
     end
   end

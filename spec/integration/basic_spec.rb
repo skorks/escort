@@ -4,7 +4,7 @@ describe "Escort basic app with no options defined", :integration => true do
   let(:app_configuration) do
     ->(app) do
       app.action do |options, arguments|
-        Command.new(options, arguments).execute(result)
+        Escort::IntegrationTestCommand.new(options, arguments).execute(result)
       end
     end
   end

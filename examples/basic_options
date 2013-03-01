@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib", "escort"))
+require File.join(File.expand_path(__FILE__), "..", "commands", "example_command")
+
+Escort::App.create do |app|
+  app.options do |opts|
+    opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string, :default => "option 1"
+  end
+
+  app.action do |options, arguments|
+    Escort::ExampleCommand.new(options, arguments).execute
+  end
+end

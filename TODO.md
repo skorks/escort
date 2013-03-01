@@ -1,24 +1,24 @@
 ROADMAP
 
-v0.9.0
+v0.2.0
 - BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case DONE
-- a few more tests
-- a few more integration tests (test that basic app automatically gets help and other automatic options)
-- depends_on support
 - refactor the formatting code some more
 - pull some formatting code into separate classes
 - test some of the utility formatting code
+- a few more tests
+- depends_on support
 - improve the readme to explain:
-  - a basic app with no options
-  - a basic app with options
-    - supplying multiple of the same parameter using multi
-  - a basic app with require arguments
-  - a basic app specifying version, description and summary
+  - a basic app with no options                              DONE
+  - a basic app with options                                 DONE
+    - supplying multiple of the same parameter using multi   DONE
+  - a basic app with require arguments                       DONE
+  - a basic app specifying version, description and summary  DONE
   - a basic app with options and validations
-- up the version to 0.9.0
+- up the version to 0.2.0
 - tag and release
 
 v1.0.0
+- a few more integration tests (test that basic app automatically gets help and other automatic options)
 - improve the readme to explain:
   - implementing and action for a basic app
   - a basic app with config file (don't worry about explaining all the helper stuff that gets created)
@@ -37,13 +37,13 @@ v1.0.0
 v1.0.1
 - more specs (setup accessor etc)
 - more integration specs (more specs for the different types of options)
-- rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.)
+- rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.) DONE
 - lots more logging at different levels for debug purposes
 - add validation messages to help text
 - a way have helpers available when you don't want to have to create a command
 - the config auto option should not be included in the config file, same with other auto options
 - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
-- rewrite the help formatter to be a bit easier to understand (more like man output for output)
+- rewrite the help formatter to be a bit easier to understand (more like man output for output) DONE
 - add depends support to dsl
 - ability to specify a different command based on options declaratively or a convention for how to do different things for the same action based on options (bunch of options that are flags, options that are a clump of values etc)
 
@@ -86,9 +86,9 @@ BUCKET
 - blog about dependencies with bundler, the spermy operator and what version will be chosen
 - blog about ppjson and how to use it
 
-- improve the terminal formatter, allowing wrapping text to anywhere, and tabular like output without an actual table, allowing configuring terminal of any size not just 80, spin it off a little separate project, with an example of how to possibly build a menu in it or something
-- BUG the help formatting is still not quite right as far as respecting the char limits and wrapping properly when doing tabular output!!!!
-- do a readme for how trollop was slightly modified to accept a formatter DONE
+- improve the terminal formatter, allowing wrapping text to anywhere, and tabular like output without an actual table, allowing configuring terminal of any size not just 80, spin it off a little separate project, with an example of how to possibly build a menu in it or something DONE
+- BUG the help formatting is still not quite right as far as respecting the char limits and wrapping properly when doing tabular output!!!! DONE
+- do a readme for how trollop was slightly modified to accept a formatter
 - gemspec summary and description should be taken from the app definition/maybe
 - perhaps add a copyright with license to readme
 - via method missing we can make the dsl classes more robust by printing errors and exting when non-dsl methods are attempted

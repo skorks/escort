@@ -1,5 +1,6 @@
 describe Escort::SetupAccessor do
   let(:setup) { Escort::SetupAccessor.new(app_configuration) }
+
   let(:global_app_configuration) do
     Escort::Setup::Dsl::Global.new do |app|
       app.options do |opts|
