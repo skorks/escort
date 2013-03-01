@@ -2,7 +2,7 @@ describe "Escort basic app with version, description, and summary", :integration
   subject { Escort::App.create(option_string, &app_configuration) }
 
   let(:app_configuration) do
-    ->(app) do
+    lambda do |app|
       app.version "0.1.1"
       app.summary "Sum1"
       app.description "Desc1"

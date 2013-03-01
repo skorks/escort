@@ -2,7 +2,7 @@ describe "Escort basic app with options defined", :integration => true do
   subject { Escort::App.create(option_string, &app_configuration) }
 
   let(:app_configuration) do
-    ->(app) do
+    lambda do |app|
       app.options do |opts|
         opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string, :default => "option 1"
       end

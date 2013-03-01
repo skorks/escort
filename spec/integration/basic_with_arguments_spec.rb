@@ -2,7 +2,7 @@ describe "Escort basic app that requires arguments", :integration => true do
   subject { Escort::App.create(option_string, &app_configuration) }
 
   let(:app_configuration) do
-    ->(app) do
+    lambda do |app|
       app.requires_arguments
 
       app.action do |options, arguments|
