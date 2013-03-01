@@ -28,6 +28,10 @@ module Escort
         @command_context
       end
 
+      def command_name
+        command_context.first || :global
+      end
+
       def command_options
         @command_options ||= context_hash(command_context)[:options] || {}
       end

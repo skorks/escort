@@ -3,7 +3,7 @@ ROADMAP
 v0.9.0
 - BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case DONE
 - a few more tests
-- a few more integration tests
+- a few more integration tests (test that basic app automatically gets help and other automatic options)
 - depends_on support
 - refactor the formatting code some more
 - pull some formatting code into separate classes
