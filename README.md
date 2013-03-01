@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/skorks/escort.png)](https://travis-ci.org/skorks/escort)
+
 # Escort
 
 Writing even complex command-line apps should be quick, easy and fun. Escort takes the excellent [Trollop](http://trollop.rubyforge.org/) option parser and adds a whole bunch of awesome features to produce a library you will always want to turn to when a 'quick script' is in order.
