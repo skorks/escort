@@ -1,5 +1,3 @@
-require 'json'
-
 module Escort
   module Setup
     module Configuration
