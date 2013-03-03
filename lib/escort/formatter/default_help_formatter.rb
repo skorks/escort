@@ -1,3 +1,4 @@
+#TODO Output module with Options, Commands and possibly Option and Command
 module Escort
   module Formatter
     class DefaultHelpFormatter

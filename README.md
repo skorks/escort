@@ -173,7 +173,7 @@ We can now do:
 ./app.rb --no-option1
 ```
 
-If you use the negation, the value of `:option1` in the command hash will be `false`, otherwise it will be `true`. Since we made `true` the default value, even if you don't specify the option at all, `:option1` will be `true`.
+If you use the negation, the value of `:option1` in the command hash will be `false`, otherwise it will be `true`. Since we made `true` the default value, even if you don't specify the option at all, `:option1` will be `true`. If you don't set the default for a flag to `true`, then it will have no negation, since not using the flag will be equivalent to setting to `false`.
 
 ### Required Arguments
 

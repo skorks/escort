@@ -31,6 +31,7 @@ require 'escort/setup/configuration/loader'
 
 require 'escort/setup_accessor'
 
+require 'escort/option_dependency_validator'
 require 'escort/validator'
 require 'escort/auto_options'
 require 'escort/global_pre_parser'

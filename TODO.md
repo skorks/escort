@@ -1,23 +1,50 @@
 ROADMAP
 
 v0.2.0
-- BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case DONE
+- depends_on support
+  - option depends on flag                                                                      DONE
+  - flag depends on another flag                                                                DONE
+  - one option depends on another (the other must be not false not nil and not empty)           DONE
+  - one option depends on specific value of another (the other must be of a specific values)    DONE
+  - one option depends on several others (where are must be not false not nil and not empty)    DONE
+  - one option depends on several others where some must have a specific value (some options have specific value, others are not false not nil and not empty)  DONE
+  - error if option for which dependecy is being defined does not exist                         DONE
+  - error if depends on non-existant option                                                     DONE
+  - error if depends on itself                                                                  DONE
+  - error if dependency not satisfied                                                           DONE
+  - error if missing on condition when specifying dependency                                    DONE
+  - refactor the options dsl class dependency code
+  - test the dsl options dependency class to make sure everything is stored as expected
+  - refactor the option_dependency_validator class to be nicer
+  - integration test all the permutations of dependency specification with error and success cases etc
+  - create a shortcut for dependency specification on the opt method options hash itself
+  - fix up example for basic app with dependencies for options
 - refactor the formatting code some more
 - pull some formatting code into separate classes
 - test some of the utility formatting code
 - a few more tests
-- depends_on support
-- improve the readme to explain:
-  - a basic app with no options                              DONE
-  - a basic app with options                                 DONE
-    - supplying multiple of the same parameter using multi   DONE
-  - a basic app with require arguments                       DONE
-  - a basic app specifying version, description and summary  DONE
+- improve the readme to explain
+  - a basic app with no options                                 DONE
+  - a basic app with options                                    DONE
+    - supplying multiple of the same parameter using multi      DONE
+  - a basic app with require arguments                          DONE
+  - a basic app specifying version, description and summary     DONE
+  - test the readme for flags to make sure it works as expected DONE
   - a basic app with options and validations
+  - a basic app with dependant options (mention that a deadlock situation can occur if you're not careful)
+- tests for a basic app with different kinds of validations
+- example for basic app with different kinds of validations
+- add validation texts to help text so that people can see what kind of values are valid
+- fix up help text so that if arguments are mandatory they are shown as mandatory not optional
+- for print stacktrace, change it to print in INFO mode so that stacktrace not printed by default DONE
+- BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case DONE
 - up the version to 0.2.0
 - tag and release
 
 v1.0.0
+- fix ppjson so that dependency suport feature is actually used
+- errors coming straigh out of configuration should still be caught by error handlers to only display stack trace when needed (refactor app create method)
+- in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself
 - a few more integration tests (test that basic app automatically gets help and other automatic options)
 - improve the readme to explain:
   - implementing and action for a basic app
@@ -35,6 +62,7 @@ v1.0.0
 - blog Build Command-Line Apps Like a Pro Using Ruby and Escort
 
 v1.0.1
+- dependencies for command options on options from parent commands or global
 - more specs (setup accessor etc)
 - more integration specs (more specs for the different types of options)
 - rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.) DONE
@@ -66,6 +94,13 @@ v1.0.3
 
 
 BUCKET
+- get the build working on ruby 1.8.7
+- formatting code should support colours and styles for output
+- formatting code should support a table with borders and stuff
+- formatting code should support a simple progress bar for showing progress
+- formatting code should be more well factored
+- highline support should be added so that values can be asked for
+- values should be asked for before validations are executed, since entered values should be validated
 - instead of before and after blocks, add before, after filters for commands, maybe
 - when no action found in the context we want to execute, it should error or at least print an error
 - can we flatten the configuration (as an option)
@@ -101,6 +136,32 @@ BUCKET
 PIE IN SKY
 - choosing default output format based on where the output is going STDOUT.tty?
 - look at ruby curses support a bit more closely and maybe use that for terminal stuff instead as it would be much better at it
+- a library for specifying conditions and matching on those conditions
+- possible syntax for conditions library:
+  Conditions.new do
+   _and do
+      _= a, 1
+      _not do
+        _or do
+          _nil :b
+          _empty :b
+          _false :b
+        end
+      end
+      _present :b
+      _present [:c, :d]
+      _nil :e
+      _empty :f
+      _false :g
+      _or do
+        _= :h, 5
+        _and do
+          _= :i, 7
+          _empty :j
+        end
+      end
+    end
+  end
 
 
 

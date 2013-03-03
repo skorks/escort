@@ -54,6 +54,7 @@ module Escort
       parser.version(setup.version)                                   #set the version if it was provided
       parser.help_formatter(Escort::Formatter::DefaultHelpFormatter.new(setup, context))
       parsed_options = parse_options_string(parser, cli_options)
+      Escort::OptionDependencyValidator.for(parser).validate(parsed_options, setup.dependencies_for(context))
       Escort::Validator.for(parser).validate(parsed_options, setup.validations_for(context))
     end
 

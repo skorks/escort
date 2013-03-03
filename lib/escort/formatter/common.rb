@@ -1,3 +1,4 @@
+#TODO don't need a separate class for this possibly or should be refactored at any rate
 module Escort
   module Formatter
     module Common

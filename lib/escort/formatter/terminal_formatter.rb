@@ -1,3 +1,9 @@
+#TODO rename to StreamOutputFormatter
+#get rid of the display method, it doesn't really add anything
+#the max_width should be max_line_width not terminal_columns, there should be no default max_width
+#indent_count should be indent_width
+#probably don't really need indent_char, we can assume it is a space
+#this will only work well with ASCII chars only!!!
 module Escort
   module Formatter
     class TerminalFormatter

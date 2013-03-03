@@ -99,12 +99,13 @@ module Escort
     end
 
     def print_stacktrace(e)
-      error_logger.error{ e }
+      error_logger.error{ e.message }
+      error_logger.debug{ e }
     end
 
     def print_escort_error_message(e)
       print_stacktrace(e)
-      error_logger.warn{ "An internal Escort error has occurred, you should probably report it by creating an issue on github!" }
+      error_logger.warn{ "An internal Escort error has occurred, you should probably report it by creating an issue on github! To get a stacktrace, up the verbosity level to DEBUG and execute your command again. Use --help for details." }
     end
   end
 end

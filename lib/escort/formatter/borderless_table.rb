@@ -1,3 +1,7 @@
+#TODO needs some serious testing stuffs
+#split out into many classes VirtuaRow, PhysicalRow, FormatterRow
+#needs method each_formatted_row
+#the printing out should only happen in the outputter class not in the table intself
 module Escort
   module Formatter
     class BorderlessTable

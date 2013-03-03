@@ -11,20 +11,9 @@ module Escort
         private
 
         def tput_width
+          #TODO make this more robust and test this as well
           `/usr/bin/env tput cols`.to_i
         end
-
-        #def curses_width
-          #require 'curses'
-          #screen_size = self::DEFAULT_WIDTH
-          #Curses.init_screen
-          #begin
-            #screen_size = Curses.cols
-          #ensure
-            #Curses.close_screen
-          #end
-          #screen_size
-        #end
       end
     end
   end
