@@ -32,7 +32,7 @@ module Escort
         when Hash
           handle_all_option_value_depndency_rules(option_name, rule, options)
         else
-          ensure_option_depends_on_valid_option(rule)
+          ensure_option_depends_on_valid_option(option_name, rule)
           handle_possible_presence_dependency_issue(option_name, rule, options)
         end
       end
@@ -41,7 +41,7 @@ module Escort
     def handle_all_option_value_depndency_rules(option_name, rule, options)
       if option_was_specified?(option_name, options)
         rule.each_pair do |rule_option, rule_option_value|
-          ensure_option_depends_on_valid_option(rule_option)
+          ensure_option_depends_on_valid_option(option_name, rule_option)
           handle_possible_option_value_dependency_issue(option_name, rule_option, rule_option_value, options)
         end
       end
@@ -74,7 +74,7 @@ module Escort
       end
     end
 
-    def ensure_option_depends_on_valid_option(rule)
+    def ensure_option_depends_on_valid_option(option_name, rule)
       unless option_exists?(rule)
         raise Escort::ClientError.new("'#{option_name}' is set up to depend on '#{rule}', but '#{rule}' does not appear to be a valid option, perhaps it is a spelling error")
       end

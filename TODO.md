@@ -1,31 +1,12 @@
 ROADMAP
 
 v0.2.0
-- depends_on support
-  - option depends on flag                                                                      DONE
-  - flag depends on another flag                                                                DONE
-  - one option depends on another (the other must be not false not nil and not empty)           DONE
-  - one option depends on specific value of another (the other must be of a specific values)    DONE
-  - one option depends on several others (where are must be not false not nil and not empty)    DONE
-  - one option depends on several others where some must have a specific value (some options have specific value, others are not false not nil and not empty)  DONE
-  - error if option for which dependecy is being defined does not exist                         DONE
-  - error if depends on non-existant option                                                     DONE
-  - error if depends on itself                                                                  DONE
-  - error if dependency not satisfied                                                           DONE
-  - error if missing on condition when specifying dependency                                    DONE
-  - refactor the options dsl class dependency code
-  - test the dsl options dependency class to make sure everything is stored as expected
-  - refactor the option_dependency_validator class to be nicer
-  - integration test all the permutations of dependency specification with error and success cases etc  DONE
-  - create a shortcut for dependency specification on the opt method options hash itself                DONE
-  - fix up example for basic app with dependencies for options                                          DONE
-- example for conflicting options
-- integration test for conflicting options
-- readme for conflicting options
 - refactor the formatting code some more
 - pull some formatting code into separate classes
 - test some of the utility formatting code
 - a few more tests
+- add dependencies to help text
+- add conflicts to help text
 - improve the readme to explain
   - a basic app with no options                                 DONE
   - a basic app with options                                    DONE
@@ -39,12 +20,34 @@ v0.2.0
 - example for basic app with different kinds of validations
 - add validation texts to help text so that people can see what kind of values are valid
 - fix up help text so that if arguments are mandatory they are shown as mandatory not optional
-- for print stacktrace, change it to print in INFO mode so that stacktrace not printed by default DONE
-- BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case DONE
 - up the version to 0.2.0
 - tag and release
 
+- example for conflicting options                            DONE
+- integration test for conflicting options                   DONE
+- readme for conflicting options                             DONE
+- for print stacktrace, change it to print in INFO mode so that stacktrace not printed by default DONE
+- BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case DONE
+- depends_on support
+  - option depends on flag                                                                      DONE
+  - flag depends on another flag                                                                DONE
+  - one option depends on another (the other must be not false not nil and not empty)           DONE
+  - one option depends on specific value of another (the other must be of a specific values)    DONE
+  - one option depends on several others (where are must be not false not nil and not empty)    DONE
+  - one option depends on several others where some must have a specific value (some options have specific value, others are not false not nil and not empty)  DONE
+  - error if option for which dependecy is being defined does not exist                         DONE
+  - error if depends on non-existant option                                                     DONE
+  - error if depends on itself                                                                  DONE
+  - error if dependency not satisfied                                                           DONE
+  - error if missing on condition when specifying dependency                                    DONE
+  - refactor the options dsl class dependency code                                              DONE
+  - refactor the option_dependency_validator class to be nicer                                          DONE
+  - integration test all the permutations of dependency specification with error and success cases etc  DONE
+  - create a shortcut for dependency specification on the opt method options hash itself                DONE
+  - fix up example for basic app with dependencies for options                                          DONE
+
 v1.0.0
+- have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code)
 - fix ppjson so that dependency suport feature is actually used
 - errors coming straigh out of configuration should still be caught by error handlers to only display stack trace when needed (refactor app create method)
 - in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself

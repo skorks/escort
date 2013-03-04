@@ -3,8 +3,8 @@ shared_context "integration test setup", :integration => true do
 
   before do
     empty_argv
-    $stderr = StringIO.new
-    $stdout = StringIO.new
+    #$stderr = StringIO.new
+    #$stdout = StringIO.new
     $stdin = StringIO.new
   end
 

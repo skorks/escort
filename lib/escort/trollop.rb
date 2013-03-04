@@ -750,9 +750,10 @@ def with_standard_exception_handling(parser)
   begin
     yield
   rescue CommandlineError => e
-    $stderr.puts "Error: #{e.message}."
-    $stderr.puts "Try --help for help."
-    exit(1)
+    raise Escort::UserError.new(e.message, e)
+    #$stderr.puts "Error: #{e.message}."
+    #$stderr.puts "Try --help for help."
+    #exit(1)
   rescue HelpNeeded
     parser.current_help_formatter ? parser.current_help_formatter.print(parser) : parser.educate
     exit

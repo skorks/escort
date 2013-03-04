@@ -319,7 +319,43 @@ Note how with `:option4` we can mix the syntax. However also note the commented 
 
 
 ### Option Conflicts
-TODO
+
+You can specify 2 or more option as conflicting, which means the app will not execute successfully if more than one of those options are provided on the command-line together.
+
+```
+#!/usr/bin/env ruby
+
+require 'escort'
+require 'my_app'
+
+Escort::App.create do |app|
+  app.options do |opts|
+    opts.opt :flag1, "Flag 1", :short => '-f', :long => '--flag1', :type => :boolean
+    opts.opt :flag2, "Flag 2", :short => :none, :long => '--flag2', :type => :boolean
+  end
+
+  app.conflicting_options :flag1, :flag2
+
+  app.action do |options, arguments|
+    MyApp::ExampleCommand.new(options, arguments).execute
+  end
+end
+```
+
+This will succeed:
+
+```
+./app.rb --flag1
+```
+
+This will fail:
+
+```
+./app.rb --flag1 --flag2
+```
+
+Simple!
+
 
 ### Validations
 TODO

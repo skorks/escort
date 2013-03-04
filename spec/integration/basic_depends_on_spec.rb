@@ -1,36 +1,6 @@
 describe "Escort basic app with dependent options", :integration => true do
   subject { Escort::App.create(option_string, &app_configuration) }
 
-  let(:app_configuration) do
-    lambda do |app|
-      app.options do |opts|
-        opts.opt :flag1, "Flag 1", :short => '-f', :long => '--flag1', :type => :boolean
-        opts.opt :flag2, "Flag 2", :short => :none, :long => '--flag2', :type => :boolean, :default => true
-        opts.opt :flag3, "Flag 3", :short => :none, :long => '--flag3', :type => :boolean
-        opts.opt :flag4, "Flag 4", :short => :none, :long => '--flag4', :type => :boolean, :default => true
-        opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string
-        opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string, :multi => true
-        opts.opt :option3, "Option3", :short => :none, :long => '--option3', :type => :string
-        opts.opt :option4, "Option4", :short => :none, :long => '--option4', :type => :string
-
-        opts.dependency :option1, :on => :flag1
-        opts.dependency :option2, :on => [:flag1, :option1]
-        opts.dependency :option3, :on => [:option2]
-        opts.dependency :flag3, :on => :flag1
-        opts.dependency :flag4, :on => :flag3
-        #opts.dependency :option4, :on => {:flag6 => false}
-        #opts.dependency :option4, :on => {:option4 => 'hello'}
-        #opts.dependency :option4, :on => :option1
-        #opts.dependency :option4, :on => [{:flag1 => false}, :option1]
-        opts.dependency :option5, :on => :flag1
-      end
-
-      app.action do |options, arguments|
-        Escort::IntegrationTestCommand.new(options, arguments).execute(result)
-      end
-    end
-  end
-
   context "when dependency specification has no 'on' parameter" do
     let(:app_configuration) do
       lambda do |app|
