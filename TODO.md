@@ -1,21 +1,15 @@
 ROADMAP
 
 v0.2.0
+- basic example with validations
+- integration test for validations
+- readme for validations
 - refactor the formatting code some more
 - pull some formatting code into separate classes
 - test some of the utility formatting code
 - a few more tests
 - add dependencies to help text
 - add conflicts to help text
-- improve the readme to explain
-  - a basic app with no options                                 DONE
-  - a basic app with options                                    DONE
-    - supplying multiple of the same parameter using multi      DONE
-  - a basic app with require arguments                          DONE
-  - a basic app specifying version, description and summary     DONE
-  - test the readme for flags to make sure it works as expected DONE
-  - a basic app with options and validations
-  - a basic app with dependant options (mention that a deadlock situation can occur if you're not careful)
 - tests for a basic app with different kinds of validations
 - example for basic app with different kinds of validations
 - add validation texts to help text so that people can see what kind of values are valid
@@ -23,6 +17,14 @@ v0.2.0
 - up the version to 0.2.0
 - tag and release
 
+- improve the readme to explain
+  - a basic app with no options                                 DONE
+  - a basic app with options                                    DONE
+    - supplying multiple of the same parameter using multi      DONE
+  - a basic app with require arguments                          DONE
+  - a basic app specifying version, description and summary     DONE
+  - test the readme for flags to make sure it works as expected DONE
+  - a basic app with dependant options (mention that a deadlock situation can occur if you're not careful)  DONE
 - example for conflicting options                            DONE
 - integration test for conflicting options                   DONE
 - readme for conflicting options                             DONE
