@@ -54,7 +54,6 @@ module Escort
           @description = description
         end
 
-
         def conflicting_options(*command_names)
           @conflicts << command_names
         end

@@ -4,16 +4,14 @@ v0.2.0
 - basic example with validations
 - integration test for validations
 - readme for validations
+- add dependencies to help text
+- add conflicts to help text
+- add validation texts to help text so that people can see what kind of values are valid
+- fix up help text so that if arguments are mandatory they are shown as mandatory not optional
 - refactor the formatting code some more
 - pull some formatting code into separate classes
 - test some of the utility formatting code
-- a few more tests
-- add dependencies to help text
-- add conflicts to help text
-- tests for a basic app with different kinds of validations
-- example for basic app with different kinds of validations
-- add validation texts to help text so that people can see what kind of values are valid
-- fix up help text so that if arguments are mandatory they are shown as mandatory not optional
+- a few more tests (setup accessor, all the dsl classes)
 - up the version to 0.2.0
 - tag and release
 
@@ -49,39 +47,39 @@ v0.2.0
   - fix up example for basic app with dependencies for options                                          DONE
 
 v1.0.0
-- have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code)
+- have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests
 - fix ppjson so that dependency suport feature is actually used
-- errors coming straigh out of configuration should still be caught by error handlers to only display stack trace when needed (refactor app create method)
 - in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself
 - a few more integration tests (test that basic app automatically gets help and other automatic options)
-- improve the readme to explain:
-  - implementing and action for a basic app
-  - a basic app with config file (don't worry about explaining all the helper stuff that gets created)
-  - a basic app with conflicting options
-  - a basic app with dependent options
-  - a command app with options, validations, description, summary, require arguments and config file
-  - a sub command app with options, validations, description, summary, require arguments and config file
-- rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)
+- readme implementing and action for a basic app
+- readme a basic app with config file (don't worry about explaining all the helper stuff that gets created)
+- readme a command app with options, validations, description, summary, require arguments and config file
+- readme a sub command app with options, validations, description, summary, require arguments and config file
 - extract all the dsl command stuff into a helper module so that global and command can be handled by the same code
+- delete the stuff from the attic once it is no longer needed
 - up the version to 1.0.0
 - tag and release
 - get the blog updated with a new theme
 - put a new subscriber count widget on blog
 - blog Build Command-Line Apps Like a Pro Using Ruby and Escort
 
+- rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)  DONE
+- errors coming straigh out of configuration should still be caught by error handlers to only display stack trace when needed (refactor app create method) DONE
+- readme for a basic app with conflicting options    DONE
+- readme for a basic app with dependent options      DONE
+
 v1.0.1
 - dependencies for command options on options from parent commands or global
-- more specs (setup accessor etc)
+- more specs
 - more integration specs (more specs for the different types of options)
-- rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.) DONE
 - lots more logging at different levels for debug purposes
-- add validation messages to help text
 - a way have helpers available when you don't want to have to create a command
 - the config auto option should not be included in the config file, same with other auto options
 - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
-- rewrite the help formatter to be a bit easier to understand (more like man output for output) DONE
-- add depends support to dsl
 - ability to specify a different command based on options declaratively or a convention for how to do different things for the same action based on options (bunch of options that are flags, options that are a clump of values etc)
+- rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.) DONE
+- rewrite the help formatter to be a bit easier to understand (more like man output for output) DONE
+- add depends support to dsl   DONE
 
 v1.0.2
 - more specs
