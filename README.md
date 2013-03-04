@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/skorks/escort.png)](https://travis-ci.org/skorks/escort)
+[![Build Status](https://travis-ci.org/skorks/escort.png?branch=master)](https://travis-ci.org/skorks/escort)
 
 # Escort
 
