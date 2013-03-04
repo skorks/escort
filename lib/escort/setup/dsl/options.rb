@@ -23,24 +23,39 @@ module Escort
         end
 
         def dependency(option_name, opts = {})
+          ensure_dependency_specification_syntax(opts)
+          @dependencies[option_name] ||= []
+          rules_as_array(opts).each do |rule|
+            ensure_no_self_dependency(option_name, rule)
+            @dependencies[option_name] << rule
+          end
+        end
+
+        private
+        def ensure_no_self_dependency(option_name, rule)
+          case rule
+          when Hash
+            rule.each_pair do |rule_option, rule_option_value|
+              handle_possible_self_dependency(option_name, rule_option)
+            end
+          else
+            handle_possible_self_dependency(option_name, rule)
+          end
+        end
+
+        def ensure_dependency_specification_syntax(opts)
           unless opts[:on]
             raise Escort::ClientError.new("Problem with syntax of dependency specification in #{@command_name} options block, #{option_name} missing ':on' condition")
           end
-          @dependencies[option_name] ||= []
-          [opts[:on]].flatten.each do |rule|
-            case rule
-            when Hash
-              rule.each_pair do |rule_option, rule_option_value|
-                if option_name == rule_option
-                  raise Escort::ClientError.new("Problem with syntax of dependency specification in #{@command_name} options block, #{option_name} is set to depend on itself")
-                end
-              end
-            else
-              if option_name == rule
-                raise Escort::ClientError.new("Problem with syntax of dependency specification in #{@command_name} options block, #{option_name} is set to depend on itself")
-              end
-            end
-            @dependencies[option_name] << rule
+        end
+
+        def rules_as_array(opts)
+          [opts[:on]].flatten
+        end
+
+        def handle_possible_self_dependency(option_name, rule)
+          if option_name == rule
+            raise Escort::ClientError.new("Problem with syntax of dependency specification in #{@command_name} options block, #{option_name} is set to depend on itself")
           end
         end
       end
