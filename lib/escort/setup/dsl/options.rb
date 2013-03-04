@@ -19,6 +19,7 @@ module Escort
         def opt(name, desc="", opts={})
           opts[:desc] ||= desc
           @options[name] ||= opts
+          dependency(name, :on => opts[:depends_on]) if opts[:depends_on]
         end
 
         def dependency(option_name, opts = {})

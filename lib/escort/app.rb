@@ -2,20 +2,34 @@ module Escort
   class App
     #TODO ensure that every command must have an action
     class << self
+      #def create(option_string = '', &block)
+        #cli_app_configuration = Escort::Setup::Dsl::Global.new(&block)
+        #setup = Escort::SetupAccessor.new(cli_app_configuration)
+        #app = self.new(option_string, setup)
+        #app.execute
+        #exit(0)
+      #end
+
       def create(option_string = '', &block)
-        cli_app_configuration = Escort::Setup::Dsl::Global.new(&block)
-        setup = Escort::SetupAccessor.new(cli_app_configuration)
-        app = self.new(option_string, setup)
-        app.execute
+        self.new(option_string, &block).setup_application.execute
         exit(0)
       end
     end
 
     attr_reader :setup, :option_string
 
-    def initialize(option_string, setup)
-      @setup = setup
+    def initialize(option_string, &block)
       @option_string = option_string
+      @setup = nil
+      @block = block
+    end
+
+    def setup_application
+      cli_app_configuration = Escort::Setup::Dsl::Global.new(&@block)
+      @setup = Escort::SetupAccessor.new(cli_app_configuration)
+      self
+    rescue => e
+      handle_escort_error(e)
     end
 
     def execute
