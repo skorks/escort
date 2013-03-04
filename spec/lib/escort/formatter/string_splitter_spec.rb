@@ -34,5 +34,17 @@ describe Escort::Formatter::StringSplitter do
         it("first segment should be 'd'") { subject[2].should == 'd' }
       end
     end
+
+    context "when segment width is 5" do
+      let(:max_segment_width) { 5 }
+
+      context "and string is 'abc\\n123456'" do
+        let(:string) {"abc\n123456"}
+        it("should produce 3 segments") { subject.size.should == 3 }
+        it("first segment should be 'abc'") { subject[0].should == 'abc' }
+        it("second segment should be '12345'") { subject[1].should == '12345' }
+        it("last segment should be '6'") { subject[2].should == '6' }
+      end
+    end
   end
 end
