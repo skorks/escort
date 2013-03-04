@@ -271,7 +271,7 @@ As you can see we've also specified the version, which gives us the `--version` 
 
 You can set up some options to be dependent on the presence or absence of other options. The app will not execute successfully unless all the dependencies are met. You can make your dependencies quite complex, but it is best to keep it pretty simple.
 
-```
+```ruby
 #!/usr/bin/env ruby
 
 require 'escort'
@@ -322,7 +322,7 @@ Note how with `:option4` we can mix the syntax. However also note the commented 
 
 You can specify 2 or more option as conflicting, which means the app will not execute successfully if more than one of those options are provided on the command-line together.
 
-```
+```ruby
 #!/usr/bin/env ruby
 
 require 'escort'
