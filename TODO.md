@@ -16,9 +16,12 @@ v0.2.0
   - refactor the options dsl class dependency code
   - test the dsl options dependency class to make sure everything is stored as expected
   - refactor the option_dependency_validator class to be nicer
-  - integration test all the permutations of dependency specification with error and success cases etc
-  - create a shortcut for dependency specification on the opt method options hash itself
-  - fix up example for basic app with dependencies for options
+  - integration test all the permutations of dependency specification with error and success cases etc  DONE
+  - create a shortcut for dependency specification on the opt method options hash itself                DONE
+  - fix up example for basic app with dependencies for options                                          DONE
+- example for conflicting options
+- integration test for conflicting options
+- readme for conflicting options
 - refactor the formatting code some more
 - pull some formatting code into separate classes
 - test some of the utility formatting code

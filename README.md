@@ -24,7 +24,7 @@ In general, some libraries give you great option parsing, but no infinitely nest
 * Version support (your app can get the `-v` and `--version` based on specification)
 * Multi options (e.g. `my_app -x foo -x bar -x baz`)
 * You can mark options as conflicting with each other
-* You can mark options as depending on each other (NOT YET IMPLEMENTED)
+* You can mark options as depending on each other
 * Declarative validation support for each option, with multiple validation rules per option
 * Specify script arguments as required or optional (when arguments are required `my_app -g foo` will execute, but `my_app -g` will prompt the user to enter arguments)
 * Specify summary and description for your script as well as per command or sub-command
@@ -267,6 +267,59 @@ OPTIONS
 
 As you can see we've also specified the version, which gives us the `--version` flag.
 
+### Option Dependencies
+
+You can set up some options to be dependent on the presence or absence of other options. The app will not execute successfully unless all the dependencies are met. You can make your dependencies quite complex, but it is best to keep it pretty simple.
+
+```
+#!/usr/bin/env ruby
+
+require 'escort'
+require 'my_app'
+
+Escort::App.create do |app|
+  app.options do |opts|
+    opts.opt :flag1, "Flag 1", :short => '-f', :long => '--flag1', :type => :boolean
+    opts.opt :flag2, "Flag 2", :short => :none, :long => '--flag2', :type => :boolean, :default => true
+    opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string
+    opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string, :multi => true
+    opts.opt :option3, "Option3", :short => :none, :long => '--option3', :type => :string
+    opts.opt :option4, "Option4", :short => :none, :long => '--option4', :type => :string
+
+    opts.dependency :option1, :on => :flag1
+    opts.dependency :option2, :on => [:flag1, :option1]
+    opts.dependency :option3, :on => {:option1 => 'foo'}
+    #opts.dependency :option4, :on => [{:flag1 => false}, :option1] #This will get you into big trouble as it can never be fulfilled
+    opts.dependency :option4, :on => [{:flag2 => false}, :option1]
+  end
+
+  app.action do |options, arguments|
+    MyApp::ExampleCommand.new(options, arguments).execute
+  end
+end
+```
+
+In this case if you're using `:option1` you need to have `:flag1` as well e.g.:
+
+```
+./app.rb -o foo -f
+```
+
+`:option2` requires both `:option1` and `:flag1` (of course since `:option1` already has a dependency on `:flag1` it is bit redundant, but demostrates the syntax).
+
+`:option3` is dependant on `:option1` having a particular value, so we need to have:
+
+```
+./app.rb -o foo -f --option3=bar
+```
+
+in order for the app to execute successfully, when we've specified `:option3` on the command-line.
+
+Note how with `:option4` we can mix the syntax. However also note the commented out dependency, this is how you can get into trouble if you make your dependencies too complex. `:option4` in the comment requires `:option1` and the absence of `:flag1`, but `:option1` requires `:flag1` to be present. Needless to say with that specification, using `:option4` on the command-line will never allow the app to execute successfully.
+
+
+### Option Conflicts
+TODO
 
 ### Validations
 TODO
