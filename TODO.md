@@ -48,6 +48,7 @@ v0.2.0
   - fix up example for basic app with dependencies for options                                          DONE
 
 v1.0.0
+- BUG parent_options when parent of command is global context doesn't seem to work???
 - have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests
 - fix ppjson so that dependency suport feature is actually used
 - in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself
@@ -92,7 +93,7 @@ v1.0.3
 - an option for setup that indicates it is a project specific CLI app
 - an options for setup that indicates it is an environment aware CLI app
 - make the configuration environment aware
-- make escort environment aware
+- make escort environment aware (app.environment_aware)
 - json configuration should support defaults config
 - much better documentation and usage patterns
 - pull the terminal formatting stuff into separate gem
@@ -101,6 +102,24 @@ v1.0.3
 
 
 BUCKET
+- a better way of executing action and servants for the actions
+
+  - specify the options via classes
+    #command.action StreamProvider::Commands::StopServer
+  - define servants for actions within context
+    #app.before_action :stop, :start, :restart do |action|
+      #action.servant :configatron, StreamProvider::Servants::ConfigatronServant
+    #end
+
+    #app.before_action :restart do |action|
+      #action.servant :blah, StreamProvider::Servants::BlahServant
+    #end
+  - a before action without command names in context
+    app.before :actions => :this - only action in current context
+    app.before :actions => :child - only child action in current context
+    app.before :actions => [:this, :child] - this action and child actions
+    app.before :actions => :descendant - all actions that descend from this one, but not this one
+
 - can split out the shell command executor into a tiny gem for later use
 - get the build working on ruby 1.8.7
 - formatting code should support colours and styles for output

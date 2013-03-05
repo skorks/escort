@@ -25,11 +25,17 @@ module Escort
     end
 
     def setup_application
-      cli_app_configuration = Escort::Setup::Dsl::Global.new(&@block)
-      @setup = Escort::SetupAccessor.new(cli_app_configuration)
-      self
-    rescue => e
-      handle_escort_error(e)
+      old_error_sev_threshold = error_logger.sev_threshold
+      begin
+        error_logger.sev_threshold = ::Logger::DEBUG
+        cli_app_configuration = Escort::Setup::Dsl::Global.new(&@block)
+        @setup = Escort::SetupAccessor.new(cli_app_configuration)
+        self
+      rescue => e
+        handle_escort_error(e)
+      ensure
+        error_logger.sev_threshold = old_error_sev_threshold
+      end
     end
 
     def execute
@@ -64,7 +70,9 @@ module Escort
 
     def execute_action(action, options, arguments, user_config)
       begin
+        #execute before servants here
         action.call(options, arguments, user_config)
+        #execute after servants here
       rescue => e
         handle_action_error(e)
       end
