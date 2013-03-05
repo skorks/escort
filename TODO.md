@@ -1,13 +1,10 @@
 ROADMAP
 
 v0.2.0
-- basic example with validations       DONE
-- integration test for validations
-- readme for validations
+- fix up help text so that if arguments are mandatory they are shown as mandatory not optional
 - add dependencies to help text
 - add conflicts to help text
 - add validation texts to help text so that people can see what kind of values are valid
-- fix up help text so that if arguments are mandatory they are shown as mandatory not optional
 - refactor the formatting code some more
 - pull some formatting code into separate classes
 - test some of the utility formatting code
@@ -16,6 +13,9 @@ v0.2.0
 - tag and release
 
 
+- basic example with validations       DONE
+- integration test for validations     DONE
+- readme for validations               DONE
 - test the shell command executor, and the terminal class for width command DONE
 - improve the readme to explain
   - a basic app with no options                                 DONE
