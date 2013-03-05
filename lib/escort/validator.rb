@@ -31,7 +31,10 @@ module Escort
 
     def validate_option(option, options, validations_array)
       validations_array.each do |validation_data|
-        parser.die(option, validation_data[:desc]) if invalid?(option, options, validation_data)
+        if invalid?(option, options, validation_data)
+          raise Escort::UserError.new("#{option} #{validation_data[:desc]}")
+        end
+        #parser.die(option, validation_data[:desc]) if invalid?(option, options, validation_data)
       end
     end
 

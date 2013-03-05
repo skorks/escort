@@ -1,8 +1,7 @@
 ROADMAP
 
 v0.2.0
-- test the shell command executor, and the terminal class for width command
-- basic example with validations
+- basic example with validations       DONE
 - integration test for validations
 - readme for validations
 - add dependencies to help text
@@ -16,6 +15,8 @@ v0.2.0
 - up the version to 0.2.0
 - tag and release
 
+
+- test the shell command executor, and the terminal class for width command DONE
 - improve the readme to explain
   - a basic app with no options                                 DONE
   - a basic app with options                                    DONE
