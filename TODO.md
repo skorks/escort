@@ -1,6 +1,7 @@
 ROADMAP
 
 v0.2.0
+- test the shell command executor, and the terminal class for width command
 - basic example with validations
 - integration test for validations
 - readme for validations
@@ -100,6 +101,7 @@ v1.0.3
 
 
 BUCKET
+- can split out the shell command executor into a tiny gem for later use
 - get the build working on ruby 1.8.7
 - formatting code should support colours and styles for output
 - formatting code should support a table with borders and stuff

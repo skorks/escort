@@ -6,6 +6,7 @@ require 'escort/logger'
 
 require 'escort/error/error'
 
+require 'escort/formatter/shell_command_executor'
 require 'escort/formatter/terminal'
 require 'escort/formatter/string_splitter'
 require 'escort/formatter/terminal_formatter'

@@ -11,8 +11,18 @@ module Escort
         private
 
         def tput_width
-          #TODO make this more robust and test this as well
-          `/usr/bin/env tput cols`.to_i
+          ShellCommandExecutor.new('/usr/bin/env tput cols').execute(tput_cols_command_success_callback, tput_cols_command_error_callback) || DEFAULT_WIDTH
+        end
+
+        def tput_cols_command_success_callback
+          lambda {|command, stdin, stdout, stderr| stdout.readlines.first.to_i}
+        end
+
+        def tput_cols_command_error_callback
+          lambda do |command, e|
+            error_logger.debug {e}
+            error_logger.info {"Unable to find terminal width via '#{command}', using default of #{DEFAULT_WIDTH}"}
+          end
         end
       end
     end
