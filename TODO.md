@@ -52,12 +52,12 @@ v0.2.0
   - fix up example for basic app with dependencies for options                                          DONE
 
 v0.4.0
-- for borderless table, should be able to create another borderless table within a cell of an existing table
 - readme a basic app with config file (don't worry about explaining all the helper stuff that gets created)
 - readme implementing and action for a basic app
 - refactor terminal formatter and test it
 - refactor borderless table and test it
 - BUG parent_options when parent of command is global context doesn't seem to work???
+- test the base command for actions well
 - fix ppjson so that dependency suport feature is actually used
 - readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
 - readme a sub command app with options, validations, description, summary, require arguments and config file
@@ -70,6 +70,7 @@ v0.4.0
 
 v1.0.0
 - a few more tests (setup accessor, all the dsl classes)
+- for borderless table, should be able to create another borderless table within a cell of an existing table
 - have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests
 - in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself
 - a few more integration tests (test that basic app automatically gets help and other automatic options)
