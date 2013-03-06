@@ -8,7 +8,7 @@ Escort::App.create do |app|
     opts.opt :flag1, "Flag 1", :short => '-f', :long => '--flag1', :type => :boolean
     opts.opt :flag2, "Flag 2", :short => :none, :long => '--flag2', :type => :boolean
 
-    opts.conflict :flag1, :flag2
+    opts.conflict :flag1, :flag2, :flag3
   end
 
   app.action do |options, arguments|

@@ -70,9 +70,16 @@ module Escort
       conflicting_options_for_context = setup.conflicting_options_for(context)
       conflicting_options_for_context.keys.each do |option_name|
         conflict_list = [option_name] + conflicting_options_for_context[option_name]
+        conflict_list.each do |option|
+          raise Escort::ClientError.new("Conflict defined with option '#{option}', but this option does not exist, perhaps it is a spelling error.") unless option_exists?(parser, option)
+        end
         parser.conflicts *conflict_list
       end
       parser
+    end
+
+    def option_exists?(parser, option)
+      parser.specs.keys.include?(option)
     end
 
     def default_option_values_from_config_for(parser, context)

@@ -1,16 +1,17 @@
 ROADMAP
 
 v0.2.0
-- need to rework conflicts as currently not really very good   DONE
-- add dependencies to help text  DONE
-- add conflicts to help text     DONE
-- add validation texts to help text so that people can see what kind of values are valid  DONE
-- make sure we check conflicts for non-existant options
 - test all the new help stuff on option, for conflicts, dependencies, validations
+- test conflicts for non-exstant options (integration)
 - up the version to 0.2.0
 - tag and release
 
 
+- need to rework conflicts as currently not really very good   DONE
+- add dependencies to help text  DONE
+- add conflicts to help text     DONE
+- add validation texts to help text so that people can see what kind of values are valid  DONE
+- make sure we check conflicts for non-existant options   DONE
 - refactor the formatting code some more DONE
 - pull some formatting code into separate classes DONE
 - test some of the utility formatting code DONE
