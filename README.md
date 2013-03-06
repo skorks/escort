@@ -332,9 +332,9 @@ Escort::App.create do |app|
   app.options do |opts|
     opts.opt :flag1, "Flag 1", :short => '-f', :long => '--flag1', :type => :boolean
     opts.opt :flag2, "Flag 2", :short => :none, :long => '--flag2', :type => :boolean
-  end
 
-  app.conflicting_options :flag1, :flag2
+    opts.conflict :flag1, :flag2, :flag3
+  end
 
   app.action do |options, arguments|
     MyApp::ExampleCommand.new(options, arguments).execute
@@ -359,7 +359,7 @@ Simple!
 
 ### Validations
 
-Validations are pretty easy, they can be defined in a separate block. You must provide an option symbol and an error message for when validation fails. The actual validation is a block, when the block evaluates to true, it means validation is successful, othewise validation fails. That's all there is to it.
+Validations are pretty easy, they can be defined inside the options block. You must provide an option symbol and an error message for when validation fails. The actual validation is a block, when the block evaluates to true, it means validation is successful, othewise validation fails. That's all there is to it.
 
 ```ruby
 #!/usr/bin/env ruby
@@ -372,9 +372,7 @@ Escort::App.create do |app|
     opts.opt :option1, "Option 1", :short => '-o', :long => '--option1', :type => :string
     opts.opt :int1, "Int 1", :short => '-i', :long => '--int1', :type => :int
     opts.opt :option2, "Option 2", :short => :none, :long => '--option2', :type => :string
-  end
 
-  app.validations do |opts|
     opts.validate(:option1, "must be either 'foo' or 'bar'") { |option| ["foo", "bar"].include?(option) }
     opts.validate(:int1, "must be between 10 and 20 exclusive") { |option| option > 10 && option < 20 }
     opts.validate(:option2, "must be two words") {|option| option =~ /\w\s\w/}

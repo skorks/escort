@@ -15,12 +15,19 @@ module Escort
           @options = {}
           @dependencies = {}
           @conflicts = {}
+          @validations = {}
         end
 
         def opt(name, desc="", opts={})
           opts[:desc] ||= desc
           @options[name] ||= opts
           dependency(name, :on => opts[:depends_on]) if opts[:depends_on]
+          conflict(*[name, opts[:conflicts_with]].flatten) if opts[:conflicts_with]
+        end
+
+        def validate(name, description, &block)
+          @validations[name] ||= []
+          @validations[name] << {:desc => description, :block => block}
         end
 
         def dependency(option_name, opts = {})

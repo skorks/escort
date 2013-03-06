@@ -182,8 +182,10 @@ module Escort
     end
 
     def validations_hash_from(context_object)
-      validations_object = fetch_instance_variable_from(context_object, :validations)
-      fetch_instance_variable_from(validations_object, :validations)
+      ensure_context_object(context_object, {}) do
+        validations_object = fetch_instance_variable_from(context_object, :options)
+        fetch_instance_variable_from(validations_object, :validations)
+      end
     end
 
     def dependencies_hash_from(context_object)

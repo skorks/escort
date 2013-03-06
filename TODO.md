@@ -7,6 +7,9 @@ v0.2.0
 - tag and release
 
 
+- fix up readme for conflicts block    DONE
+- rework validations to be part of the options block rather than in their own block  DONE
+- fix example, fix tests, fix readme DONE
 - need to rework conflicts as currently not really very good   DONE
 - add dependencies to help text  DONE
 - add conflicts to help text     DONE
@@ -69,6 +72,8 @@ v0.4.0
 
 
 v1.0.0
+- perhaps rework actions with passing a class and having it being auto called
+- implement servants for dealing with clumps of functionality, and action commands have access to all servants that were executed before them
 - a few more tests (setup accessor, all the dsl classes)
 - for borderless table, should be able to create another borderless table within a cell of an existing table
 - have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests

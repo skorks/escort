@@ -6,9 +6,6 @@ describe "Escort basic app with validations", :integration => true do
       lambda do |app|
         app.options do |opts|
           opts.opt :option1, "Option 1", :short => '-o', :long => '--option1', :type => :string
-        end
-
-        app.validations do |opts|
           opts.validate(:option2, "must be either 'foo' or 'bar'") { |option| ["foo", "bar"].include?(option) }
         end
 
@@ -27,9 +24,6 @@ describe "Escort basic app with validations", :integration => true do
       lambda do |app|
         app.options do |opts|
           opts.opt :option1, "Option 1", :short => '-o', :long => '--option1', :type => :string
-        end
-
-        app.validations do |opts|
           opts.validate(:option1, "must be either 'foo' or 'bar'") { |option| ["foo", "bar"].include?(option) }
         end
 
@@ -55,9 +49,6 @@ describe "Escort basic app with validations", :integration => true do
       lambda do |app|
         app.options do |opts|
           opts.opt :option2, "Option 2", :short => :none, :long => '--option2', :type => :string
-        end
-
-        app.validations do |opts|
           opts.validate(:option2, "must be two words") {|option| option =~ /\w\s\w/}
           opts.validate(:option2, "must be at least 20 characters long") {|option| option.length >= 20}
         end

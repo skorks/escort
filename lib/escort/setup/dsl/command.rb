@@ -21,11 +21,8 @@ module Escort
           Action.action(@name, @action, &block)
         end
 
-        def validations(&block)
-          Validations.validations(@name, @validations, &block)
-        end
-
         def command(name, options = {}, &block)
+          raise Escort::ClientError.new("Parameter to 'requires_arguments' must be a boolean") unless [true, false].include?(boolean)
           options[:requires_arguments] = @requires_arguments
           command = Command.new(name.to_sym, options, &block)
           aliases = [options[:aliases] || []].flatten + [name]
@@ -44,7 +41,6 @@ module Escort
 
         def conflicting_options(*command_names)
           raise Escort::ClientError.new("This interface for specifying conflicting options is no longer supported, please use 'opts.conflict' in the options block")
-          #@conflicts << command_names
         end
 
         def summary(summary)
@@ -62,11 +58,9 @@ module Escort
           @commands = {}
           @options = Options.new(name)
           @action = Action.new(name)
-          @validations = Validations.new(name)
           @name = nil
           @description = nil
           @aliases = []
-          #@conflicts = []
           @summary = nil
         end
       end

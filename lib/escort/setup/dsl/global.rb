@@ -17,10 +17,6 @@ module Escort
           Action.action(:global, @action, &block)
         end
 
-        def validations(&block)
-          Validations.validations(:global, @validations, &block)
-        end
-
         def command(name, options = {}, &block)
           options[:requires_arguments] = @requires_arguments
           command = Command.new(name.to_sym, options, &block)
@@ -31,7 +27,7 @@ module Escort
         end
 
         def requires_arguments(boolean = true)
-          #TODO raise a client error if the value is anything besides true or false
+          raise Escort::ClientError.new("Parameter to 'requires_arguments' must be a boolean") unless [true, false].include?(boolean)
           @requires_arguments = boolean
           @commands.each do |command|
             command.requires_arguments(boolean)
@@ -56,7 +52,6 @@ module Escort
 
         def conflicting_options(*command_names)
           raise Escort::ClientError.new("This interface for specifying conflicting options is no longer supported, please use 'opts.conflict' in the options block")
-          #@conflicts << command_names
         end
 
         private
@@ -69,9 +64,7 @@ module Escort
           @requires_arguments = false
           @options = Options.new
           @action = Action.new
-          @validations = Validations.new
           @config_file  = nil
-          #@conflicts = []
         end
 
         def set_instance_variable_on(instance, instance_variable, value)

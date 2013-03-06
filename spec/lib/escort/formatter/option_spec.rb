@@ -1,5 +1,7 @@
 describe Escort::Formatter::Option do
-  let(:option) {Escort::Formatter::Option.new(name, details)}
+  let(:option) {Escort::Formatter::Option.new(name, details, setup, context)}
+  let(:setup) { Escort::SetupAccessor.new(app_configuration) }
+  let(:context) {[]}
   let(:name) { 'option1' }
   let(:details) do
     {:short=>short, :long=>"option1", :type=>type, :default=>default, :desc=>desc, :multi=>false}
@@ -8,6 +10,10 @@ describe Escort::Formatter::Option do
   let(:type) {:string}
   let(:default) {'foo'}
   let(:desc) {'Option 1'}
+  let(:app_configuration) do
+    Escort::Setup::Dsl::Global.new do |app|
+    end
+  end
 
   describe "#usage" do
     subject {option.usage}
