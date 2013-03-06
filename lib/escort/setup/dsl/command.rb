@@ -22,7 +22,6 @@ module Escort
         end
 
         def command(name, options = {}, &block)
-          raise Escort::ClientError.new("Parameter to 'requires_arguments' must be a boolean") unless [true, false].include?(boolean)
           options[:requires_arguments] = @requires_arguments
           command = Command.new(name.to_sym, options, &block)
           aliases = [options[:aliases] || []].flatten + [name]
@@ -32,7 +31,7 @@ module Escort
         end
 
         def requires_arguments(boolean = true)
-          #TODO raise a client error if the value is anything besides true or false
+          raise Escort::ClientError.new("Parameter to 'requires_arguments' must be a boolean") unless [true, false].include?(boolean)
           @requires_arguments = boolean
           @commands.each do |command|
             command.requires_arguments(boolean)
