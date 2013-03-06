@@ -1,12 +1,12 @@
 describe Escort::Formatter::ShellCommandExecutor do
   let(:executor) {Escort::Formatter::ShellCommandExecutor.new(command)}
   let(:result) { [] }
-  let(:new_shell_success_callback) {lambda{ |command, stdin, stdout, stderr| result << 'success' }}
-  let(:current_shell_success_callback) {lambda{ |command, final_result| result << 'success' }}
   let(:error_callback) {lambda{ |command, error| result << 'error'; result << error.class }}
 
   describe "#execute_in_new_shell" do
-    subject {executor.execute_in_new_shell(new_shell_success_callback, error_callback)}
+    subject {executor.execute_in_new_shell(success_callback, error_callback)}
+
+    let(:success_callback) {lambda{ |command, stdin, stdout, stderr| result << 'success' }}
 
     context "when command is invalid" do
       let(:command) { 'lx -z' }
@@ -31,7 +31,9 @@ describe Escort::Formatter::ShellCommandExecutor do
   end
 
   describe "#execute_in_current_shell" do
-    subject {executor.execute_in_current_shell(current_shell_success_callback, error_callback)}
+    subject {executor.execute_in_current_shell(success_callback, error_callback)}
+
+    let(:success_callback) {lambda{ |command, final_result| result << 'success' }}
 
     context "when command is invalid" do
       let(:command) { 'lx -z' }

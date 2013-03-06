@@ -1,9 +1,6 @@
-#TODO Output module with Options, Commands and possibly Option and Command
 module Escort
   module Formatter
     class DefaultHelpFormatter
-      include Escort::Formatter::Common
-
       attr_reader :setup, :context
 
       def initialize(setup, context)
@@ -12,8 +9,8 @@ module Escort
       end
 
       def print(parser)
-        option_strings = option_output_strings(parser)
-        command_strings = command_output_strings
+        options = Options.new(parser)
+        commands = Commands.new(setup, context)
 
         TerminalFormatter.display($stdout, Terminal.width) do |d|
           d.puts "NAME"
@@ -38,29 +35,28 @@ module Escort
               d.put setup.version, :newlines => 2
             }
           end
-          if option_strings.keys.size > 0
+          if options.count > 0
             d.puts "OPTIONS"
             d.indent(4) {
               d.table(:columns => 3, :newlines => 1) do |t|
-                option_strings.each_pair do |key, value|
-                  t.row value[:string], '-', value[:desc] || ''
+                options.each do |option|
+                  t.row option.usage, '-', option.description
                 end
               end
             }
           end
-          if command_strings.keys.size > 0
+          if commands.count > 0
             d.puts "COMMANDS"
             d.indent(4) {
               d.table(:columns => 3, :newlines => 1) do |t|
-                command_strings.each_pair do |command_name, values_array|
-                  t.row values_array[0], '-', command_outline(values_array)
+                commands.each do |command|
+                  t.row command.name_with_aliases, '-', command.outline
                 end
               end
             }
           end
         end
       end
-
 
       private
 
@@ -79,29 +75,23 @@ module Escort
         context.last || :global
       end
 
-      def command_outline(command_data)
-        result = command_data[1] || ''
-        result = command_data[2] || '' if result.nil? || result.empty?
-        result
-      end
-
       def current_command_summary
         setup.summary_for(context) || ''
       end
 
-      def command_output_strings
-        commands = {}
-        setup.canonical_command_names_for(context).each do |command_name|
-          command_description = setup.command_description_for(command_name, context) || ""
-          command_summary = setup.command_summary_for(command_name, context) || ""
-          command_aliases = setup.command_aliases_for(command_name, context)
-          command_alias_string = command_aliases.join(", ") if command_aliases && command_aliases.size > 0
-          command_string = (command_aliases && command_aliases.size > 0 ? "#{command_name}, #{command_alias_string}" : "#{command_name}" )
-          command_name = command_name.to_s
-          commands[command_name] = [command_string, command_summary, command_description]
-        end
-        commands
-      end
+      #def command_output_strings
+        #commands = {}
+        #setup.canonical_command_names_for(context).each do |command_name|
+          #command_description = setup.command_description_for(command_name, context) || ""
+          #command_summary = setup.command_summary_for(command_name, context) || ""
+          #command_aliases = setup.command_aliases_for(command_name, context)
+          #command_alias_string = command_aliases.join(", ") if command_aliases && command_aliases.size > 0
+          #command_string = (command_aliases && command_aliases.size > 0 ? "#{command_name}, #{command_alias_string}" : "#{command_name}" )
+          #command_name = command_name.to_s
+          #commands[command_name] = [command_string, command_summary, command_description]
+        #end
+        #commands
+      #end
     end
   end
 end
