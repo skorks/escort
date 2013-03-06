@@ -1,22 +1,26 @@
 ROADMAP
 
 v0.3.0
-- extract all the dsl command stuff into a helper module so that global and command can be handled by the same code
-- readme implementing and action for a basic app
-- readme a basic app with config file (don't worry about explaining all the helper stuff that gets created)
 - refactor terminal formatter and test it
 - refactor borderless table and test it
+- readme implementing and action for a basic app
+- readme a basic app with config file (don't worry about explaining all the helper stuff that gets created)
+- readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
 - BUG parent_options when parent of command is global context doesn't seem to work???
 - test the base command for actions well
-- fix ppjson so that dependency suport feature is actually used
-- readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
-- readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example
-- delete the stuff from the attic once it is no longer needed
-- readme for requires arguments overriding and inheritance
-- up the version to 0.4.0
+- up the version to 0.3.0
 - tag and release
 
 - get rid of shell command executor new shell stuff (doesn't work in Jruby and not really needed anyway)  DONE
+- extract all the dsl command stuff into a helper module so that global and command can be handled by the same code DONE
+
+v0.4.0
+- readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example
+- fix ppjson so that dependency suport feature is actually used
+- delete the stuff from the attic once it is no longer needed
+- readme for requires arguments overriding and inheritance
+- up the version to 0.3.0
+- tag and release
 
 
 v1.0.0
