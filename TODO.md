@@ -1,74 +1,22 @@
 ROADMAP
 
-v0.2.0
-- up the version to 0.2.0
-- tag and release
-
-
-- test conflicts for non-exstant options (integration) DONE
-- test all the new help stuff on option, for conflicts, dependencies, validations DONE
-- fix up readme for conflicts block    DONE
-- rework validations to be part of the options block rather than in their own block  DONE
-- fix example, fix tests, fix readme DONE
-- need to rework conflicts as currently not really very good   DONE
-- add dependencies to help text  DONE
-- add conflicts to help text     DONE
-- add validation texts to help text so that people can see what kind of values are valid  DONE
-- make sure we check conflicts for non-existant options   DONE
-- refactor the formatting code some more DONE
-- pull some formatting code into separate classes DONE
-- test some of the utility formatting code DONE
-- fix up help text so that if arguments are mandatory they are shown as mandatory not optional DONE
-- basic example with validations       DONE
-- integration test for validations     DONE
-- readme for validations               DONE
-- test the shell command executor, and the terminal class for width command DONE
-- improve the readme to explain
-  - a basic app with no options                                 DONE
-  - a basic app with options                                    DONE
-    - supplying multiple of the same parameter using multi      DONE
-  - a basic app with require arguments                          DONE
-  - a basic app specifying version, description and summary     DONE
-  - test the readme for flags to make sure it works as expected DONE
-  - a basic app with dependant options (mention that a deadlock situation can occur if you're not careful)  DONE
-- example for conflicting options                            DONE
-- integration test for conflicting options                   DONE
-- readme for conflicting options                             DONE
-- for print stacktrace, change it to print in INFO mode so that stacktrace not printed by default DONE
-- BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case DONE
-- depends_on support
-  - option depends on flag                                                                      DONE
-  - flag depends on another flag                                                                DONE
-  - one option depends on another (the other must be not false not nil and not empty)           DONE
-  - one option depends on specific value of another (the other must be of a specific values)    DONE
-  - one option depends on several others (where are must be not false not nil and not empty)    DONE
-  - one option depends on several others where some must have a specific value (some options have specific value, others are not false not nil and not empty)  DONE
-  - error if option for which dependecy is being defined does not exist                         DONE
-  - error if depends on non-existant option                                                     DONE
-  - error if depends on itself                                                                  DONE
-  - error if dependency not satisfied                                                           DONE
-  - error if missing on condition when specifying dependency                                    DONE
-  - refactor the options dsl class dependency code                                              DONE
-  - refactor the option_dependency_validator class to be nicer                                          DONE
-  - integration test all the permutations of dependency specification with error and success cases etc  DONE
-  - create a shortcut for dependency specification on the opt method options hash itself                DONE
-  - fix up example for basic app with dependencies for options                                          DONE
-
-v0.4.0
-- readme a basic app with config file (don't worry about explaining all the helper stuff that gets created)
+v0.3.0
+- extract all the dsl command stuff into a helper module so that global and command can be handled by the same code
 - readme implementing and action for a basic app
+- readme a basic app with config file (don't worry about explaining all the helper stuff that gets created)
 - refactor terminal formatter and test it
 - refactor borderless table and test it
 - BUG parent_options when parent of command is global context doesn't seem to work???
 - test the base command for actions well
 - fix ppjson so that dependency suport feature is actually used
 - readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
-- readme a sub command app with options, validations, description, summary, require arguments and config file
-- extract all the dsl command stuff into a helper module so that global and command can be handled by the same code
+- readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example
 - delete the stuff from the attic once it is no longer needed
-- get rid of shell command executor new shell stuff (doesn't work in Jruby and not really needed anyway)
+- readme for requires arguments overriding and inheritance
 - up the version to 0.4.0
 - tag and release
+
+- get rid of shell command executor new shell stuff (doesn't work in Jruby and not really needed anyway)  DONE
 
 
 v1.0.0
@@ -263,3 +211,55 @@ v0.1.0
 - look again at conflicts support in dsl, we can probably do better naming for it   DONE
 - up the version to 0.1.0                                                           DONE
 - tag and release                                                                   DONE
+
+v0.2.0
+- up the version to 0.2.0 DONE
+- tag and release DONE
+- test conflicts for non-exstant options (integration) DONE
+- test all the new help stuff on option, for conflicts, dependencies, validations DONE
+- fix up readme for conflicts block    DONE
+- rework validations to be part of the options block rather than in their own block  DONE
+- fix example, fix tests, fix readme DONE
+- need to rework conflicts as currently not really very good   DONE
+- add dependencies to help text  DONE
+- add conflicts to help text     DONE
+- add validation texts to help text so that people can see what kind of values are valid  DONE
+- make sure we check conflicts for non-existant options   DONE
+- refactor the formatting code some more DONE
+- pull some formatting code into separate classes DONE
+- test some of the utility formatting code DONE
+- fix up help text so that if arguments are mandatory they are shown as mandatory not optional DONE
+- basic example with validations       DONE
+- integration test for validations     DONE
+- readme for validations               DONE
+- test the shell command executor, and the terminal class for width command DONE
+- improve the readme to explain
+  - a basic app with no options                                 DONE
+  - a basic app with options                                    DONE
+    - supplying multiple of the same parameter using multi      DONE
+  - a basic app with require arguments                          DONE
+  - a basic app specifying version, description and summary     DONE
+  - test the readme for flags to make sure it works as expected DONE
+  - a basic app with dependant options (mention that a deadlock situation can occur if you're not careful)  DONE
+- example for conflicting options                            DONE
+- integration test for conflicting options                   DONE
+- readme for conflicting options                             DONE
+- for print stacktrace, change it to print in INFO mode so that stacktrace not printed by default DONE
+- BUG when a script requires arguments and user doesn't supply any escort treats this as an internal error and asks you to report it, this shouldn't be the case DONE
+- depends_on support
+  - option depends on flag                                                                      DONE
+  - flag depends on another flag                                                                DONE
+  - one option depends on another (the other must be not false not nil and not empty)           DONE
+  - one option depends on specific value of another (the other must be of a specific values)    DONE
+  - one option depends on several others (where are must be not false not nil and not empty)    DONE
+  - one option depends on several others where some must have a specific value (some options have specific value, others are not false not nil and not empty)  DONE
+  - error if option for which dependecy is being defined does not exist                         DONE
+  - error if depends on non-existant option                                                     DONE
+  - error if depends on itself                                                                  DONE
+  - error if dependency not satisfied                                                           DONE
+  - error if missing on condition when specifying dependency                                    DONE
+  - refactor the options dsl class dependency code                                              DONE
+  - refactor the option_dependency_validator class to be nicer                                          DONE
+  - integration test all the permutations of dependency specification with error and success cases etc  DONE
+  - create a shortcut for dependency specification on the opt method options hash itself                DONE
+  - fix up example for basic app with dependencies for options                                          DONE

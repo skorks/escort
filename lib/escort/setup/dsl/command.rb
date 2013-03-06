@@ -4,7 +4,6 @@ module Escort
       class Command
         def initialize(name, options = {}, &block)
           reset(name)
-          @name = name
           @description = options[:description] || options[:desc] || ""
           @aliases = [options[:aliases] || []].flatten
           @requires_arguments ||= options[:requires_arguments]
@@ -22,7 +21,6 @@ module Escort
         end
 
         def command(name, options = {}, &block)
-          raise Escort::ClientError.new("Parameter to 'requires_arguments' must be a boolean") unless [true, false].include?(boolean)
           options[:requires_arguments] = @requires_arguments
           command = Command.new(name.to_sym, options, &block)
           aliases = [options[:aliases] || []].flatten + [name]
@@ -32,15 +30,11 @@ module Escort
         end
 
         def requires_arguments(boolean = true)
-          #TODO raise a client error if the value is anything besides true or false
+          raise Escort::ClientError.new("Parameter to 'requires_arguments' must be a boolean") unless [true, false].include?(boolean)
           @requires_arguments = boolean
           @commands.each do |command|
             command.requires_arguments(boolean)
           end
-        end
-
-        def conflicting_options(*command_names)
-          raise Escort::ClientError.new("This interface for specifying conflicting options is no longer supported, please use 'opts.conflict' in the options block")
         end
 
         def summary(summary)
@@ -54,14 +48,18 @@ module Escort
         private
 
         def reset(name)
+          @name = name
+          @summary = nil
+          @description = nil
           @requires_arguments = false
           @commands = {}
           @options = Options.new(name)
           @action = Action.new(name)
-          @name = nil
-          @description = nil
+          custom_reset
+        end
+
+        def custom_reset
           @aliases = []
-          @summary = nil
         end
       end
     end
