@@ -55,7 +55,8 @@ module Escort
         end
 
         def conflicting_options(*command_names)
-          @conflicts << command_names
+          raise Escort::ClientError.new("This interface for specifying conflicting options is no longer supported, please use 'opts.conflict' in the options block")
+          #@conflicts << command_names
         end
 
         private
@@ -70,7 +71,7 @@ module Escort
           @action = Action.new
           @validations = Validations.new
           @config_file  = nil
-          @conflicts = []
+          #@conflicts = []
         end
 
         def set_instance_variable_on(instance, instance_variable, value)

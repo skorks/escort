@@ -6,9 +6,9 @@ describe "Escort basic app with conflicting options", :integration => true do
       app.options do |opts|
         opts.opt :flag1, "Flag 1", :short => '-f', :long => '--flag1', :type => :boolean
         opts.opt :flag2, "Flag 2", :short => :none, :long => '--flag2', :type => :boolean
-      end
 
-      app.conflicting_options :flag1, :flag2
+        opts.conflict :flag1, :flag2
+      end
 
       app.action do |options, arguments|
         Escort::IntegrationTestCommand.new(options, arguments).execute(result)

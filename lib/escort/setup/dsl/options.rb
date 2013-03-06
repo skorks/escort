@@ -14,6 +14,7 @@ module Escort
           @command_name = command_name
           @options = {}
           @dependencies = {}
+          @conflicts = {}
         end
 
         def opt(name, desc="", opts={})
@@ -28,6 +29,15 @@ module Escort
           rules_as_array(opts).each do |rule|
             ensure_no_self_dependency(option_name, rule)
             @dependencies[option_name] << rule
+          end
+        end
+
+        def conflict(*opts)
+          opts.each do |opt|
+            conflicts_for_opt = opts.reject{|value| value == opt}
+            @conflicts[opt] ||= []
+            @conflicts[opt] += conflicts_for_opt
+            @conflicts[opt].uniq!
           end
         end
 

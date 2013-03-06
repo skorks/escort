@@ -3,15 +3,17 @@ module Escort
     class Options
       include Enumerable
 
-      attr_reader :parser
+      attr_reader :parser, :setup, :context
 
-      def initialize(parser)
+      def initialize(parser, setup, context)
         @parser = parser
+        @setup = setup
+        @context = context
       end
 
       def each(&block)
         parser.specs.each do |option_name, details|
-          option = Option.new(option_name, details)
+          option = Option.new(option_name, details, setup, context)
           block.call(option)
         end
       end

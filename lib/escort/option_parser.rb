@@ -67,7 +67,9 @@ module Escort
     end
 
     def add_option_conflicts_to(parser, context = [])
-      setup.conflicting_options_for(context).each do |conflict_list|
+      conflicting_options_for_context = setup.conflicting_options_for(context)
+      conflicting_options_for_context.keys.each do |option_name|
+        conflict_list = [option_name] + conflicting_options_for_context[option_name]
         parser.conflicts *conflict_list
       end
       parser

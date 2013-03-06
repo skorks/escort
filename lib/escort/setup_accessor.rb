@@ -14,7 +14,7 @@ module Escort
 
     def conflicting_options_for(context = [])
       with_context(context) do |current_context|
-        conflict_lists_for(current_context)
+        conflicts_hash_for(current_context)
       end
     end
 
@@ -174,8 +174,11 @@ module Escort
       end
     end
 
-    def conflict_lists_for(context_object)
-      fetch_instance_variable_from(context_object, :conflicts)
+    def conflicts_hash_for(context_object)
+      ensure_context_object(context_object, {}) do
+        options_object = options_object_from(context_object)
+        fetch_instance_variable_from(options_object, :conflicts)
+      end
     end
 
     def validations_hash_from(context_object)

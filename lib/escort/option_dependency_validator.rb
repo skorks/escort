@@ -30,7 +30,7 @@ module Escort
       dependency_rules.each do |rule|
         case rule
         when Hash
-          handle_all_option_value_depndency_rules(option_name, rule, options)
+          handle_all_option_value_dependency_rules(option_name, rule, options)
         else
           ensure_option_depends_on_valid_option(option_name, rule)
           handle_possible_presence_dependency_issue(option_name, rule, options)
@@ -38,7 +38,7 @@ module Escort
       end
     end
 
-    def handle_all_option_value_depndency_rules(option_name, rule, options)
+    def handle_all_option_value_dependency_rules(option_name, rule, options)
       if option_was_specified?(option_name, options)
         rule.each_pair do |rule_option, rule_option_value|
           ensure_option_depends_on_valid_option(option_name, rule_option)

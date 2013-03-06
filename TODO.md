@@ -1,18 +1,20 @@
 ROADMAP
 
 v0.2.0
-- fix up help text so that if arguments are mandatory they are shown as mandatory not optional
-- add dependencies to help text
-- add conflicts to help text
-- add validation texts to help text so that people can see what kind of values are valid
-- refactor the formatting code some more
-- pull some formatting code into separate classes
-- test some of the utility formatting code
-- a few more tests (setup accessor, all the dsl classes)
+- need to rework conflicts as currently not really very good   DONE
+- add dependencies to help text  DONE
+- add conflicts to help text     DONE
+- add validation texts to help text so that people can see what kind of values are valid  DONE
+- make sure we check conflicts for non-existant options
+- test all the new help stuff on option, for conflicts, dependencies, validations
 - up the version to 0.2.0
 - tag and release
 
 
+- refactor the formatting code some more DONE
+- pull some formatting code into separate classes DONE
+- test some of the utility formatting code DONE
+- fix up help text so that if arguments are mandatory they are shown as mandatory not optional DONE
 - basic example with validations       DONE
 - integration test for validations     DONE
 - readme for validations               DONE
@@ -48,18 +50,28 @@ v0.2.0
   - create a shortcut for dependency specification on the opt method options hash itself                DONE
   - fix up example for basic app with dependencies for options                                          DONE
 
-v1.0.0
-- BUG parent_options when parent of command is global context doesn't seem to work???
-- have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests
-- fix ppjson so that dependency suport feature is actually used
-- in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself
-- a few more integration tests (test that basic app automatically gets help and other automatic options)
-- readme implementing and action for a basic app
+v0.4.0
+- for borderless table, should be able to create another borderless table within a cell of an existing table
 - readme a basic app with config file (don't worry about explaining all the helper stuff that gets created)
-- readme a command app with options, validations, description, summary, require arguments and config file
+- readme implementing and action for a basic app
+- refactor terminal formatter and test it
+- refactor borderless table and test it
+- BUG parent_options when parent of command is global context doesn't seem to work???
+- fix ppjson so that dependency suport feature is actually used
+- readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
 - readme a sub command app with options, validations, description, summary, require arguments and config file
 - extract all the dsl command stuff into a helper module so that global and command can be handled by the same code
 - delete the stuff from the attic once it is no longer needed
+- get rid of shell command executor new shell stuff (doesn't work in Jruby and not really needed anyway)
+- up the version to 0.4.0
+- tag and release
+
+
+v1.0.0
+- a few more tests (setup accessor, all the dsl classes)
+- have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests
+- in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself
+- a few more integration tests (test that basic app automatically gets help and other automatic options)
 - up the version to 1.0.0
 - tag and release
 - get the blog updated with a new theme
@@ -72,7 +84,6 @@ v1.0.0
 - readme for a basic app with dependent options      DONE
 
 v1.0.1
-- dependencies for command options on options from parent commands or global
 - more specs
 - more integration specs (more specs for the different types of options)
 - lots more logging at different levels for debug purposes
@@ -80,6 +91,7 @@ v1.0.1
 - the config auto option should not be included in the config file, same with other auto options
 - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
 - ability to specify a different command based on options declaratively or a convention for how to do different things for the same action based on options (bunch of options that are flags, options that are a clump of values etc)
+
 - rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.) DONE
 - rewrite the help formatter to be a bit easier to understand (more like man output for output) DONE
 - add depends support to dsl   DONE
@@ -103,6 +115,7 @@ v1.0.3
 
 
 BUCKET
+- dependencies for command options on options from parent commands or global
 - a better way of executing action and servants for the actions
 
   - specify the options via classes
