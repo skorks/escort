@@ -3,6 +3,16 @@ module Escort
     class Commands
       include Enumerable
 
+      class << self
+        def command_for(setup, context)
+          if context.empty?
+            GlobalCommand.new(setup)
+          else
+            Command.new(context.last, setup, context)
+          end
+        end
+      end
+
       attr_reader :setup, :context
 
       def initialize(setup, context)
