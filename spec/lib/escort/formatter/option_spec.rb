@@ -93,4 +93,208 @@ describe Escort::Formatter::Option do
       end
     end
   end
+
+  describe "#has_conflicts?" do
+    subject {option.has_conflicts?}
+    context "when no conflicts defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should be_false}
+    end
+
+    context "when conflict is defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string, :conflicts_with => :option2
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should be_true}
+    end
+  end
+
+  describe "#has_dependencies?" do
+    subject {option.has_dependencies?}
+    context "when no dependencies defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should be_false}
+    end
+
+    context "when dependency is defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string, :depends_on => :option2
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should be_true}
+    end
+  end
+
+  describe "#has_validations?" do
+    subject {option.has_validations?}
+    context "when no validations defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should be_false}
+    end
+
+    context "when validations is defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+
+            opts.validate(:option1, "must be 'foo'") {|option| option == 'foo'}
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should be_true}
+    end
+  end
+
+  describe "#conflicts" do
+    subject {option.conflicts}
+    context "when no conflicts defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should == ''}
+    end
+
+    context "when conflict is defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string, :conflicts_with => [:option2, :option3]
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+            opts.opt :option3, "Option3", :short => :none, :long => '--option3', :type => :string
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should == 'conflicts with: --option2, --option3'}
+    end
+  end
+
+  describe "#dependencies" do
+    subject {option.dependencies}
+    context "when no dependencies defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should == ''}
+    end
+
+    context "when dependency is defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string, :depends_on => :option2
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should == 'depends on: --option2'}
+    end
+  end
+
+  describe "#validations" do
+    subject {option.validations}
+    context "when no validations defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should == ''}
+    end
+
+    context "when validations is defined" do
+      let(:app_configuration) do
+        Escort::Setup::Dsl::Global.new do |app|
+          app.options do |opts|
+            opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string
+            opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string
+
+            opts.validate(:option1, "must be 'foo'") {|option| option == 'foo'}
+            opts.validate(:option1, "must not be 'bar'") {|option| option != 'bar'}
+          end
+
+          app.action do |options, arguments|
+          end
+        end
+      end
+      it {subject.should == "must be 'foo'\n- must not be 'bar'"}
+    end
+  end
 end

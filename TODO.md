@@ -1,12 +1,12 @@
 ROADMAP
 
 v0.2.0
-- test all the new help stuff on option, for conflicts, dependencies, validations
-- test conflicts for non-exstant options (integration)
 - up the version to 0.2.0
 - tag and release
 
 
+- test conflicts for non-exstant options (integration) DONE
+- test all the new help stuff on option, for conflicts, dependencies, validations DONE
 - fix up readme for conflicts block    DONE
 - rework validations to be part of the options block rather than in their own block  DONE
 - fix example, fix tests, fix readme DONE
