@@ -1,6 +1,8 @@
 ROADMAP
 
 v0.3.0
+- test string splitter for first segment max length
+- finish testing the output formatter
 - refactor terminal formatter and test it
 - refactor borderless table and test it
 - readme implementing and action for a basic app

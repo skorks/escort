@@ -1,17 +1,36 @@
 module Escort
   module Formatter
     class StringSplitter
-      attr_reader :max_segment_width
+      attr_reader :max_segment_width, :first_segment_max_length
 
-      def initialize(max_segment_width)
+      def initialize(max_segment_width, options = {})
         @max_segment_width = max_segment_width
+        @first_segment_max_length = options[:first_segment_max_length] || max_segment_width
       end
 
       def split(string)
-        string.split("\n").map { |s| split_string(s) }.flatten
+        strings = string.split("\n")
+        first_string = strings.shift
+        other_strings = strings
+        result = [split_first_string(first_string) + split_strings(other_strings)].flatten
+        result
       end
 
       private
+
+      def split_first_string(string)
+        if first_segment_max_length >= string.length
+          split_string(string)
+        else
+          first = string.slice(0, first_segment_max_length)
+          last = string.slice(first_segment_max_length..-1)
+          split_strings([first, last])
+        end
+      end
+
+      def split_strings(strings)
+        strings.map { |s| split_string(s) }
+      end
 
       def split_string(string)
         result = []
