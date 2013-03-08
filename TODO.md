@@ -1,10 +1,10 @@
 ROADMAP
 
 v0.3.0
-- test the configuration writer
 - test the configuration reader
 - test the configuration generator
 - test the configuration merge tool
+- test the configuration loader
 - test the descend to home locator
 - create other locators (dir of currently executing script locator, i.e. not the working directory, specified dir locator)
 - create a chaining locator so we can put all our locators together
@@ -18,6 +18,7 @@ v0.3.0
 - tag and release
 
 
+- test the configuration writer  DONE
 - a basic app example with all the trimmings DONE
 - app with config file example     DONE
 - readme implementing and action for a basic app DONE
