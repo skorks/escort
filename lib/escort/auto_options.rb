@@ -5,7 +5,9 @@ module Escort
         if setup.has_config_file?
           setup.add_global_option :config, "Configuration file to use for this execution", :short => :none, :long => '--config', :type => :string
 
-          setup.add_global_command :escort, :description => "Auto created utility command", :aliases => [] do |command|
+          setup.add_global_command :escort, :aliases => [] do |command|
+            command.summary "Auto created utility command"
+            command.description "Auto created utility command"
             command.requires_arguments false
 
             command.options do |opts|
@@ -13,9 +15,9 @@ module Escort
               opts.opt :create_default_config, "Create a default configuration file", :short => :none, :long => '--create-default-config', :type => :boolean, :default => false
               opts.opt :update_config, "Update configuration file at specified location", :short => :none, :long => '--update-config', :type => :string
               opts.opt :update_default_config, "Update the default configuration file", :short => :none, :long => '--update-default-config', :type => :boolean, :default => false
-            end
 
-            command.conflicting_options :create_config, :create_default_config, :update_config, :update_default_config
+              opts.conflict :create_config, :create_default_config, :update_config, :update_default_config
+            end
 
             command.action do |options, arguments|
               ActionCommand::EscortUtilityCommand.new(setup, options, arguments).execute

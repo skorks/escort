@@ -13,14 +13,6 @@ module Escort
         commands = Commands.new(setup, context)
         current_command = Commands.command_for(setup, context)
 
-        #TerminalFormatter.display($stdout, Terminal.width) do |d|
-          #name_help(current_command, d)
-          #usage_help(current_command, d)
-          #version_help(current_command, d)
-          #options_help(options, d)
-          #commands_help(commands, d)
-        #end
-
         StreamOutputFormatter.new($stdout, :max_output_width => Terminal.width) do |f|
           name_help(current_command, f)
           usage_help(current_command, f)
@@ -36,7 +28,7 @@ module Escort
         f.puts "NAME"
         f.indent(4) do |f|
           f.grid(:columns => 3) do |t|
-            t.row current_command.script_name, '-', current_command.summary
+            t.row current_command.script_name, '-', setup.summary_for(context)
           end
           f.newline
           f.puts(setup.description_for(context), :newlines => 2) if setup.description_for(context)

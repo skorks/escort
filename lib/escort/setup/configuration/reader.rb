@@ -1,3 +1,5 @@
+require 'json'
+
 module Escort
   module Setup
     module Configuration
@@ -20,11 +22,11 @@ module Escort
           data = {}
           begin
             json = File.read(path)
-            hash = JSON.parse(json)
+            hash = ::JSON.parse(json)
             data = Escort::Utils.symbolize_keys(hash)
           rescue => e
             error_logger.warn { "Found config at #{path}, but failed to load it, perhaps your JSON syntax is invalid. Attempting to continue without..." }
-            error_logger.error(e)
+            error_logger.debug(e)
           end
           data
         end

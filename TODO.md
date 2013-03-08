@@ -1,7 +1,15 @@
 ROADMAP
 
 v0.3.0
-- readme a basic app with config file, example, integration test (don't worry about explaining all the helper stuff that gets created)
+- test the configuration writer
+- test the configuration reader
+- test the configuration generator
+- test the configuration merge tool
+- test the descend to home locator
+- create other locators (dir of currently executing script locator, i.e. not the working directory, specified dir locator)
+- create a chaining locator so we can put all our locators together
+- we should always be using the chaining locator, with more or less sub locators depending on setup
+- readme a basic app with config file, integration test (don't worry about explaining all the helper stuff that gets created)
 - example a basic app with all the trimmings
 - readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
 - BUG parent_options when parent of command is global context doesn't seem to work???
@@ -10,6 +18,8 @@ v0.3.0
 - tag and release
 
 
+- a basic app example with all the trimmings DONE
+- app with config file example     DONE
 - readme implementing and action for a basic app DONE
 - rejig for betterness the validations help outputs DONE
 - test the string grid      DONE
@@ -87,6 +97,10 @@ v2.0.1
 
 
 BUCKET
+- for help current command context is all confused, is the context a parent context or the current context, fixed in help but the class is still confused as it's being used in two different ways
+- genericise the generator concept, so that the current one becomes a nested generator, but we can also have a flat generator
+- genericise the writer and reader, so that the current one becomes json writer/reader, but we can have yaml or whatever we want
+- we should always be working with a nested hash for configuration, its only at writing and reading time do we flatten or whatever
 - dependencies for command options on options from parent commands or global
 - a better way of executing action and servants for the actions
 
