@@ -1,8 +1,7 @@
 ROADMAP
 
 v0.3.0
-- readme implementing and action for a basic app
-- readme a basic app with config file (don't worry about explaining all the helper stuff that gets created)
+- readme a basic app with config file, example, integration test (don't worry about explaining all the helper stuff that gets created)
 - readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
 - BUG parent_options when parent of command is global context doesn't seem to work???
 - test the base command for actions well
@@ -10,6 +9,7 @@ v0.3.0
 - tag and release
 
 
+- readme implementing and action for a basic app DONE
 - rejig for betterness the validations help outputs DONE
 - test the string grid      DONE
 - start using the new stream output formatter   DONE
@@ -47,6 +47,7 @@ v1.0.0
 - readme for a basic app with dependent options      DONE
 
 v1.0.1
+- add a section to readme for command line tools built with escort (e.g. ppjson)
 - more specs
 - more integration specs (more specs for the different types of options)
 - lots more logging at different levels for debug purposes

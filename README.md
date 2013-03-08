@@ -417,6 +417,69 @@ TODO
 ### Sub-Commands
 TODO
 
+
+### Implementing the Actions
+
+So far we've seen a lot of examples of how to add various command-line UI features, but what about implementing the actual functionality.
+
+If your functionality is a one liner, you can, of course, just dump it into the action block, but we're trying to keep a clean separation between our UI logic and the actual functionality we are trying to implement. We do this by writing `ActionCommand` classes.
+
+In all the previous examples you've seen the following:
+
+```ruby
+...
+
+  app.action do |options, arguments|
+    MyApp::ExampleCommand.new(options, arguments).execute
+  end
+
+...
+```
+
+The `ExampleCommand` is an `ActionCommand` and is implemented in a separate class. In the above examples we would `require 'my_app'` with the assumption that it requires the file where `ExampleCommand` is imlpemented. You could of course just require the file with the implementation directly.
+
+A command might look like this:
+
+```ruby
+module Escort
+  class ExampleCommand < ::Escort::ActionCommand::Base
+    def execute
+      Escort::Logger.output.puts "Command: #{command_name}"
+      Escort::Logger.output.puts "Options: #{options}"
+      Escort::Logger.output.puts "Command options: #{command_options}"
+      Escort::Logger.output.puts "Arguments: #{arguments}"
+      if config
+        Escort::Logger.output.puts "User config: #{config}"
+      end
+    end
+  end
+end
+```
+
+As you can see all you need to do is inherit from `::Escort::ActionCommand::Base` and implement the execute method. Inheriting from `Base` gives you access to a bunch of useful methods:
+
+* `command_name` - the name of the command that is being executed (or :global if it is the main action)
+* `command_options` - the options for this command
+* `parent_options` - the options for the parent command (if any)
+* `global_options` - the global app options
+* `config` - a hash of the user defined portion of the configuration file
+* `options` - the raw options hash
+* `arguments` - a list of arguments passed to the app
+
+These should give you hand in implementing the functionality you need, but most importantly it allows us to keep our actual command-line UI definition clean and separate the useful logic into what is/are essentially pure ruby classes.
+
+## Examples
+
+There is an examples directory where you can have a play with a whole bunch of little 'Escort' apps, from a very basic one with no options to more complex nested command suites with all the trimmings. Most of them call the `ExampleCommand` which lives in `examples/commands`. Have a read/play to learn, or just copy/paste bits straight into your apps.
+
+## More In-Depth
+
+TODO
+
+## Command-Line Tools Built With Escort
+
+TODO
+
 ## Alternatives
 
 * https://github.com/davetron5000/gli
