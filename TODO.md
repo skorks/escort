@@ -1,10 +1,6 @@
 ROADMAP
 
 v0.3.0
-- test string splitter for first segment max length
-- finish testing the output formatter
-- refactor terminal formatter and test it
-- refactor borderless table and test it
 - readme implementing and action for a basic app
 - readme a basic app with config file (don't worry about explaining all the helper stuff that gets created)
 - readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
@@ -13,6 +9,12 @@ v0.3.0
 - up the version to 0.3.0
 - tag and release
 
+
+- rejig for betterness the validations help outputs DONE
+- test the string grid      DONE
+- start using the new stream output formatter   DONE
+- refactor terminal formatter and test it     DONE
+- finish testing the output formatter        DONE
 - get rid of shell command executor new shell stuff (doesn't work in Jruby and not really needed anyway)  DONE
 - extract all the dsl command stuff into a helper module so that global and command can be handled by the same code DONE
 

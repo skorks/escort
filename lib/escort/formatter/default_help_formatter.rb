@@ -13,48 +13,57 @@ module Escort
         commands = Commands.new(setup, context)
         current_command = Commands.command_for(setup, context)
 
-        TerminalFormatter.display($stdout, Terminal.width) do |d|
-          name_help(current_command, d)
-          usage_help(current_command, d)
-          version_help(current_command, d)
-          options_help(options, d)
-          commands_help(commands, d)
+        #TerminalFormatter.display($stdout, Terminal.width) do |d|
+          #name_help(current_command, d)
+          #usage_help(current_command, d)
+          #version_help(current_command, d)
+          #options_help(options, d)
+          #commands_help(commands, d)
+        #end
+
+        StreamOutputFormatter.new($stdout, :max_output_width => Terminal.width) do |f|
+          name_help(current_command, f)
+          usage_help(current_command, f)
+          version_help(current_command, f)
+          options_help(options, f)
+          commands_help(commands, f)
         end
       end
 
       private
 
-      def name_help(current_command, d)
-        d.puts "NAME"
-        d.indent(4) do
-          d.table(:columns => 3, :newlines => 1) do |t|
+      def name_help(current_command, f)
+        f.puts "NAME"
+        f.indent(4) do |f|
+          f.grid(:columns => 3) do |t|
             t.row current_command.script_name, '-', current_command.summary
           end
-          d.put(setup.description_for(context), :newlines => 2) if setup.description_for(context)
+          f.newline
+          f.puts(setup.description_for(context), :newlines => 2) if setup.description_for(context)
         end
       end
 
-      def usage_help(current_command, d)
-        d.puts "USAGE"
-        d.indent(4) do
-          d.put current_command.usage, :newlines => 2
+      def usage_help(current_command, f)
+        f.puts "USAGE"
+        f.indent(4) do |f|
+          f.puts current_command.usage, :newlines => 2
         end
       end
 
-      def version_help(current_command, d)
+      def version_help(current_command, f)
         if setup.version
-          d.puts "VERSION"
-          d.indent(4) {
-            d.put setup.version, :newlines => 2
-          }
+          f.puts "VERSION"
+          f.indent(4) do |f|
+            f.puts setup.version, :newlines => 2
+          end
         end
       end
 
-      def options_help(options, d)
+      def options_help(options, f)
         if options.count > 0
-          d.puts "OPTIONS"
-          d.indent(4) {
-            d.table(:columns => 3, :newlines => 1) do |t|
+          f.puts "OPTIONS"
+          f.indent(4) do |f|
+            f.grid(:columns => 3) do |t|
               options.each do |option|
                 t.row option.usage, '-', option.description
                 option_conflicts_help(option, t)
@@ -62,7 +71,8 @@ module Escort
                 option_validations_help(option, t)
               end
             end
-          }
+            f.newline
+          end
         end
       end
 
@@ -80,20 +90,23 @@ module Escort
 
       def option_validations_help(option, t)
         if option.has_validations?
-          t.row '', '', "- #{option.validations}"
+          option.validations.each do |validation|
+            t.row '', '', "- #{validation}"
+          end
         end
       end
 
-      def commands_help(commands, d)
+      def commands_help(commands, f)
         if commands.count > 0
-          d.puts "COMMANDS"
-          d.indent(4) {
-            d.table(:columns => 3, :newlines => 1) do |t|
+          f.puts "COMMANDS"
+          f.indent(4) do |f|
+            f.grid(:columns => 3) do |t|
               commands.each do |command|
                 t.row command.name_with_aliases, '-', command.outline
               end
             end
-          }
+            f.newline
+          end
         end
       end
     end

@@ -276,7 +276,7 @@ describe Escort::Formatter::Option do
           end
         end
       end
-      it {subject.should == ''}
+      it {subject.should == []}
     end
 
     context "when validations is defined" do
@@ -294,7 +294,7 @@ describe Escort::Formatter::Option do
           end
         end
       end
-      it {subject.should == "must be 'foo'\n- must not be 'bar'"}
+      it {subject.should == ["must be 'foo'", "must not be 'bar'"]}
     end
   end
 end

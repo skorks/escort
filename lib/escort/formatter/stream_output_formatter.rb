@@ -17,12 +17,14 @@ module Escort
       end
 
       def print(string)
-        segments = StringSplitter.new(max_output_width_given_indent, :first_segment_max_length => next_output_string_max_length).split(string.to_s)
+        splitter_input = pad_string_to_account_for_cursor_position(string.to_s)
+        segments = StringSplitter.new(max_output_width).split(splitter_input)
+        segments = remove_padding_that_account_for_cursor_position(segments)
         segments.each do |segment|
           output_string = "#{current_indent_string}#{segment}"
           output_string = segment unless cursor_position.newline?
           stream.print output_string
-          cursor_position.update_for(output_string)
+          cursor_position.update_for(segment)
           newline if segments.last != segment
         end
       end
@@ -39,37 +41,34 @@ module Escort
 
       def indent(count, &block)
         newline unless cursor_position.newline?
-        self.class.new(stream, :max_output_width => max_output_width, :indent_string => indent_string, :current_indent => current_indent + count, &block)
+        new_indent = current_indent + count
+        self.class.new(stream, :max_output_width => max_output_width - count, :indent_string => indent_string, :current_indent => new_indent, &block)
       end
 
-      def table(options = {}, &block)
-        #d.table(:columns => 3, :max_width => 50, :border => [:none, :outer, :inner, :full], :title => 'Hello') do |t|
-        #  t.column 1, :padding_left => 1, :padding_right => 1, :halign => center, :valign => center
-        #  t.header 'a', 'b', 'c'
-        #  t.row 1, 2, 3
-        #  t.row 2, 3, 4
-        #end
-        #merge particular cells in a row
-        #merge particular cells in a column
-        raise "Not implemented"
+      def grid(options = {}, &block)
+        if block_given?
+          options[:width] ||= max_output_width
+          grid = StringGrid.new(options, &block)
+          puts grid.to_s
+        end
       end
 
       private
 
-      #def on_same_line_from_previous_print?(segment, segments)
-        #segment == segments.first && @cursor_position != 0
-        #@cursor_position != 0
-      #end
-
-      def next_output_string_max_length
-        length = max_output_width - cursor_position.position
-        length = 0 if length < 0
-        length = max_output_width_given_indent if length > max_output_width_given_indent
-        length
+      def pad_string_to_account_for_cursor_position(string)
+        "#{padding_string}#{string}"
       end
 
-      def max_output_width_given_indent
-        max_output_width - current_indent_width
+      def remove_padding_that_account_for_cursor_position(segments)
+        first_string = segments.first
+        if first_string
+          segments[0] = first_string.sub(/#{padding_string}/, '')
+        end
+        segments
+      end
+
+      def padding_string
+        "." * cursor_position.position
       end
 
       def current_indent_width

@@ -39,7 +39,7 @@ module Escort
       end
 
       def validations
-        has_validations? ? "#{validation_messages.join("\n- ")}" : ''
+        has_validations? ? validation_messages : []
       end
 
       private

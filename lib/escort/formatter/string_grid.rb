@@ -1,34 +1,35 @@
-#TODO needs some serious testing stuffs
-#split out into many classes VirtuaRow, PhysicalRow, FormatterRow
-#needs method each_formatted_row
-#the printing out should only happen in the outputter class not in the table intself
 module Escort
   module Formatter
-    class BorderlessTable
-      attr_reader :column_count, :formatter
+    class StringGrid
+      DEFAULT_WIDTH = 80
+
+      attr_reader :column_count, :width
       attr_accessor :rows
 
-      def initialize(formatter, options = {})
-        @formatter = formatter
+      def initialize(options = {}, &block)
+        @width = options[:width] || DEFAULT_WIDTH
         @column_count = options[:columns] || 3
         @rows = []
+        block.call(self) if block_given?
       end
 
       def row(*column_values)
+        while column_values.size < @column_count
+          column_values << ''
+        end
         rows << column_values.map(&:to_s)
-        #TODO raise error if column values size doesn't match columns
       end
 
-      def output(&block)
-        block.call(self)
-
+      def to_s
+        buffer = []
         rows.each do |cells|
           virtual_row = normalize_virtual_row(virtual_row_for(cells))
           physical_row_count_for(virtual_row).times do |physical_count|
             physical_row = format_physical_row_values(physical_row_for(virtual_row, physical_count))
-            formatter.put physical_row.join("").chomp, :newlines => 1
+            buffer << physical_row.join("").chomp
           end
         end
+        buffer.join("\n")
       end
 
       private
@@ -65,7 +66,6 @@ module Escort
       end
 
       def column_width(column_index)
-        #TODO raise error if index out of bounds
         width = fair_column_width(column_index)
         if column_index == column_count - 1
           width = last_column_width
@@ -74,14 +74,13 @@ module Escort
       end
 
       def fair_column_width(index)
-        #TODO raise error if index out of bounds
         width = values_in_column(index).map(&:length).max
         width = width + 1
         width > max_column_width ? max_column_width : width
       end
 
       def last_column_width
-        full_fair_column_width = max_column_width * column_count
+        full_fair_column_width = max_column_width * column_count + max_column_width_remainder
         all_but_last_fair_column_width = 0
         (column_count - 1).times do |index|
           all_but_last_fair_column_width += fair_column_width(index)
@@ -90,16 +89,19 @@ module Escort
       end
 
       def values_in_column(column_index)
-        #TODO raise error if index out of bounds
         rows.map{|cells| cells[column_index]}
       end
 
       def max_column_width
-        (formatter.terminal_columns - 1 - formatter.current_indent_string.length)/column_count
+        width/column_count
+      end
+
+      def max_column_width_remainder
+        width%column_count
       end
 
       def cell_value(value, column_index)
-        sprintf("%-#{column_width(column_index)}s", value.strip)
+        sprintf("%-#{column_width(column_index)}s", value)
       end
     end
   end
