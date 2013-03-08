@@ -2,6 +2,7 @@ ROADMAP
 
 v0.3.0
 - readme a basic app with config file, example, integration test (don't worry about explaining all the helper stuff that gets created)
+- example a basic app with all the trimmings
 - readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
 - BUG parent_options when parent of command is global context doesn't seem to work???
 - test the base command for actions well
@@ -19,21 +20,18 @@ v0.3.0
 - extract all the dsl command stuff into a helper module so that global and command can be handled by the same code DONE
 
 v0.4.0
+- readme for requires arguments overriding and inheritance
+- readme explain all the helper stuff that automatically gets created with config file support
 - readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example
 - fix ppjson so that dependency suport feature is actually used
 - delete the stuff from the attic once it is no longer needed
-- readme for requires arguments overriding and inheritance
-- up the version to 0.3.0
+- a few more tests (setup accessor, all the dsl classes)
+- up the version to 0.4.0
 - tag and release
 
 
 v1.0.0
-- perhaps rework actions with passing a class and having it being auto called
-- implement servants for dealing with clumps of functionality, and action commands have access to all servants that were executed before them
-- a few more tests (setup accessor, all the dsl classes)
-- for borderless table, should be able to create another borderless table within a cell of an existing table
 - have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests
-- in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself
 - a few more integration tests (test that basic app automatically gets help and other automatic options)
 - up the version to 1.0.0
 - tag and release
@@ -41,6 +39,8 @@ v1.0.0
 - put a new subscriber count widget on blog
 - blog Build Command-Line Apps Like a Pro Using Ruby and Escort
 
+
+- in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself DONE
 - rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)  DONE
 - errors coming straigh out of configuration should still be caught by error handlers to only display stack trace when needed (refactor app create method) DONE
 - readme for a basic app with conflicting options    DONE
@@ -50,11 +50,10 @@ v1.0.1
 - add a section to readme for command line tools built with escort (e.g. ppjson)
 - more specs
 - more integration specs (more specs for the different types of options)
-- lots more logging at different levels for debug purposes
 - a way have helpers available when you don't want to have to create a command
 - the config auto option should not be included in the config file, same with other auto options
 - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
-- ability to specify a different command based on options declaratively or a convention for how to do different things for the same action based on options (bunch of options that are flags, options that are a clump of values etc)
+
 
 - rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.) DONE
 - rewrite the help formatter to be a bit easier to understand (more like man output for output) DONE
@@ -62,11 +61,13 @@ v1.0.1
 
 v1.0.2
 - more specs
+- need a suite for escort itself using escort to bootstrap etc
 - scaffold for app with no sub commands
 - scaffold for app with one level of commands
 - scaffold for app with nested sub commands
 
 v1.0.3
+- refactor the app class so it is a bit nicer etc
 - an option for setup that indicates it is a project specific CLI app
 - an options for setup that indicates it is an environment aware CLI app
 - make the configuration environment aware
@@ -75,6 +76,13 @@ v1.0.3
 - much better documentation and usage patterns
 - pull the terminal formatting stuff into separate gem
 
+v2.0.0
+- rework actions with passing a class and having it being auto called
+- implement servants for dealing with clumps of functionality, and action commands have access to all servants that were executed before them
+
+v2.0.1
+- lots more logging at different levels for debug purposes
+- configatron support in addition to json config
 
 
 
@@ -99,6 +107,7 @@ BUCKET
     app.before :actions => :descendant - all actions that descend from this one, but not this one
 
 - can split out the shell command executor into a tiny gem for later use
+- for borderless table, should be able to create another borderless table within a cell of an existing table
 - get the build working on ruby 1.8.7
 - formatting code should support colours and styles for output
 - formatting code should support a table with borders and stuff
