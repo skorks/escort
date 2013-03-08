@@ -204,5 +204,11 @@ describe Escort::Formatter::StreamOutputFormatter do
         end
       end
     end
+
+    context "stream should contain" do
+      it do
+        output.should == ["the quick\n", "brown foxj\n", "umped over\n", " thelazy d\n", "og\n", "rainbow su\n", "spenders\n", "   blah bl\n", "   ah blah\n", "    blah\n", "\n", "\n", "     inden\n", "     t me \n", "     good\n", "     foofo\n", "     ofoo\n", "     exit\n", "\n", "\n", "\n"]
+      end
+    end
   end
 end

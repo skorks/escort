@@ -5,14 +5,14 @@ module Escort
       DEFAULT_INDENT_STRING = ' '
       DEFAULT_INDENT = 0
 
-      attr_reader :stream, :indent_string, :current_indent, :max_output_width
+      attr_reader :stream, :indent_string, :current_indent, :max_output_width, :cursor_position
 
       def initialize(stream = $stdout, options = {}, &block)
         @stream = stream
         @max_output_width = options[:max_output_width] || DEFAULT_OUTPUT_WIDTH
         @indent_string = options[:indent_string] || DEFAULT_INDENT_STRING
         @current_indent = options[:current_indent] || DEFAULT_INDENT
-        @cursor_position = 0
+        @cursor_position = CursorPosition.new(@max_output_width)
         block.call(self) if block_given?
       end
 
@@ -20,9 +20,9 @@ module Escort
         segments = StringSplitter.new(max_output_width_given_indent, :first_segment_max_length => next_output_string_max_length).split(string.to_s)
         segments.each do |segment|
           output_string = "#{current_indent_string}#{segment}"
-          output_string = segment if on_same_line_from_previous_print?(segment, segments)
+          output_string = segment unless cursor_position.newline?
           stream.print output_string
-          @cursor_position += output_string.length
+          cursor_position.update_for(output_string)
           newline if segments.last != segment
         end
       end
@@ -34,11 +34,11 @@ module Escort
 
       def newline(newline_count = 1)
         stream.print("\n" * newline_count)
-        @cursor_position = 0 if newline_count > 0
+        cursor_position.reset if newline_count > 0
       end
 
       def indent(count, &block)
-        newline if @cursor_position != 0
+        newline unless cursor_position.newline?
         self.class.new(stream, :max_output_width => max_output_width, :indent_string => indent_string, :current_indent => current_indent + count, &block)
       end
 
@@ -56,12 +56,13 @@ module Escort
 
       private
 
-      def on_same_line_from_previous_print?(segment, segments)
-        segment == segments.first && @cursor_position != 0
-      end
+      #def on_same_line_from_previous_print?(segment, segments)
+        #segment == segments.first && @cursor_position != 0
+        #@cursor_position != 0
+      #end
 
       def next_output_string_max_length
-        length = max_output_width - @cursor_position
+        length = max_output_width - cursor_position.position
         length = 0 if length < 0
         length = max_output_width_given_indent if length > max_output_width_given_indent
         length
