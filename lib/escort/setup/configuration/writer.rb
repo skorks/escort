@@ -1,4 +1,5 @@
 require 'json'
+require 'fileutils'
 
 module Escort
   module Setup
@@ -34,6 +35,7 @@ module Escort
 
         def save_to_file
           current_path = File.expand_path(path)
+          FileUtils.mkdir_p(File.dirname(current_path))
           File.open(current_path, "w") do |f|
             f.puts ::JSON.pretty_generate(data)
           end

@@ -1,5 +1,6 @@
 require 'escort'
-
+require 'fakefs/safe'
+require 'fakefs/spec_helpers'
 
 Dir[File.join(File.dirname(__FILE__), 'support', '**', "*.rb").to_s].each {|file| require file }
 
