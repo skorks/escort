@@ -5,6 +5,7 @@ v0.3.0
 - test the configuration merge tool
 - test the configuration loader
 - test the descend to home locator
+
 - readme a basic app with config file, integration test (don't worry about explaining all the helper stuff that gets created)
 - readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
 - BUG parent_options when parent of command is global context doesn't seem to work???
@@ -33,6 +34,7 @@ v0.3.0
 v0.4.0
 - readme for requires arguments overriding and inheritance
 - readme explain all the helper stuff that automatically gets created with config file support
+- test all the config file helper stuff
 - readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example
 - fix ppjson so that dependency suport feature is actually used
 - delete the stuff from the attic once it is no longer needed
@@ -44,6 +46,7 @@ v0.4.0
 v1.0.0
 - have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests
 - a few more integration tests (test that basic app automatically gets help and other automatic options)
+- clean up all the extraneous branches
 - up the version to 1.0.0
 - tag and release
 - get the blog updated with a new theme
@@ -86,18 +89,21 @@ v1.0.3
 - json configuration should support defaults config
 - much better documentation and usage patterns
 - pull the terminal formatting stuff into separate gem
+- pull nested exception stuff into separate gem
 
 v2.0.0
 - rework actions with passing a class and having it being auto called
 - implement servants for dealing with clumps of functionality, and action commands have access to all servants that were executed before them
+- ability to break up a big config into chucks, e.g. per command etc. so that it is more modular and easier to read
+- whether or not action is specified things should not blow up
 
 v2.0.1
 - lots more logging at different levels for debug purposes
-- configatron support in addition to json config
 
 
 
 BUCKET
+- configatron support in addition to json config
 - for help current command context is all confused, is the context a parent context or the current context, fixed in help but the class is still confused as it's being used in two different ways
 - genericise the generator concept, so that the current one becomes a nested generator, but we can also have a flat generator
 - genericise the writer and reader, so that the current one becomes json writer/reader, but we can have yaml or whatever we want
