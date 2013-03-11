@@ -29,7 +29,13 @@ module Escort
         end
 
         def config_path
-          @config_path ||= (auto_options.non_default_config_path || Locator::DescendingToHome.new(config_filename).locate || default_config_path)
+          @config_path ||= (auto_options.non_default_config_path || locator.locate || default_config_path)
+        end
+
+        def locator
+          Locator::Chaining.new(config_filename).
+            add_locator(Locator::ExecutingScriptDirectory.new(config_filename)).
+            add_locator(Locator::DescendingToHome.new(config_filename))
         end
       end
     end

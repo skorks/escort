@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib", "escort"))
+require File.join(File.expand_path(__FILE__), "..", "commands", "example_command")
+
+Escort::App.create do |app|
+  app.version "0.1.1"
+  app.summary "Summary 1"
+  app.description "Description 1"
+
+  app.config_file ".my_apprc", :autocreate => false
+
+  app.requires_arguments
+
+  app.options do |opts|
+    opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string, :default => "option 1"
+    opts.opt :option2, "Option2", :short => :none, :long => '--option2', :type => :string, :multi => true
+    opts.opt :int_option, "Int option", :short => '-i', :long => '--int-option', :type => :int
+    opts.opt :flag1, "Flag 1", :short => '-f', :long => '--flag1', :type => :boolean, :default => true
+    opts.opt :flag2, "Flag 2", :short => :none, :long => '--flag2', :type => :boolean
+
+    opts.conflict :flag1, :flag2
+    opts.dependency :option1, :on => :flag1
+    opts.validate(:int_option, "must be greater than 10") { |option| option > 10 }
+  end
+
+  app.command :command1  do |command|
+    command.summary "Command summary 1"
+    command.description "Command description 1"
+
+    command.options do |opts|
+      opts.opt :option1, "Option1 for command1", :short => '-o', :long => '--option1', :type => :string, :default => "option 1 command 1"
+      opts.opt :flag_for_command1, "Flag for command 1", :short => :none, :long => '--flag-for-command1', :type => :boolean
+
+      opts.dependency :option1, :on => :flag_for_command1
+    end
+
+    command.action do |options, arguments|
+      Escort::ExampleCommand.new(options, arguments).execute
+    end
+  end
+
+  app.command :command2, :aliases => :c2  do |command|
+    command.summary "Command summary 2"
+    command.description "Command description 2"
+
+    command.requires_arguments false
+
+    command.options do |opts|
+      opts.opt :optionb, "Optionb", :short => :none, :long => '--optionb', :type => :string, :multi => true
+      opts.opt :float_option, "Float option", :short => '-d', :long => '--float-option', :type => :float
+
+      opts.conflict :optionb, :float_option
+      opts.validate(:float_option, "must be less than 5") { |option| option < 5 }
+    end
+
+    command.action do |options, arguments|
+      Escort::ExampleCommand.new(options, arguments).execute
+    end
+  end
+
+  app.action do |options, arguments|
+    Escort::ExampleCommand.new(options, arguments).execute
+  end
+end
