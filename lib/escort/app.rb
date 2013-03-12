@@ -46,6 +46,8 @@ module Escort
         invoked_options, arguments = Escort::OptionParser.new(configuration, setup).parse(cli_options)
         context = context_from_options(invoked_options[:global])
         action = setup.action_for(context)
+        current_command = context.empty? ? :global : context.last
+        raise Escort::ClientError.new("No action defined for command '#{current_command}'") unless action
         actual_arguments = Escort::Arguments.read(arguments, setup.arguments_required_for(context))
       rescue => e
         handle_escort_error(e)
