@@ -213,6 +213,22 @@ This will execute fine, but if we do:
 
 The app will prompt the user to enter an argument. Pressing `Enter` will allow to enter more arguments. Like with many command-line apps you will need to press `Ctrl-D` to jump out of the prompt and allow the app to execute.
 
+There is one extra thing to note. If you're writing a command suite (see below for explanation). The `requires_arguments` setting will be inherited by all the sub-commands. You can however easily override the setting for any sub-command and this overridden value will be inherited by all the sub-commands of that command.
+
+```ruby
+...
+  app.command :start do |command|
+    command.requires_arguments false
+
+    command.action do |options, arguments|
+      MyApp::ExampleCommand.new(options, arguments).execute
+    end
+  end
+...
+```
+
+This way different commands in your app can pick and choose whether or not they want to require arguments or make them optional.
+
 
 ### Better Help Text
 
@@ -487,11 +503,125 @@ It is also worth knowing that Escort is quite clever when it comes to working ou
 
 As you can see the config file support is quite extensive and can take your command-line apps to the next level in terms of useability and utility.
 
-### Commands
-TODO
 
-### Sub-Commands
-TODO
+### Command Suites
+
+You're not just limited to options for your command-line apps. Escort allows you to turn your command-line apps into command-line suites, with command support. Let's say you want a command-line app to control a process of some sort. Your process is `app.rb`. What you want to be able to do is the following:
+
+```
+./app.rb start
+./app.rb stop
+./app.rb restart
+```
+
+You also want to be able to provide options both to the main process itself as well as to the various commands, e.g.:
+
+```
+./app.rb -e production start --reload
+```
+
+Escort makes this easy:
+
+```ruby
+#!/usr/bin/env ruby
+
+require 'escort'
+require 'my_app'
+
+Escort::App.create do |app|
+  app.config_file ".my_apprc", :autocreate => true
+
+  app.options do |opts|
+    opts.opt :environment, "Environment", :short => '-e', :long => '--environment', :type => :string, :default => "development"
+  end
+
+  app.command :start do |command|
+    command.summary "Start process"
+    command.description "Start process"
+
+    command.options do |opts|
+      opts.opt :reload, "Reload", :short => '-r', :long => '--reload', :type => :flag
+    end
+
+    command.action do |options, arguments|
+      MyApp::ExampleCommand.new(options, arguments).execute
+    end
+  end
+
+  app.command :stop do |command|
+    command.summary "Stop process"
+    command.description "Stop process"
+
+    command.action do |options, arguments|
+      MyApp::ExampleCommand.new(options, arguments).execute
+    end
+  end
+
+  app.command :restart do |command|
+    command.summary "Restart process"
+    command.description "Restart process"
+
+    command.action do |options, arguments|
+      MyApp::ExampleCommand.new(options, arguments).execute
+    end
+  end
+end
+```
+
+Of course you would probably use a different `ActionCommand` class to implement each of your defined commands (more on `ActionCommands` below).
+
+
+### Command Suites Sub-Commands
+
+Of course if one level of commands is good it is only logical that multiple levels of commands is even better. Luckily Escort supports infinitely nesting sub-commands so you can create command-line suites which are truly extensive. Let's say you're writing a command-line utility for your framework, you've named your framework 'Rails' (cause surely that's not taken :P) and your utility is `rails`. You want your utility to be used for generating migrations as well as controllers, something like:
+
+```
+rails generate migration
+rails g controller
+```
+
+Of course you want to be able to supply a set of options to each of the sub-commands when necessary:
+
+```
+rails -e development generate migration --sequel
+```
+
+As we've come to expect, this is very easy:
+
+```ruby
+#!/usr/bin/env ruby
+
+require 'escort'
+require 'my_app'
+
+Escort::App.create do |app|
+  app.config_file ".my_apprc", :autocreate => false
+
+  app.options do |opts|
+    opts.opt :environment, "Environment", :short => '-e', :long => '--environment', :type => :string, :default => "development"
+  end
+
+  app.command :generate, :aliases => [:g] do |command|
+    command.command :migration do |command|
+      app.options do |opts|
+        opts.opt :sequel, "Sequel", :short => '-s', :long => '--sequel', :type => :flag
+      end
+
+      command.action do |options, arguments|
+        MyApp::ExampleCommand.new(options, arguments).execute
+      end
+    end
+
+    command.command :controller do |command|
+      command.action do |options, arguments|
+        MyApp::ExampleCommand.new(options, arguments).execute
+      end
+    end
+  end
+end
+```
+
+Of course, you can flesh it out by providing a summary and description for the commands, specifying if arguments are required, conflicts, dependencies etc (this will be reflected in the help text). Just about everything you can do at the global level for apps without sub-commands, you can do at the command level (the only things you currently can't specify at the command level are 'version' and 'config_file', these are global only).
 
 
 ### Implementing the Actions

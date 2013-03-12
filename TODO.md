@@ -1,7 +1,8 @@
 ROADMAP
 
 v0.3.0
-- readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
+- integration test for commands
+- integration test for sub-commands
 - BUG parent_options when parent of command is global context doesn't seem to work???
 - test the base command for actions well
 - up the version to 0.3.0
@@ -31,15 +32,16 @@ v0.3.0
 - extract all the dsl command stuff into a helper module so that global and command can be handled by the same code DONE
 
 v0.4.0
-- readme for requires arguments overriding and inheritance
-- readme explain all the helper stuff that automatically gets created with config file support
 - test all the config file helper stuff
-- readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example
-- fix ppjson so that dependency suport feature is actually used
-- delete the stuff from the attic once it is no longer needed
 - a few more tests (setup accessor, all the dsl classes)
+- fix ppjson so that dependency suport feature is actually used
 - up the version to 0.4.0
 - tag and release
+
+- delete the stuff from the attic once it is no longer needed DONE
+- readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example DONE
+- readme for requires arguments overriding and inheritance DONE
+- readme explain all the helper stuff that automatically gets created with config file support DONE
 
 
 v1.0.0
