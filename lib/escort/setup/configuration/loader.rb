@@ -19,7 +19,7 @@ module Escort
         end
 
         def default_config_path
-          @default_config_path ||= File.join(File.expand_path(ENV["HOME"]), config_filename)
+          @default_config_path ||= (config_filename ? File.join(File.expand_path(ENV["HOME"]), config_filename) : nil)
         end
 
         private

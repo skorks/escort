@@ -1,11 +1,6 @@
 ROADMAP
 
 v0.3.0
-- test the configuration generator
-- test the configuration merge tool
-- test the configuration loader
-- test the descend to home locator
-
 - readme a basic app with config file, integration test (don't worry about explaining all the helper stuff that gets created)
 - readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
 - BUG parent_options when parent of command is global context doesn't seem to work???
@@ -14,6 +9,10 @@ v0.3.0
 - tag and release
 
 
+- test the configuration loader DONE
+- test the descend to home locator DONE
+- test the configuration merge tool DONE
+- test the configuration generator DONE
 - test all the locators (descend, specfic dir, current script dir, chaining) DONE
 - we should always be using the chaining locator, with more or less sub locators depending on setup DONE
 - create other locators (dir of currently executing script locator, i.e. not the working directory, specified dir locator) DONE

@@ -97,18 +97,5 @@ describe Escort::Setup::Configuration::Generator do
       it("sub_command1 options config should not be empty") {subject[:global][:commands][:command1][:commands][:sub_command1][:options].should_not be_empty}
       it("sub_command1 options option value should be the same as default value") {subject[:global][:commands][:command1][:commands][:sub_command1][:options][:option3].should == 'yadda'}
     end
-
-    context "when configuration with config file" do
-      let(:app_configuration) do
-        Escort::Setup::Dsl::Global.new do |app|
-          app.config_file ".my_apprc", :autocreate => false
-
-          app.options do |opts|
-            opts.opt :option1, "option1", :short => :none, :long => '--option1', :type => :string
-          end
-        end
-      end
-      it {p subject}
-    end
   end
 end

@@ -1,7 +1,7 @@
 {
   "global": {
     "options": {
-      "option1": "option 123",
+      "option1": "option from file",
       "config": null,
       "verbosity": "WARN",
       "error_output_format": "basic"
