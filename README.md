@@ -409,7 +409,83 @@ As you can see you may define multiple validation rules for the same option with
 
 
 ### Configuration File
-TODO
+
+Sometime you have a whole bunch of command line options you need to pass in to your app, but the value of these options hardly ever changes. It's a bit of a drag to have supply these on the command-line every time. This is why we have config file support. You may indicate that your app has a config file like so:
+
+```ruby
+#!/usr/bin/env ruby
+
+require 'escort'
+require 'my_app'
+
+Escort::App.create do |app|
+  app.config_file ".my_apprc", :autocreate => true
+
+  app.options do |opts|
+    opts.opt :option1, "Option1", :short => '-o', :long => '--option1', :type => :string, :default => "option 1"
+  end
+
+  app.action do |options, arguments|
+    MyApp::ExampleCommand.new(options, arguments).execute
+  end
+end
+```
+
+Essentially we give the config file a name and optionally set the config file to be autocreatable. When the config file is autocreatable, the first time you run the command-line app, a config file with the name your specified will be created in the default location (which is your home directory). The config file format is JSON, and it is structured in a specific way to support infinitely nesting sub commands. The config file for an app like the one above, might look like this:
+
+```
+{
+  "global": {
+    "options": {
+      "option1": "option 1",
+      "config": null,
+      "verbosity": "WARN",
+      "error_output_format": "basic"
+    },
+    "commands": {
+      "escort": {
+        "options": {
+          "create_config": null,
+          "create_default_config": null,
+          "update_config": null,
+          "update_default_config": null
+        },
+        "commands": {
+        }
+      }
+    }
+  },
+  "user": {
+  }
+}
+```
+
+All the options you can supply to your app will be present in the config file as well as all the commands and all their options etc (you also get a bunch of options and a single command that get automatically added by escort for your convenience, these will be explained below). You can go and modify the values for all your options in the config file. The config file values, take precedence over the default values that you specified for the options (if any), but if you supply an option value on the command-line, this will still take precedence over the option value you define in the config file. This way you can provide sensible defaults and still override when necessary.
+
+Whenever you define an app to have a config file, escort will add some utility options and commands for you to make working with config files easier. Firstly, you will get a global `config` option. This can be used to make your app take a specific config file instead of the default one, this config file will only be valid for the single execution of your command-line app e.g.:
+
+```
+./app.rb --config='/var/opt/.blahrc' -o yadda
+```
+
+You also get a utility command for working with config files - the `escort` command. This command has 4 options:
+
+* `--create-config` - this can be used to create a config file in a specified location
+* `--create-default-config` - this can be used to create a config file in the default location (home directory) if one doesn't already exit
+* `--update-config` - this can be used to update a specific config file (mainly useful during development), if you've added new options/commands using this option will allow your config file to reflect this (it will not blow away any of the values you have set for your options)
+* `--update-default-config` - same as above but will just work with the default config file if it is present (if not, it will create a default config file)
+
+These utility options can be very useful as the nested format of the config file can become confusing if you have to update it by hand with new options and commands while you're developing your apps.
+
+It is also worth knowing that Escort is quite clever when it comes to working out which config file to use for a particular run of the command-line app. It will not just use the config file in your home directory, but will instead attempt to find a config file closer in the directory hierarchy to the location of the command-line script. The strategy is as follows:
+
+* look for a config file in the directory where the command-line script itself lives, if found use that one
+* otherwise look for a config file in the current working directory and use that one
+* if still not found, go down one level of the directory tree from the current working directory and look for a config file there
+* keep going down the directory tree until the home directory is reached, if no config file was found, then no config file exists
+* in which case either create the config file in home directory (if autocreatable) or continue without config file
+
+As you can see the config file support is quite extensive and can take your command-line apps to the next level in terms of useability and utility.
 
 ### Commands
 TODO

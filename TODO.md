@@ -1,7 +1,6 @@
 ROADMAP
 
 v0.3.0
-- readme a basic app with config file, integration test (don't worry about explaining all the helper stuff that gets created)
 - readme a command app with options, validations, description, summary, require arguments and config file, integration tests for commands, example
 - BUG parent_options when parent of command is global context doesn't seem to work???
 - test the base command for actions well
@@ -9,6 +8,7 @@ v0.3.0
 - tag and release
 
 
+- readme a basic app with config file, integration test (don't worry about explaining all the helper stuff that gets created) DONE
 - test the configuration loader DONE
 - test the descend to home locator DONE
 - test the configuration merge tool DONE
