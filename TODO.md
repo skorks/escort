@@ -38,6 +38,7 @@ v0.4.0
 - up the version to 0.4.0
 - tag and release
 
+
 - delete the stuff from the attic once it is no longer needed DONE
 - readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example DONE
 - readme for requires arguments overriding and inheritance DONE
@@ -62,11 +63,12 @@ v1.0.0
 - readme for a basic app with dependent options      DONE
 
 v1.0.1
+- pull out the action execution into a separate class and test it
 - add a section to readme for command line tools built with escort (e.g. ppjson)
-- more specs
+- more specs (all the dsl classes possibly)
 - more integration specs (more specs for the different types of options)
 - a way have helpers available when you don't want to have to create a command
-- the config auto option should not be included in the config file, same with other auto options
+- the config auto option should not be included in the config file, same with other auto options???
 - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
 
 
@@ -75,6 +77,7 @@ v1.0.1
 - add depends support to dsl   DONE
 
 v1.0.2
+- refactor the app class so it is a bit nicer etc
 - more specs
 - need a suite for escort itself using escort to bootstrap etc
 - scaffold for app with no sub commands
@@ -82,15 +85,16 @@ v1.0.2
 - scaffold for app with nested sub commands
 
 v1.0.3
-- refactor the app class so it is a bit nicer etc
 - an option for setup that indicates it is a project specific CLI app
 - an options for setup that indicates it is an environment aware CLI app
 - make the configuration environment aware
 - make escort environment aware (app.environment_aware)
 - json configuration should support defaults config
-- much better documentation and usage patterns
 - pull the terminal formatting stuff into separate gem
 - pull nested exception stuff into separate gem
+
+
+- much better documentation and usage patterns         DONE
 
 v2.0.0
 - rework actions with passing a class and having it being auto called
