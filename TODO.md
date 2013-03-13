@@ -1,39 +1,7 @@
 ROADMAP
-
-v0.3.0
-- tag and release
-
-
-- up the version to 0.3.0 DONE
-- test the base command for actions well DONE
-- BUG parent_options when parent of command is global context doesn't seem to work??? DONE
-- integration test for commands   DONE
-- integration test for sub-commands DONE
-- readme a basic app with config file, integration test (don't worry about explaining all the helper stuff that gets created) DONE
-- test the configuration loader DONE
-- test the descend to home locator DONE
-- test the configuration merge tool DONE
-- test the configuration generator DONE
-- test all the locators (descend, specfic dir, current script dir, chaining) DONE
-- we should always be using the chaining locator, with more or less sub locators depending on setup DONE
-- create other locators (dir of currently executing script locator, i.e. not the working directory, specified dir locator) DONE
-- create a chaining locator so we can put all our locators together  DONE
-- test the configuration reader DONE
-- test the configuration writer  DONE
-- a basic app example with all the trimmings DONE
-- app with config file example     DONE
-- readme implementing and action for a basic app DONE
-- rejig for betterness the validations help outputs DONE
-- test the string grid      DONE
-- start using the new stream output formatter   DONE
-- refactor terminal formatter and test it     DONE
-- finish testing the output formatter        DONE
-- get rid of shell command executor new shell stuff (doesn't work in Jruby and not really needed anyway)  DONE
-- extract all the dsl command stuff into a helper module so that global and command can be handled by the same code DONE
-
 v0.4.0
-- test all the config file helper stuff
-- a few more tests (setup accessor, all the dsl classes)
+- integration test all the config file helper stuff
+- a few more tests (setup accessor)
 - fix ppjson so that dependency suport feature is actually used
 - up the version to 0.4.0
 - tag and release
@@ -310,3 +278,32 @@ v0.2.0
   - integration test all the permutations of dependency specification with error and success cases etc  DONE
   - create a shortcut for dependency specification on the opt method options hash itself                DONE
   - fix up example for basic app with dependencies for options                                          DONE
+
+v0.3.0
+- tag and release DONE
+- up the version to 0.3.0 DONE
+- test the base command for actions well DONE
+- BUG parent_options when parent of command is global context doesn't seem to work??? DONE
+- integration test for commands   DONE
+- integration test for sub-commands DONE
+- readme a basic app with config file, integration test (don't worry about explaining all the helper stuff that gets created) DONE
+- test the configuration loader DONE
+- test the descend to home locator DONE
+- test the configuration merge tool DONE
+- test the configuration generator DONE
+- test all the locators (descend, specfic dir, current script dir, chaining) DONE
+- we should always be using the chaining locator, with more or less sub locators depending on setup DONE
+- create other locators (dir of currently executing script locator, i.e. not the working directory, specified dir locator) DONE
+- create a chaining locator so we can put all our locators together  DONE
+- test the configuration reader DONE
+- test the configuration writer  DONE
+- a basic app example with all the trimmings DONE
+- app with config file example     DONE
+- readme implementing and action for a basic app DONE
+- rejig for betterness the validations help outputs DONE
+- test the string grid      DONE
+- start using the new stream output formatter   DONE
+- refactor terminal formatter and test it     DONE
+- finish testing the output formatter        DONE
+- get rid of shell command executor new shell stuff (doesn't work in Jruby and not really needed anyway)  DONE
+- extract all the dsl command stuff into a helper module so that global and command can be handled by the same code DONE
