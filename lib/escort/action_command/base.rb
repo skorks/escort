@@ -19,17 +19,18 @@ module Escort
       def command_context
         return @command_context if @command_context
         @command_context = []
-        current_command_hash = options[:global][:commands]
+        options[:global] ||= {}
+        current_command_hash = options[:global][:commands] || {}
         until current_command_hash.keys.empty?
           key = current_command_hash.keys.first
           @command_context << key
-          current_command_hash = current_command_hash[key][:commands]
+          current_command_hash = current_command_hash[key][:commands] || {}
         end
         @command_context
       end
 
       def command_name
-        command_context.first || :global
+        command_context.last || :global
       end
 
       def command_options
@@ -73,8 +74,9 @@ module Escort
       end
 
       def ensure_ancestor(generation_number, &block)
-        return {} if generation_number < 1
-        return {} unless command_context.size > generation_number
+        return {} if generation_number < 0
+        #return {} if generation_number == 0
+        return {} unless command_context.size >= generation_number
         ancestor_context = command_context.dup.slice(0, command_context.size - generation_number)
         block.call(ancestor_context)
       end

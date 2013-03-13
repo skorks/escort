@@ -1,14 +1,14 @@
 ROADMAP
 
 v0.3.0
-- integration test for commands
-- integration test for sub-commands
-- BUG parent_options when parent of command is global context doesn't seem to work???
-- test the base command for actions well
-- up the version to 0.3.0
 - tag and release
 
 
+- up the version to 0.3.0 DONE
+- test the base command for actions well DONE
+- BUG parent_options when parent of command is global context doesn't seem to work??? DONE
+- integration test for commands   DONE
+- integration test for sub-commands DONE
 - readme a basic app with config file, integration test (don't worry about explaining all the helper stuff that gets created) DONE
 - test the configuration loader DONE
 - test the descend to home locator DONE
@@ -108,6 +108,9 @@ v2.0.1
 
 
 BUCKET
+- get all tests passing on jruby 1.9
+- get all tests passing on rubinius 1.9
+- get all tests passing on mri 1.8.7
 - configatron support in addition to json config
 - for help current command context is all confused, is the context a parent context or the current context, fixed in help but the class is still confused as it's being used in two different ways
 - genericise the generator concept, so that the current one becomes a nested generator, but we can also have a flat generator
