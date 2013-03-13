@@ -1,12 +1,12 @@
 ROADMAP
 v0.4.0
-- integration test all the config file helper stuff
 - a few more tests (setup accessor)
-- fix ppjson so that dependency suport feature is actually used
 - up the version to 0.4.0
 - tag and release
 
 
+- integration test all the config file helper stuff  DONE
+- fix ppjson so that dependency suport feature is actually used DONE
 - delete the stuff from the attic once it is no longer needed DONE
 - readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example DONE
 - readme for requires arguments overriding and inheritance DONE
@@ -15,8 +15,7 @@ v0.4.0
 
 v1.0.0
 - have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests
-- a few more integration tests (test that basic app automatically gets help and other automatic options)
-- clean up all the extraneous branches
+- a few more integration tests (test that basic app automatically gets help and version and that they are correct)
 - up the version to 1.0.0
 - tag and release
 - get the blog updated with a new theme
@@ -24,6 +23,7 @@ v1.0.0
 - blog Build Command-Line Apps Like a Pro Using Ruby and Escort
 
 
+- clean up all the extraneous branches DONE
 - in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself DONE
 - rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)  DONE
 - errors coming straigh out of configuration should still be caught by error handlers to only display stack trace when needed (refactor app create method) DONE
@@ -69,6 +69,7 @@ v2.0.0
 - implement servants for dealing with clumps of functionality, and action commands have access to all servants that were executed before them
 - ability to break up a big config into chucks, e.g. per command etc. so that it is more modular and easier to read
 - whether or not action is specified things should not blow up
+- rework ppjson to take advantage of servants and non-block actions and release a new version
 
 v2.0.1
 - lots more logging at different levels for debug purposes

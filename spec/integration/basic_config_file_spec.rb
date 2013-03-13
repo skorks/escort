@@ -79,4 +79,48 @@ describe "Escort basic app with config file defined", :integration => true do
       it("should not have created a config file in default location") { File.should_not exist path  }
     end
   end
+
+  context "when config file specified" do
+    let(:autocreate) {false}
+
+    before do
+      FileUtils.mkdir_p(File.dirname path)
+      File.open(path, 'w') {|f| f.write(JSON.pretty_generate({:global => {:commands => {}, :options => {:option1 => 'hello'}}, :user => {}})) }
+
+      begin
+        subject
+      rescue SystemExit => e
+      end
+    end
+
+    context "--config global option should exist" do
+      let(:option_string) { "--config=#{path}" }
+      it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+    end
+
+    context "escort command should exist" do
+      let(:option_string) { "escort -h" }
+      it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+
+      context "--create-config option for escort command should exist" do
+        let(:option_string) { "escort --create-config=#{path}" }
+        it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+      end
+
+      context "--create-default-config option for escort command should exist" do
+        let(:option_string) { "escort --create-default-config" }
+        it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+      end
+
+      context "--update-config option for escort command should exist" do
+        let(:option_string) { "escort --update-config=#{path}" }
+        it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+      end
+
+      context "--update-default-config option for escort command should exist" do
+        let(:option_string) { "escort --update-default-config" }
+        it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+      end
+    end
+  end
 end
