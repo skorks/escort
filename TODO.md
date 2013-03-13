@@ -39,9 +39,9 @@ v1.0.2
 - create a table of contents for the readme so that it is easier to navigate it
 - refactor the app class so it is a bit nicer etc
 - need a suite for escort itself using escort to bootstrap etc
-- scaffold for app with no sub commands
-- scaffold for app with one level of commands
-- scaffold for app with nested sub commands
+- scaffold for app with no sub commands (escort g -o blah -o yadda bin/app.rb)
+- scaffold for app with one level of commands (escort g -o blah -o yadda suite -o blah -o yadda -c foo -c bar bin/app.rb)
+- scaffold for app with nested sub commands (escort g -o blah -o yadda suite -o blah -o yadda -c foo -c bar --nested bin/app.rb) ???
 
 v1.0.3
 - an option for setup that indicates it is a project specific CLI app
@@ -49,8 +49,7 @@ v1.0.3
 - make the configuration environment aware
 - make escort environment aware (app.environment_aware)
 - json configuration should support defaults config
-- pull the terminal formatting stuff into separate gem
-- pull nested exception stuff into separate gem
+- if necessary, extra helpers to work with environment specific config sections (xxx -e production escort --create-config-environment-section)
 
 
 - much better documentation and usage patterns         DONE
@@ -68,6 +67,8 @@ v2.0.1
 - more specs (dsl classes, validator, option_parser, dependency validator, global_pre_parser, auto_options, app)
 - perhaps verbosity should be at the highest level by default and allow toning it down via the setup
 - blog Build Command-Line Apps Like a Pro Using Ruby and Escort
+- pull the terminal formatting stuff into separate gem
+- pull nested exception stuff into separate gem
 
 
 
