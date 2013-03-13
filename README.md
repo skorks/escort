@@ -684,7 +684,10 @@ TODO
 
 ## Command-Line Tools Built With Escort
 
-TODO
+If you've used Escort to build a command-line tool that you have made publicly available, feel free to add a link to it here.
+
+* https://github.com/skorks/ppjson - pretty print your JSON on the command-line (works with JSON strings as well as files containing JSON, can uglify as well as pretty print)
+
 
 ## Alternatives
 

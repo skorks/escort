@@ -1,10 +1,21 @@
 ROADMAP
-v0.4.0
+v1.0.0
 - a few more tests (setup accessor)
-- up the version to 0.4.0
+- up the version to 1.0.0
 - tag and release
+- get the blog updated with a new theme
+- put a new subscriber count widget on blog
 
 
+
+- a few more integration tests (test that basic app automatically gets help and version and that they are correct) DONE
+- have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests DONE
+- clean up all the extraneous branches DONE
+- in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself DONE
+- rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)  DONE
+- errors coming straigh out of configuration should still be caught by error handlers to only display stack trace when needed (refactor app create method) DONE
+- readme for a basic app with conflicting options    DONE
+- readme for a basic app with dependent options      DONE
 - integration test all the config file helper stuff  DONE
 - fix ppjson so that dependency suport feature is actually used DONE
 - delete the stuff from the attic once it is no longer needed DONE
@@ -12,41 +23,21 @@ v0.4.0
 - readme for requires arguments overriding and inheritance DONE
 - readme explain all the helper stuff that automatically gets created with config file support DONE
 
-
-v1.0.0
-- have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests
-- a few more integration tests (test that basic app automatically gets help and version and that they are correct)
-- up the version to 1.0.0
-- tag and release
-- get the blog updated with a new theme
-- put a new subscriber count widget on blog
-- blog Build Command-Line Apps Like a Pro Using Ruby and Escort
-
-
-- clean up all the extraneous branches DONE
-- in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself DONE
-- rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)  DONE
-- errors coming straigh out of configuration should still be caught by error handlers to only display stack trace when needed (refactor app create method) DONE
-- readme for a basic app with conflicting options    DONE
-- readme for a basic app with dependent options      DONE
-
 v1.0.1
 - pull out the action execution into a separate class and test it
-- add a section to readme for command line tools built with escort (e.g. ppjson)
-- more specs (all the dsl classes possibly)
-- more integration specs (more specs for the different types of options)
 - a way have helpers available when you don't want to have to create a command
-- the config auto option should not be included in the config file, same with other auto options???
 - readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
 
 
+- the config auto option should not be included in the config file, same with other auto options??? N/A
+- add a section to readme for command line tools built with escort (e.g. ppjson) DONE
 - rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.) DONE
 - rewrite the help formatter to be a bit easier to understand (more like man output for output) DONE
 - add depends support to dsl   DONE
 
 v1.0.2
+- create a table of contents for the readme so that it is easier to navigate it
 - refactor the app class so it is a bit nicer etc
-- more specs
 - need a suite for escort itself using escort to bootstrap etc
 - scaffold for app with no sub commands
 - scaffold for app with one level of commands
@@ -73,6 +64,10 @@ v2.0.0
 
 v2.0.1
 - lots more logging at different levels for debug purposes
+- more integration specs (more specs for the different types of options)
+- more specs (dsl classes, validator, option_parser, dependency validator, global_pre_parser, auto_options, app)
+- perhaps verbosity should be at the highest level by default and allow toning it down via the setup
+- blog Build Command-Line Apps Like a Pro Using Ruby and Escort
 
 
 
@@ -120,6 +115,7 @@ BUCKET
 - json configuration should support having environment configs in multiple files
 - blog the crap out of all aspects of how to use it, how it is constructed, some fancy things you can do with it etc.
 - ability to ask for user input for a command (e.g. for passwords, this can possibly be done via validations)
+- do a homebrew config for ppjson so that it can easily be installed using brew
 
 - blog about what makes a good command line app (this and the one below are possibly one post)
 - blog about how to use escort and why the other libraries possibly fall short
@@ -132,6 +128,7 @@ BUCKET
 - blog about nested exceptions and how to make them nice in your app, also metion exceptional ruby book as well as nestegg gem
 - blog about dependencies with bundler, the spermy operator and what version will be chosen
 - blog about ppjson and how to use it
+- reply to a bunch of stackoverflow posts about pretty printing json on the command-line
 
 - improve the terminal formatter, allowing wrapping text to anywhere, and tabular like output without an actual table, allowing configuring terminal of any size not just 80, spin it off a little separate project, with an example of how to possibly build a menu in it or something DONE
 - BUG the help formatting is still not quite right as far as respecting the char limits and wrapping properly when doing tabular output!!!! DONE
