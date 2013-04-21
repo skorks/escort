@@ -1,3 +1,5 @@
+autoload :Nesty,                            "nesty"
+
 module Escort
   autoload :VERSION,                        "escort/version"
   autoload :Trollop,                        "escort/trollop"
