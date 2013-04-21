@@ -3,8 +3,6 @@ v1.0.0
 - a few more tests (setup accessor)
 - up the version to 1.0.0
 - tag and release
-- get the blog updated with a new theme
-- put a new subscriber count widget on blog
 
 
 
@@ -22,6 +20,8 @@ v1.0.0
 - readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example DONE
 - readme for requires arguments overriding and inheritance DONE
 - readme explain all the helper stuff that automatically gets created with config file support DONE
+- get the blog updated with a new theme    DONE
+- put a new subscriber count widget on blog DONE
 
 v1.0.1
 - pull out the action execution into a separate class and test it
