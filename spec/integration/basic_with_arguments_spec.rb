@@ -1,3 +1,5 @@
+require 'readline'
+
 describe "Escort basic app that requires arguments", :integration => true do
   subject { Escort::App.create(option_string, &app_configuration) }
 
