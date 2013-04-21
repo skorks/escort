@@ -112,11 +112,6 @@ module Escort
 
     def add_global_command(name, options = {}, &block)
       global_instance.command(name, options, &block)
-
-      #with_context([]) do |current_context|
-        #commands = fetch_instance_variable_from(current_context, :commands)
-        #options_object.opt name, desc, options
-      #end
     end
 
     private

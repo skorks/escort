@@ -1,39 +1,16 @@
 ROADMAP
 v1.0.0
-- a few more tests (setup accessor)
+- thoroughly test the setup accessor
+- refactor setup accessor to break it up into multiple objects so that it is easier to test and less monolithic
+- pull out the action execution into a separate class and test it
+- a way have helpers available when you don't want to have to create a command
+- readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
 - up the version to 1.0.0
 - tag and release
 
 
 
-- a few more integration tests (test that basic app automatically gets help and version and that they are correct) DONE
-- have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests DONE
-- clean up all the extraneous branches DONE
-- in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself DONE
-- rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)  DONE
-- errors coming straigh out of configuration should still be caught by error handlers to only display stack trace when needed (refactor app create method) DONE
-- readme for a basic app with conflicting options    DONE
-- readme for a basic app with dependent options      DONE
-- integration test all the config file helper stuff  DONE
-- fix ppjson so that dependency suport feature is actually used DONE
-- delete the stuff from the attic once it is no longer needed DONE
-- readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example DONE
-- readme for requires arguments overriding and inheritance DONE
-- readme explain all the helper stuff that automatically gets created with config file support DONE
-- get the blog updated with a new theme    DONE
-- put a new subscriber count widget on blog DONE
-
 v1.0.1
-- pull out the action execution into a separate class and test it
-- a way have helpers available when you don't want to have to create a command
-- readme about how to actually pass the user config through to action and the fact that regardless if you have a config file or not, you can have a config var or not as part of the block variables
-
-
-- the config auto option should not be included in the config file, same with other auto options??? N/A
-- add a section to readme for command line tools built with escort (e.g. ppjson) DONE
-- rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.) DONE
-- rewrite the help formatter to be a bit easier to understand (more like man output for output) DONE
-- add depends support to dsl   DONE
 
 v1.0.2
 - create a table of contents for the readme so that it is easier to navigate it
@@ -306,3 +283,26 @@ v0.3.0
 - finish testing the output formatter        DONE
 - get rid of shell command executor new shell stuff (doesn't work in Jruby and not really needed anyway)  DONE
 - extract all the dsl command stuff into a helper module so that global and command can be handled by the same code DONE
+
+v0.4.0
+- a few more integration tests (test that basic app automatically gets help and version and that they are correct) DONE
+- have a think about how to make the integration tests a bit more robust, so that failures don't get swallowed (test for specific exit codes instead of non-zero exit code), fix the existing integration tests DONE
+- clean up all the extraneous branches DONE
+- in trollop when errors are raised they should be wrapped as escort errors and propagate rather than being caught by trollop itself DONE
+- rework the examples again to show of some/most of the features (along the lines of the integration tests and readme)  DONE
+- errors coming straigh out of configuration should still be caught by error handlers to only display stack trace when needed (refactor app create method) DONE
+- readme for a basic app with conflicting options    DONE
+- readme for a basic app with dependent options      DONE
+- integration test all the config file helper stuff  DONE
+- fix ppjson so that dependency suport feature is actually used DONE
+- delete the stuff from the attic once it is no longer needed DONE
+- readme a sub command app with options, validations, description, summary, require arguments and config file, integration tests, example DONE
+- readme for requires arguments overriding and inheritance DONE
+- readme explain all the helper stuff that automatically gets created with config file support DONE
+- get the blog updated with a new theme    DONE
+- put a new subscriber count widget on blog DONE
+- the config auto option should not be included in the config file, same with other auto options??? N/A
+- add a section to readme for command line tools built with escort (e.g. ppjson) DONE
+- rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.) DONE
+- rewrite the help formatter to be a bit easier to understand (more like man output for output) DONE
+- add depends support to dsl   DONE
