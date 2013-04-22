@@ -38,7 +38,7 @@ module Escort
       end
 
       def global_options
-        @global_options ||= options[:global][:options] || {}
+        @global_options ||= (options[:global] || {})[:options] || {}
       end
 
       def parent_options
