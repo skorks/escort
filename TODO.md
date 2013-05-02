@@ -8,6 +8,10 @@ v1.0.0
 - up the version to 1.0.0
 - tag and release
 
+- rejig it completely so that we don't have multiple levels of options, instead all options get merged into a single level options hash, you should be able to specify all options anywhere if the options make sense for the set of commands that we have in the options string, this should make the configuration file much simpler as it will be single level, should also potentially make a lot of the code much simpler, should be able to delete a bunch of stuff and make other stuff much simpler, this will make the interface much simpler as well!!!!!!!!!!!!!!!!!!
+
+- we could/should probably write a better option parser that will allow us to specify options anywhere irrespective to the arguments and should return a list of options with values as well as arguments (this about it!)
+
 
 
 v1.0.1
