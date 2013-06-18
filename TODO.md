@@ -50,6 +50,47 @@ v2.0.1
 - blog Build Command-Line Apps Like a Pro Using Ruby and Escort
 - pull the terminal formatting stuff into separate gem
 - pull nested exception stuff into separate gem
+- 
+
+IDEAS
+#!/usr/bin/env ruby
+
+require 'escort'
+require 'my_app'
+h
+class Myapp::Commnads:MyCommand::Base
+  option
+end
+
+class Myapp::Commnads:MySubCommand < Myapp::Commnads:MyCommand::Base
+  description "I am an awesome class"
+  option :full_name, short: '-f', ...
+  include_options MyApp::Commands::SomeOtherCommand
+
+
+  def self.description
+    "I am an awesome class"
+  end
+
+  def self.options
+    SomeCommand.options + SomeOtherCommand.options
+  end
+
+  def run
+    do_some_things(options.foo)
+  end
+end
+
+class Myapp::Commnads:MyCommand:MySubcommand
+
+
+Escort::App.create do |r|
+  r.group 'bananas' do |r|
+    r.group 'delicious' do |r|
+      r.map 'my_subcommand', Myapp::Commnads:MyCommand:MySubcommand
+    end
+  end
+end
 
 
 
