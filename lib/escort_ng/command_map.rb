@@ -3,9 +3,10 @@
 #end
 module Escort
   class CommandMap
+    DEFAULT_KEY = '__default__'
+
     def initialize
-      @hash = {}
-      @default_action = nil
+      @commands = {}
     end
 
     def build(&block)
@@ -14,12 +15,17 @@ module Escort
       self
     end
 
-    def default_action=(command_class)
-      @default_action = command_class
+    def executable_for(context, options, arguments)
+      executable = @commands[DEFAULT_KEY]
+      if executable.ancestors.include?(Command)
+        executable.new(options, arguments)
+      else
+        BlockExecutionCommand.new(options, arguments, &executable)
+      end
     end
 
-    def default_action
-      @default_action
+    def set_command(key, value)
+      @commands[key] = value
     end
 
     class DSL
@@ -29,8 +35,12 @@ module Escort
         @command_map = command_map
       end
 
-      def default_action(command_class)
-        command_map.default_action = command_class
+      def default_command(command_class = nil, &block)
+        if block_given?
+          command_map.set_command(DEFAULT_KEY, block)
+        else
+          command_map.set_command(DEFAULT_KEY, command_class)
+        end
       end
     end
   end

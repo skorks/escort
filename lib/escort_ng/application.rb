@@ -14,19 +14,19 @@ module Escort
       end
 
       def run(option_string = '')
-        raw_cli_options = get_raw_cli_options(option_string)
-        p raw_cli_options
+        #raw_cli_options = get_raw_cli_options(option_string)
+        #p raw_cli_options
         #parse the option string
-        @command_map.default_action.new.execute
+        @command_map.executable_for(nil, nil, nil).execute
         #TODO introduce an exit call here when things are further along
       end
 
-      private
+      #private
 
-      def get_raw_cli_options(option_string)
-        passed_in_options = Escort::Utils.tokenize_option_string(option_string)
-        passed_in_options.empty? ? ARGV.dup : passed_in_options
-      end
+      #def get_raw_cli_options(option_string)
+        #passed_in_options = Escort::Utils.tokenize_option_string(option_string)
+        #passed_in_options.empty? ? ARGV.dup : passed_in_options
+      #end
     end
   end
 end

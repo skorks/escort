@@ -4,27 +4,14 @@ $:.unshift File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "l
 
 require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib", "escort_ng"))
 
-require File.join(File.expand_path(__FILE__), "..", "commands", "ng_example_command")
-require File.join(File.expand_path(__FILE__), "..", "commands", "ng_example_command2")
-
-module BasicNg
+module Basic
   class Application < Escort::Application
+    command_map do |m|
+      m.default_command do
+        p 'HELLO'
+      end
+    end
   end
 end
 
-BasicNg::Application.command_map.build do |m|
-  m.default_action Escort::ExampleCommand
-end
-
-module BasicNg2
-  class Application < Escort::Application
-  end
-end
-
-BasicNg2::Application.command_map.build do |m|
-  m.default_action Escort::ExampleCommand2
-end
-
-BasicNg::Application.run
-
-BasicNg2::Application.run
+Basic::Application.run

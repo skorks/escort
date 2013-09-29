@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib"))
+
+require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib", "escort_ng"))
+
+module Basic
+  class ExampleCommand < Escort::Command
+    options :flag1, :flag2
+
+    def execute
+      p options
+    end
+  end
+
+  class Application < Escort::Application
+    command_map do |m|
+      m.default_command ExampleCommand
+    end
+
+    option_registry do |r|
+      r.option :flag1, desc: "Flag 1", short: 'f', long: 'flag1', type: :boolean, default: true
+      r.option :flag2, desc: "Flag 2", short: :none, long: 'flag2', type: :boolean
+    end
+  end
+end
+
+Basic::Application.run
