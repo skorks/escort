@@ -1,73 +1,61 @@
-autoload :Nesty,                            "nesty"
+# Because of rubygems require as soon as you require
+# the first gem, you pay around 0.5 second penalty
+require 'json' unless defined?(JSON)
+require 'fileutils' unless defined?(FileUtils)
+require 'nesty' unless defined?(Nesty)
 
-module Escort
-  autoload :VERSION,                        "escort/version"
-  autoload :Trollop,                        "escort/trollop"
-  autoload :Utils,                          "escort/utils"
-  autoload :Arguments,                      "escort/arguments"
-  autoload :Logger,                         "escort/logger"
-  autoload :SetupAccessor,                  "escort/setup_accessor"
-  autoload :OptionDependencyValidator,      "escort/option_dependency_validator"
-  autoload :Validator,                      "escort/validator"
-  autoload :AutoOptions,                    "escort/auto_options"
-  autoload :GlobalPreParser,                "escort/global_pre_parser"
-  autoload :OptionParser,                   "escort/option_parser"
-  autoload :App,                            "escort/app"
+require 'escort/version'
+require 'escort/trollop'
+require 'escort/utils'
+require 'escort/arguments'
+require 'escort/logger'
+require 'escort/setup_accessor'
+require 'escort/option_dependency_validator'
+require 'escort/validator'
+require 'escort/auto_options'
+require 'escort/global_pre_parser'
+require 'escort/option_parser'
+require 'escort/app'
 
-  autoload :Error,                          "escort/error/error"
-  autoload :BaseError,                      "escort/error/error"
-  autoload :UserError,                      "escort/error/error"
-  autoload :InternalError,                  "escort/error/error"
-  autoload :ClientError,                    "escort/error/error"
-  autoload :TransientError,                 "escort/error/error"
+require 'escort/error/error'
 
-  module Formatter
-    autoload :Option,                       "escort/formatter/option"
-    autoload :Options,                      "escort/formatter/options"
-    autoload :Command,                      "escort/formatter/command"
-    autoload :Commands,                     "escort/formatter/commands"
-    autoload :GlobalCommand,                "escort/formatter/global_command"
-    autoload :ShellCommandExecutor,         "escort/formatter/shell_command_executor"
-    autoload :Terminal,                     "escort/formatter/terminal"
-    autoload :StringSplitter,               "escort/formatter/string_splitter"
-    autoload :CursorPosition,               "escort/formatter/cursor_position"
-    autoload :StreamOutputFormatter,        "escort/formatter/stream_output_formatter"
-    autoload :StringGrid,                   "escort/formatter/string_grid"
-    autoload :DefaultHelpFormatter,         "escort/formatter/default_help_formatter"
-  end
+require 'escort/formatter/option'
+require 'escort/formatter/options'
+require 'escort/formatter/command'
+require 'escort/formatter/commands'
+require 'escort/formatter/global_command'
+require 'escort/formatter/shell_command_executor'
+require 'escort/formatter/terminal'
+require 'escort/formatter/string_splitter'
+require 'escort/formatter/cursor_position'
+require 'escort/formatter/stream_output_formatter'
+require 'escort/formatter/string_grid'
+require 'escort/formatter/default_help_formatter'
 
-  module Setup
-    module Dsl
-      autoload :Options,                    "escort/setup/dsl/options"
-      autoload :Action,                     "escort/setup/dsl/action"
-      autoload :Command,                    "escort/setup/dsl/command"
-      autoload :ConfigFile,                 "escort/setup/dsl/config_file"
-      autoload :Global,                     "escort/setup/dsl/global"
-    end
+require 'escort/setup/dsl/options'
+require 'escort/setup/dsl/action'
+require 'escort/setup/dsl/command'
+require 'escort/setup/dsl/config_file'
+require 'escort/setup/dsl/global'
 
-    module Configuration
-      module Locator
-        autoload :Base,                     "escort/setup/configuration/locator/base"
-        autoload :DescendingToHome,         "escort/setup/configuration/locator/descending_to_home"
-        autoload :ExecutingScriptDirectory, "escort/setup/configuration/locator/executing_script_directory"
-        autoload :SpecifiedDirectory,       "escort/setup/configuration/locator/specified_directory"
-        autoload :Chaining,                 "escort/setup/configuration/locator/chaining"
-      end
+require 'escort/setup/configuration/locator/base'
+require 'escort/setup/configuration/locator/descending_to_home'
+require 'escort/setup/configuration/locator/executing_script_directory'
+require 'escort/setup/configuration/locator/specified_directory'
+require 'escort/setup/configuration/locator/chaining'
 
-      autoload :MergeTool,                  "escort/setup/configuration/merge_tool"
-      autoload :Instance,                   "escort/setup/configuration/instance"
-      autoload :Reader,                     "escort/setup/configuration/reader"
-      autoload :Writer,                     "escort/setup/configuration/writer"
-      autoload :Generator,                  "escort/setup/configuration/generator"
-      autoload :Loader,                     "escort/setup/configuration/loader"
-    end
-  end
+require 'escort/setup/configuration/merge_tool'
+require 'escort/setup/configuration/instance'
+require 'escort/setup/configuration/reader'
+require 'escort/setup/configuration/writer'
+require 'escort/setup/configuration/generator'
+require 'escort/setup/configuration/loader'
 
-  module ActionCommand
-    autoload :Base,                         "escort/action_command/base"
-    autoload :EscortUtilityCommand,         "escort/action_command/escort_utility_command"
-  end
-end
+require 'escort/action_command/base'
+require 'escort/action_command/escort_utility_command'
+
+require 'escort/dsl'
+#require 'escort/command_map'
 
 at_exit do
   Escort::Logger.close
@@ -80,5 +68,3 @@ end
 def output_logger
   Escort::Logger.output
 end
-
-

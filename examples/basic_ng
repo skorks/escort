@@ -1,0 +1,105 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib"))
+
+require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib", "escort"))
+
+require File.join(File.expand_path(__FILE__), "..", "commands", "example_command")
+
+module Escort
+  class CommandMap
+    def initialize
+      @hash = {}
+      @default_action = nil
+    end
+
+    def build(&block)
+      dsl = self.class::DSL.new(self)
+      yield(dsl) if block_given?
+      self
+    end
+
+    def default_action=(command_class)
+      @default_action = command_class
+    end
+
+    def default_action
+      @default_action
+    end
+
+    class DSL
+      attr_reader :command_map
+
+      def initialize(command_map)
+        @command_map = command_map
+      end
+
+      def default_action(command_class)
+        command_map.default_action = command_class
+      end
+    end
+  end
+
+  class OptionRegistry
+    def initialize
+      @hash = {}
+    end
+
+    def build(&block)
+      dsl = self.class::DSL.new(self)
+      yield(dsl) if block_given?
+      self
+    end
+
+    def add_option(identifier, data)
+      @hash[identifier] = data
+    end
+
+    class DSL
+      attr_reader :option_registry
+
+      def initialize(option_registry)
+        @option_registry = option_registry
+      end
+
+      def option(identifier, data = {})
+        option_registry.add_option(identifier, data)
+      end
+    end
+  end
+
+  class Application
+    class << self
+      def command_map(&block)
+        @command_map ||= ::Escort::CommandMap.new
+        @command_map.build(&block) if block_given?
+        @command_map
+      end
+
+      def option_registry(&block)
+        @option_registry ||= ::Escort::OptionRegistry.new
+        @option_registry.build(&block) if block_given?
+        @option_registry
+      end
+
+      def run
+      end
+    end
+  end
+end
+
+module BasicNg
+  class Application < Escort::Application
+  end
+end
+
+BasicNg::Application.command_map.build do |m|
+  m.default_action Escort::ExampleCommand
+end
+
+BasicNg::Application.option_registry.build do |r|
+  r.option :flag1, desc: "Flag 1", short: 'f', long: 'flag1', type: :boolean, default: true
+  r.option :flag2, desc: "Flag 2", short: :none, long: 'flag2', type: :boolean
+end
+
+BasicNg::Application.run

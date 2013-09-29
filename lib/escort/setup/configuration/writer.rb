@@ -1,6 +1,3 @@
-require 'json'
-require 'fileutils'
-
 module Escort
   module Setup
     module Configuration

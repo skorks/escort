@@ -1,10 +1,16 @@
 #!/usr/bin/env ruby
 
+$:.unshift File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib"))
+
 require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib", "escort"))
 require File.join(File.expand_path(__FILE__), "..", "commands", "example_command")
 
 Escort::App.create do |app|
-  app.action do |options, arguments|
-    Escort::ExampleCommand.new(options, arguments).execute
-  end
+  app.action Escort::ExampleCommand
 end
+
+#Escort::App.create do |app|
+  #app.action do |options, arguments|
+    #Escort::ExampleCommand.new(options, arguments).execute
+  #end
+#end

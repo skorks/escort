@@ -16,16 +16,16 @@ module Escort
           Options.options(@name, @options, &block)
         end
 
-        def action(&block)
-          Action.action(@name, @action, &block)
+        def action(command_class = nil, &block)
+          Action.action(@name, @action, command_class, &block)
         end
 
         def command(name, options = {}, &block)
           options[:requires_arguments] = @requires_arguments
           command = Command.new(name.to_sym, options, &block)
           aliases = [options[:aliases] || []].flatten + [name]
-          aliases.each do |name|
-            @commands[name.to_sym] = command
+          aliases.each do |current_alias|
+            @commands[current_alias.to_sym] = command
           end
         end
 

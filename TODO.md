@@ -50,9 +50,12 @@ v2.0.1
 - blog Build Command-Line Apps Like a Pro Using Ruby and Escort
 - pull the terminal formatting stuff into separate gem
 - pull nested exception stuff into separate gem
-- 
+-
 
 IDEAS
+Preloader to make startup time for cli apps much faster
+
+
 #!/usr/bin/env ruby
 
 require 'escort'
@@ -351,3 +354,7 @@ v0.4.0
 - rework the integration specs and matchers so there are less moving parts (perhaps push some stuff down into a base class etc.) DONE
 - rewrite the help formatter to be a bit easier to understand (more like man output for output) DONE
 - add depends support to dsl   DONE
+
+
+## New Features (need tests and documentation)
+- ability to pass just a command class instead of a block which instantiates a command and calls execute
