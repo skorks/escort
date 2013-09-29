@@ -55,7 +55,6 @@ require 'escort/action_command/base'
 require 'escort/action_command/escort_utility_command'
 
 require 'escort/dsl'
-#require 'escort/command_map'
 
 at_exit do
   Escort::Logger.close
