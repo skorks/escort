@@ -17,10 +17,10 @@ module Escort
 
     def executable_for(context, options, arguments)
       executable = @commands[DEFAULT_KEY]
-      if executable.ancestors.include?(Command)
-        executable.new(options, arguments)
-      else
+      if executable.kind_of?(Proc)
         BlockExecutionCommand.new(options, arguments, &executable)
+      else
+        executable.new(options, arguments)
       end
     end
 

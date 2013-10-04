@@ -4,8 +4,16 @@
 #end
 module Escort
   class OptionRegistry
+    include Enumerable
+
     def initialize
       @hash = {}
+    end
+
+    def each(&block)
+      @hash.each_pair do |key, value|
+        yield(key, value)
+      end
     end
 
     def build(&block)

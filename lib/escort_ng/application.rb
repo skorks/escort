@@ -13,20 +13,9 @@ module Escort
         @option_registry
       end
 
-      def run(option_string = '')
-        #raw_cli_options = get_raw_cli_options(option_string)
-        #p raw_cli_options
-        #parse the option string
-        @command_map.executable_for(nil, nil, nil).execute
-        #TODO introduce an exit call here when things are further along
+      def executable(option_string = '')
+        Executable.new(option_string, command_map, option_registry)
       end
-
-      #private
-
-      #def get_raw_cli_options(option_string)
-        #passed_in_options = Escort::Utils.tokenize_option_string(option_string)
-        #passed_in_options.empty? ? ARGV.dup : passed_in_options
-      #end
     end
   end
 end
