@@ -15,13 +15,12 @@ module Escort
       self
     end
 
-    def executable_for(context, options, arguments)
-      executable = @commands[DEFAULT_KEY]
-      if executable.kind_of?(Proc)
-        BlockExecutionCommand.new(options, arguments, &executable)
-      else
-        executable.new(options, arguments)
-      end
+    def has_command_for?(key)
+      @commands[key] != nil
+    end
+
+    def command_for(key)
+      @commands[key]
     end
 
     def set_command(key, value)

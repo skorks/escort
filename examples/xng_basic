@@ -14,4 +14,4 @@ module Basic
   end
 end
 
-Basic::Application.run
+Basic::Application.executable.run

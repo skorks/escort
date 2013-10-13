@@ -13,6 +13,18 @@ module Escort
         @option_registry
       end
 
+      def version(version)
+        @version ||= version
+      end
+
+      def summary(summary)
+        @summary ||= summary
+      end
+
+      def description(description)
+        @description ||= description
+      end
+
       def executable(option_string = '')
         Executable.new(option_string, command_map, option_registry)
       end

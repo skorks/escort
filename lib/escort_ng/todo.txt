@@ -1,0 +1,12 @@
+scenarios
+-------------
+- default command is given as a block
+- help options is given on the command line
+- version option is given on the command line
+- options are given on the command line that are in the registry but are invalid for the command
+- options are given on the command line that are not in the registry
+
+
+features
+-----------
+- use Yell for all the logging

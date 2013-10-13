@@ -17,6 +17,9 @@ end
 
 module Basic
   class Application < Escort::Application
+    version '0.1'
+    summary 'Summary 1'
+    description 'Description 1'
   end
 end
 
