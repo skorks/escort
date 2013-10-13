@@ -10,3 +10,18 @@ scenarios
 features
 -----------
 - use Yell for all the logging
+
+big ones
+------------
+- configuration
+- help output
+- sub commands
+- conflicts
+- dependencies
+- validations
+- required and optional arguments
+
+- print help as a command of some sort
+- print error as a command of some sort
+
+- integration specs for all the different features
