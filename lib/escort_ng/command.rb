@@ -1,21 +1,25 @@
 module Escort
   class Command
-    class << self
-      def options(*option_keys)
-        @options_set ||= option_keys
-      end
-    end
+    #class << self
+      #def options(*option_keys)
+        #@options_set ||= option_keys
+      #end
 
-    attr_reader :options, :arguments
+      #def action(&block)
+        #@action = block
+      #end
+    #end
 
-    def initialize(options, arguments)
-      @options = options
-      @arguments = arguments
-    end
+    #attr_reader :options, :arguments
 
-    def execute
-      #TODO create an error for when something should be implemented by child class
-      raise "Must be implemented by child class"
-    end
+    #def initialize(options, arguments)
+      #@options = options
+      #@arguments = arguments
+    #end
+
+    #def execute
+      ##TODO create an error for when something should be implemented by child class
+      #raise "Must be implemented by child class"
+    #end
   end
 end

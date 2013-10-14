@@ -6,12 +6,14 @@ require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib"
 
 module Basic
   class Application < Escort::Application
-    command_map do |m|
-      m.default_command do
-        p 'HELLO'
+    command_map do
+      default_command do
+        #action do
+          #p 'HELLO'
+        #end
       end
     end
   end
 end
 
-Basic::Application.executable.run
+Basic::Application.new.run

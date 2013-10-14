@@ -8,9 +8,3 @@ require File.join(File.expand_path(__FILE__), "..", "commands", "example_command
 Escort::App.create do |app|
   app.action Escort::ExampleCommand
 end
-
-#Escort::App.create do |app|
-  #app.action do |options, arguments|
-    #Escort::ExampleCommand.new(options, arguments).execute
-  #end
-#end

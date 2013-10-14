@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib"))
+
+require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib", "escort_ng"))
+
+module Basic
+  class ExampleCommand < Escort::Command
+    action do
+      p 'HELLO'
+    end
+  end
+
+  class CommandMap < Escort::CommandMap
+    default_command Basic::ExampleCommand
+  end
+
+  class OptionRegistry < Escort::OptionRegistry
+  end
+
+  class Application < Escort::Application
+    version '0.1.5'
+    command_map CommandMap
+    option_registry OptionRegistry
+  end
+end
+
+Basic::Application.new.run

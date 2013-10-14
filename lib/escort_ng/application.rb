@@ -1,33 +1,55 @@
 module Escort
   class Application
     class << self
-      def command_map(&block)
-        @command_map ||= ::Escort::CommandMap.new
-        @command_map.build(&block) if block_given?
-        @command_map
+      def version(value)
+        set_configuration_value(__method__, value)
       end
 
-      def option_registry(&block)
-        @option_registry ||= ::Escort::OptionRegistry.new
-        @option_registry.build(&block) if block_given?
-        @option_registry
+      def summary(value)
+        set_configuration_value(__method__, value)
       end
 
-      def version(version)
-        @version ||= version
+      def description(value)
+        set_configuration_value(__method__, value)
       end
 
-      def summary(summary)
-        @summary ||= summary
+      def command_map(klass = nil, &block)
+        if block_given?
+          set_configuration_value(__method__, block)
+        else
+          set_configuration_value(__method__, klass)
+        end
       end
 
-      def description(description)
-        @description ||= description
+      def option_registry(klass = nil, &block)
+        if block_given?
+          set_configuration_value(__method__, block)
+        else
+          set_configuration_value(__method__, klass)
+        end
       end
 
-      def executable(option_string = '')
-        Executable.new(option_string, command_map, option_registry)
+      private
+
+      def set_configuration_value(key, value)
+        configuration[key.to_s] = value
       end
+
+      def configuration
+        @configuration ||= {}
+      end
+    end
+
+    attr_reader :configuration
+
+    def initialize
+      @configuration = self.class.send(:configuration)
+      @configuration['option_registry'] ||= Escort::OptionRegistry
+      @configuration['command_map'] ||= Escort::CommandMap
+    end
+
+    def run
+      Executable.new(nil, configuration).run
     end
   end
 end

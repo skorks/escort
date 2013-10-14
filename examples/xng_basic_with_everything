@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib"))
+
+require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib", "escort_ng"))
+
+module Basic
+  class ExampleCommand < Escort::Command
+    options :flag1, :flag2
+
+    def execute
+      p options
+      p arguments
+    end
+  end
+end
+
+module Basic
+  class Application < Escort::Application
+    version '0.1'
+    summary 'Summary 1'
+    description 'Description 1'
+
+    requires_arguments true
+    global_config_file 'basic.conf', path: '/etc', environment_aware: false
+    autocreate_global_config true
+    user_config_file 'basic.conf', path: '~/', environment_aware: true
+    autocreate_user_config true
+    #project_config_file 'basic.conf', path: '../../', environment_aware: true
+    #autocreate_project_config true
+    environment_aware true
+  end
+end
+
+Basic::Application.command_map do |m|
+  m.default_command Basic::ExampleCommand
+end
+
+Basic::Application.option_registry do |r|
+  r.option :option1, "Option1", :short => '-o', :long => '--option1', :type => :string, :default => "option 1"
+  r.option :option2, "Option2", :short => :none, :long => '--option2', :type => :string, :multi => true
+  r.option :int_option, "Int option", :short => '-i', :long => '--int-option', :type => :int
+  r.option :flag1, "Flag 1", :short => '-f', :long => '--flag1', :type => :boolean, :default => true
+  r.option :flag2, "Flag 2", :short => :none, :long => '--flag2', :type => :boolean
+
+  r.confict :flag1, :flag2
+  r.dependency :option1, :on => :flag1
+  r.validate(:int_option, "must be greater than 10") { |option| option > 10 }
+end
+
+Basic::Application.executable.run

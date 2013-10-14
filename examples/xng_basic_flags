@@ -5,6 +5,11 @@ $:.unshift File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "l
 require File.expand_path(File.join(File.expand_path(__FILE__), "..", "..", "lib", "escort_ng"))
 
 module Basic
+  class Application < Escort::Application
+  end
+end
+
+module Basic
   class ExampleCommand < Escort::Command
     options :flag1, :flag2
 
@@ -12,11 +17,6 @@ module Basic
       p options
       p arguments
     end
-  end
-end
-
-module Basic
-  class Application < Escort::Application
   end
 end
 
