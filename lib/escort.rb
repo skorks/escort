@@ -69,10 +69,6 @@ module Escort
   end
 end
 
-at_exit do
-  Escort::Logger.close
-end
-
 def error_logger
   Escort::Logger.error
 end
@@ -80,5 +76,3 @@ end
 def output_logger
   Escort::Logger.output
 end
-
-
