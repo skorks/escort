@@ -40,7 +40,7 @@ In general, some libraries give you great option parsing, but no infinitely nest
   * A space for user specific config values in the config file, which is available at runtime
   * Automatic command with options to update and create config files in a default location or anywhere else (e.g. `my_app escort --update-config`)
 * Tool to bootstrap an Escort script (basic, with commands and with sub-commands)  (NOT YET IMPLEMENTED)
-* Envrionment aware configuration (NOT YET IMPLEMENTED)
+* Environment aware configuration (NOT YET IMPLEMENTED)
 * Project specific scripts support (NOT YET IMPLEMENTED)
 * Lots of usage examples (COMING SOON)
 * Lots of documentation (COMING SOON)
@@ -375,7 +375,7 @@ Simple!
 
 ### Validations
 
-Validations are pretty easy, they can be defined inside the options block. You must provide an option symbol and an error message for when validation fails. The actual validation is a block, when the block evaluates to true, it means validation is successful, othewise validation fails. That's all there is to it.
+Validations are pretty easy, they can be defined inside the options block. You must provide an option symbol and an error message for when validation fails. The actual validation is a block, when the block evaluates to true, it means validation is successful, otherwise validation fails. That's all there is to it.
 
 ```ruby
 #!/usr/bin/env ruby
@@ -501,7 +501,7 @@ It is also worth knowing that Escort is quite clever when it comes to working ou
 * keep going down the directory tree until the home directory is reached, if no config file was found, then no config file exists
 * in which case either create the config file in home directory (if autocreatable) or continue without config file
 
-As you can see the config file support is quite extensive and can take your command-line apps to the next level in terms of useability and utility.
+As you can see the config file support is quite extensive and can take your command-line apps to the next level in terms of usability and utility.
 
 
 ### Command Suites
@@ -642,7 +642,7 @@ In all the previous examples you've seen the following:
 ...
 ```
 
-The `ExampleCommand` is an `ActionCommand` and is implemented in a separate class. In the above examples we would `require 'my_app'` with the assumption that it requires the file where `ExampleCommand` is imlpemented. You could of course just require the file with the implementation directly.
+The `ExampleCommand` is an `ActionCommand` and is implemented in a separate class. In the above examples we would `require 'my_app'` with the assumption that it requires the file where `ExampleCommand` is implemented. You could of course just require the file with the implementation directly.
 
 A command might look like this:
 
