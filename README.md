@@ -654,6 +654,7 @@ module Escort
       Escort::Logger.output.puts "Options: #{options}"
       Escort::Logger.output.puts "Command options: #{command_options}"
       Escort::Logger.output.puts "Arguments: #{arguments}"
+      Escort::Logger.error.error "Example of how to log to STDERR"
       if config
         Escort::Logger.output.puts "User config: #{config}"
       end
@@ -677,6 +678,14 @@ These should give you hand in implementing the functionality you need, but most 
 ## Examples
 
 There is an examples directory where you can have a play with a whole bunch of little 'Escort' apps, from a very basic one with no options to more complex nested command suites with all the trimmings. Most of them call the `ExampleCommand` which lives in `examples/commands`. Have a read/play to learn, or just copy/paste bits straight into your apps.
+
+## Error Handling
+Escort handles all errors encountered for you and doesn't print out the call stack unless you tell it to.  By default, your users will receive error messages similar to this:
+```
+undefined method `self' for #<Foo:0x007fb9049f0fa0>
+```
+
+To generate a call stack when errors are encountered, start your program with the built-in global option `--verbosity debug`.
 
 ## More In-Depth
 
