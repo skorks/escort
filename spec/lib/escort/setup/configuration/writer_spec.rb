@@ -1,3 +1,4 @@
+require 'json'
 describe Escort::Setup::Configuration::Writer do
   include FakeFS::SpecHelpers
   let(:writer) {Escort::Setup::Configuration::Writer.new(path, data)}

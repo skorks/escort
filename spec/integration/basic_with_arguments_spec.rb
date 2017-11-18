@@ -20,16 +20,16 @@ describe "Escort basic app that requires arguments", :integration => true do
       Readline.stub(:readline).and_return('1', nil)
     end
 
-    it("action should receive ['1'] as arguments") { expect{subject}.to execute_action_with_arguments(result, ['1']) }
+    it("action should receive ['1'] as arguments") { expect(subject).to execute_action_with_arguments(result, ['1']) }
   end
 
   context "when called with one argument" do
     let(:option_string) { "1" }
-    it("action should receive ['1'] as arguments") { expect{subject}.to execute_action_with_arguments(result, ['1']) }
+    it("action should receive ['1'] as arguments") { expect(subject).to execute_action_with_arguments(result, ['1']) }
   end
 
   context "when called with three arguments" do
     let(:option_string) { "1 2 3" }
-    it("action should receive ['1', '2', '3'] as arguments") { expect{subject}.to execute_action_with_arguments(result, ['1', '2', '3']) }
+    it("action should receive ['1', '2', '3'] as arguments") { expect(subject).to execute_action_with_arguments(result, ['1', '2', '3']) }
   end
 end

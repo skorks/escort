@@ -42,7 +42,7 @@ describe "Escort suite app with sub commands", :integration => true do
       rescue SystemExit => e
       end
     end
-    it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+    it("should exit with code 0") { expect(subject).to exit_with_code(0) }
     it("should have the right command name") { result[:command_name].should == :sub_command1 }
     it("should have have sub command option set") { result[:command_options][:option3].should == 'foo' }
     it("should have have global option set") { result[:options][:global][:options][:option1].should == 'hello' }

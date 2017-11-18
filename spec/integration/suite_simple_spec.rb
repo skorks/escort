@@ -32,7 +32,7 @@ describe "Escort suite app with one level of commands", :integration => true do
       rescue SystemExit => e
       end
     end
-    it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+    it("should exit with code 0") { expect(subject).to exit_with_code(0) }
     it("should have the right command name") { result[:command_name].should == :command1 }
     it("should have have global option set") { result[:options][:global][:options][:option1].should == 'hello' }
     it("should have have command option set") { result[:command_options][:option2].should == 'world' }
@@ -40,6 +40,6 @@ describe "Escort suite app with one level of commands", :integration => true do
 
   context "when using command alias" do
     let(:option_string) { "-o hello c1 --option2 world" }
-    it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+    it("should exit with code 0") { expect(subject).to exit_with_code(0) }
   end
 end

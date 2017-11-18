@@ -16,7 +16,7 @@ describe "Escort basic app with validations", :integration => true do
     end
     let(:option_string) { "-o bar" }
 
-    it("should exit with code 2") { expect{ subject }.to exit_with_code(2) }
+    it("should exit with code 2") { expect(subject).to exit_with_code(2) }
   end
 
   context "when option has a validation" do
@@ -35,12 +35,12 @@ describe "Escort basic app with validations", :integration => true do
 
     context "and validation fails" do
       let(:option_string) { "-o baz" }
-      it("should exit with code 3") { expect{ subject }.to exit_with_code(3) }
+      it("should exit with code 3") { expect(subject).to exit_with_code(3) }
     end
 
     context "and validation does not fail" do
       let(:option_string) { "-o foo" }
-      it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+      it("should exit with code 0") { expect(subject).to exit_with_code(0) }
     end
   end
 
@@ -61,17 +61,17 @@ describe "Escort basic app with validations", :integration => true do
 
     context "and one validation fails" do
       let(:option_string) { "--option2='hb'" }
-      it("should exit with code 3") { expect{ subject }.to exit_with_code(3) }
+      it("should exit with code 3") { expect(subject).to exit_with_code(3) }
     end
 
     context "and the other validation fails" do
       let(:option_string) { "--option2='h bssfs'" }
-      it("should exit with code 3") { expect{ subject }.to exit_with_code(3) }
+      it("should exit with code 3") { expect(subject).to exit_with_code(3) }
     end
 
     context "and both validations pass" do
       let(:option_string) { "--option2='h bssfsfsdfsdfsfsdsf'" }
-      it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+      it("should exit with code 0") { expect(subject).to exit_with_code(0) }
     end
   end
 end

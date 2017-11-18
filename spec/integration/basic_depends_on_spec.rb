@@ -17,7 +17,7 @@ describe "Escort basic app with dependent options", :integration => true do
       end
     end
     let(:option_string) { "-f" }
-    it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+    it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
   end
 
   context "when option dependent on presence of flag" do
@@ -38,12 +38,12 @@ describe "Escort basic app with dependent options", :integration => true do
 
     context "and flag is not present" do
       let(:option_string) { "-o foo" }
-      it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+      it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
     end
 
     context "and flag is present" do
       let(:option_string) { "-f -o foo" }
-      it("it should exit successfully") { expect{subject}.to exit_with_code(0) }
+      it("it should exit successfully") { expect(subject).to exit_with_code(0) }
     end
   end
 
@@ -69,29 +69,29 @@ describe "Escort basic app with dependent options", :integration => true do
     context "and other flag has a default value of false" do
       context "and other flag is present" do
         let(:option_string) { "--flag1 --flag3" }
-        it("it should exit successfully") { expect{subject}.to exit_with_code(0) }
+        it("it should exit successfully") { expect(subject).to exit_with_code(0) }
       end
 
       context "and other flag is not present" do
         let(:option_string) { "--flag3" }
-        it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+        it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
       end
     end
 
     context "and other flag has a default value of true" do
       context "and other flag is present" do
         let(:option_string) { "--flag2 --flag4" }
-        it("it should exit successfully") { expect{subject}.to exit_with_code(0) }
+        it("it should exit successfully") { expect(subject).to exit_with_code(0) }
       end
 
       context "and other flag is not present" do
         let(:option_string) { "--flag4" }
-        it("it should exit successfully") { expect{subject}.to exit_with_code(0) }
+        it("it should exit successfully") { expect(subject).to exit_with_code(0) }
       end
 
       context "and other flag negative option is used" do
         let(:option_string) { "--no-flag2 --flag4" }
-        it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+        it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
       end
     end
   end
@@ -115,17 +115,17 @@ describe "Escort basic app with dependent options", :integration => true do
 
     context "and one of the other options is not present" do
       let(:option_string) { "-f --option2=foo" }
-      it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+      it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
     end
 
     context "and none of the other options are present" do
       let(:option_string) { "--option2=foo" }
-      it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+      it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
     end
 
     context "and all of the other options are present" do
       let(:option_string) { "-f -o bar --option2=foo" }
-      it("it should exit successfully") { expect{subject}.to exit_with_code(0) }
+      it("it should exit successfully") { expect(subject).to exit_with_code(0) }
     end
   end
 
@@ -148,17 +148,17 @@ describe "Escort basic app with dependent options", :integration => true do
 
     context "and other option is supplied with this value" do
       let(:option_string) { "-o bar --option2=foo" }
-      it("it should exit successfully") { expect{subject}.to exit_with_code(0) }
+      it("it should exit successfully") { expect(subject).to exit_with_code(0) }
     end
 
     context "and other option is supplied with different value" do
       let(:option_string) { "-o baz --option2=foo" }
-      it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+      it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
     end
 
     context "and other option is not supplied" do
       let(:option_string) { "--option2=foo" }
-      it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+      it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
     end
   end
 
@@ -181,17 +181,17 @@ describe "Escort basic app with dependent options", :integration => true do
 
     context "and yet another option is not present" do
       let(:option_string) { "-o bar --option2=foo" }
-      it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+      it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
     end
 
     context "and other option has different value" do
       let(:option_string) { "-o baz -f --option2=foo" }
-      it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+      it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
     end
 
     context "and other option has the right value and yet another option is present" do
       let(:option_string) { "-o bar -f --option2=foo" }
-      it("it should exit successfully") { expect{subject}.to exit_with_code(0) }
+      it("it should exit successfully") { expect(subject).to exit_with_code(0) }
     end
   end
 
@@ -210,7 +210,7 @@ describe "Escort basic app with dependent options", :integration => true do
       end
     end
     let(:option_string) { "-o bar" }
-    it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+    it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
   end
 
   context "when dependency specified for non-existant option" do
@@ -228,7 +228,7 @@ describe "Escort basic app with dependent options", :integration => true do
       end
     end
     let(:option_string) { "-o bar" }
-    it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+    it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
   end
 
   context "when option dependent on non-existant option" do
@@ -246,7 +246,7 @@ describe "Escort basic app with dependent options", :integration => true do
       end
     end
     let(:option_string) { "-o bar" }
-    it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+    it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
   end
 
   context "when dependency is specified inline" do
@@ -264,12 +264,12 @@ describe "Escort basic app with dependent options", :integration => true do
     end
     context "and dependency is satisfied" do
       let(:option_string) { "-f -o bar" }
-      it("it should exit successfully") { expect{subject}.to exit_with_code(0) }
+      it("it should exit successfully") { expect(subject).to exit_with_code(0) }
     end
 
     context "and dependency is not satisfied" do
       let(:option_string) { "-o bar" }
-      it("it should not exit successfully") { expect{subject}.to_not exit_with_code(0) }
+      it("it should not exit successfully") { expect(subject).to_not exit_with_code(0) }
     end
   end
 end
