@@ -108,7 +108,7 @@ describe Escort::Formatter::Option do
           end
         end
       end
-      it {subject.should be_false}
+      it {subject.should be_falsey}
     end
 
     context "when conflict is defined" do
@@ -123,7 +123,7 @@ describe Escort::Formatter::Option do
           end
         end
       end
-      it {subject.should be_true}
+      it {subject.should be_truthy}
     end
   end
 
@@ -141,7 +141,7 @@ describe Escort::Formatter::Option do
           end
         end
       end
-      it {subject.should be_false}
+      it {subject.should be_falsey}
     end
 
     context "when dependency is defined" do
@@ -156,7 +156,7 @@ describe Escort::Formatter::Option do
           end
         end
       end
-      it {subject.should be_true}
+      it {subject.should be_truthy}
     end
   end
 
@@ -174,7 +174,7 @@ describe Escort::Formatter::Option do
           end
         end
       end
-      it {subject.should be_false}
+      it {subject.should be_falsey}
     end
 
     context "when validations is defined" do
@@ -191,7 +191,7 @@ describe Escort::Formatter::Option do
           end
         end
       end
-      it {subject.should be_true}
+      it {subject.should be_truthy}
     end
   end
 

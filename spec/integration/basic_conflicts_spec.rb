@@ -18,12 +18,12 @@ describe "Escort basic app with conflicting options", :integration => true do
 
   context "when conflicting options supplied" do
     let(:option_string) { "--flag1 --flag2" }
-    it("should exit with code 2 or 3") { expect{ subject }.to exit_with_code(2, 3) }
+    it("should exit with code 2 or 3") { expect(subject).to exit_with_code(2, 3) }
   end
 
   context "when no conflicting options supplied" do
     let(:option_string) { "--flag1" }
-    it("should exit with code 0") { expect{ subject }.to exit_with_code(0) }
+    it("should exit with code 0") { expect(subject).to exit_with_code(0) }
   end
 
   context "when non-existant option in conflict list" do
@@ -42,6 +42,6 @@ describe "Escort basic app with conflicting options", :integration => true do
       end
     end
     let(:option_string) { "--flag1" }
-    it("should exit with code 2") { expect{ subject }.to exit_with_code(2) }
+    it("should exit with code 2") { expect(subject).to exit_with_code(2) }
   end
 end

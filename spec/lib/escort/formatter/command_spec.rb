@@ -53,12 +53,12 @@ describe Escort::Formatter::Command do
 
     context "when no aliases" do
       let(:aliases) {[]}
-      it {subject.should be_false}
+      it {subject.should be_falsey}
     end
 
     context "when has an alias" do
       let(:aliases) {[command_alias]}
-      it {subject.should be_true}
+      it {subject.should be_truthy}
     end
   end
 
@@ -123,7 +123,7 @@ describe Escort::Formatter::Command do
     context "when context is not global" do
       let(:context) {[:hello]}
       it{subject.split(" ").count.should == 2}
-      it{subject.split(" ").include?('hello').should be_true}
+      it{subject.split(" ").include?('hello').should be_truthy}
     end
   end
 
@@ -157,11 +157,11 @@ describe Escort::Formatter::Command do
           end
         end
       end
-      it {subject.should be_false}
+      it {subject.should be_falsey}
     end
 
     context "when has child commands" do
-      it {subject.should be_true}
+      it {subject.should be_truthy}
     end
   end
 
@@ -169,7 +169,7 @@ describe Escort::Formatter::Command do
     subject {command.requires_arguments?}
 
     context "when arguments not required" do
-      it {subject.should be_false}
+      it {subject.should be_falsey}
     end
 
     context "when arguments are required" do
@@ -180,7 +180,7 @@ describe Escort::Formatter::Command do
           end
         end
       end
-      it {subject.should be_true}
+      it {subject.should be_truthy}
     end
   end
 

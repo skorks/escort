@@ -1,3 +1,4 @@
+require 'json'
 describe Escort::Setup::Configuration::Reader do
   include FakeFS::SpecHelpers
 
