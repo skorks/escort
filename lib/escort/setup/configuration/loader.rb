@@ -29,7 +29,7 @@ module Escort
         end
 
         def config_path
-          @config_path ||= (auto_options.non_default_config_path || locator.locate || default_config_path)
+          @config_path ||= (@auto_options.non_default_config_path || locator.locate || default_config_path)
         end
 
         def locator
